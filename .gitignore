@@ -11,3 +11,5 @@ media
 ### env 
 backend/env/
 backend/env/lib
+
+frontend/dashboard_frontend/node_modules
