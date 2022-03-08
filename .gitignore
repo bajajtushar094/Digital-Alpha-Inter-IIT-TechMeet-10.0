@@ -14,5 +14,4 @@ backend/env/lib
 
 frontend/dashboard_frontend/node_modules
 
-
-**/migrations/*
+migrations/
