@@ -17,6 +17,8 @@ urlpatterns = [
     #Company APIs
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
-    path("companies/addToBasket/<str:ticker>",addToBasket.as_view())
+    path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
+    path('companies/getKeyMetrics/<str:ticker>/<str:metric_type>', getKeyMetrics.as_view()),
+    path('companies/getFilingMetric/<int:id>', getFilingFromMetric.as_view())
 
 ]
