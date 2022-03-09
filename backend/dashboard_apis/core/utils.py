@@ -11,10 +11,11 @@ def get_company(ticker):
 
     try:
         company = Company.objects.get(ticker=ticker)
-        print("Company:", type(company))
     except:
         return Response(
             {"res":"Error while fetching company"},
             status=status.HTTP_404_NOT_FOUND
         )
+
+    return company
 

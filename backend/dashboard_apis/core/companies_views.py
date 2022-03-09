@@ -1,4 +1,5 @@
 import imp
+from os import stat
 from warnings import catch_warnings
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -6,6 +7,7 @@ from rest_framework import status
 from rest_framework import permissions
 from .utils import *
 from .models import *
+from .serializers import *
 
 class bookmarkCompanyView(APIView):
 
@@ -58,6 +60,27 @@ class addToBasket(APIView):
 
         return Response(
             {"res":"Company added in the basket of user"},
+            status=status.HTTP_200_OK
+        )
+
+class getRecentFilings(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        company = get_company(kwargs['ticker'])
+        if isinstance(company, Response):
+            return company
+        print("Company:", company)
+        try:
+            filings = Filing.objects.filter(company=company)
+        except:
+            return Response(
+                {"res":"Error while fetching filings of the company"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        return Response(
+            data=FilingSerializer(query_set=filings).data,
             status=status.HTTP_200_OK
         )
 

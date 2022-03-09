@@ -7,8 +7,16 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
+    #Auth APIs
     path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # Search APIs
     path('search/companies', searchCompanies,),
+
+    #Company APIs
+    path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
+    path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
+    path("companies/addToBasket/<str:ticker>",addToBasket.as_view())
+
 ]
