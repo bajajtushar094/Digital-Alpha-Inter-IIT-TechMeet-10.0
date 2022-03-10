@@ -13,6 +13,8 @@ urlpatterns = [
 
     # Search APIs
     path('search/companies', searchCompanies,),
+    path('search/filings', searchFillings,),
+    path('search', completeSearch,),
 
     #Company APIs
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
