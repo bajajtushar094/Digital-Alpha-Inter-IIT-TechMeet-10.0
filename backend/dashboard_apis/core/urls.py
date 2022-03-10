@@ -1,6 +1,7 @@
 from django.urls import path, include
 from .companies_views import *
 from .search_views import *
+from .landing_views import *
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -17,6 +18,9 @@ urlpatterns = [
     #Company APIs
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
-    path("companies/addToBasket/<str:ticker>",addToBasket.as_view())
+    path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
+
+    #Landing page Apis
+    path("landingPage/recentFilings/all", getAllRecentFilings.as_view())
 
 ]
