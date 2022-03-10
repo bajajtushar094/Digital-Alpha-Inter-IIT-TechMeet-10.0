@@ -1,4 +1,6 @@
-from django.urls import path, include
+from django.urls import path
+
+from .basket_views import *
 from .companies_views import *
 from .search_views import *
 from rest_framework_simplejwt.views import (
@@ -15,7 +17,8 @@ urlpatterns = [
     # Search APIs
     path('search/companies', searchCompanies,),
     path('search/filings', searchFillings,),
-    path('search', completeSearch,),
+    path('search/advanced', advancedSearch,),
+    path('search', simpleSearch,),
 
     #Company APIs
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
@@ -25,6 +28,16 @@ urlpatterns = [
     path('companies/getFilingMetric/<int:id>', getFilingFromMetric.as_view()),
 
     #Filing APIs
-    path("filings/getKeyMetric/<int:id>/<str:metric_type>", getKeyMetricsOfFiling.as_view())
+    path("filings/getKeyMetric/<int:id>/<str:metric_type>", getKeyMetricsOfFiling.as_view()),
+
+    #Basket APIs
+    # I think these are wrong APIs, makes no sense to me :(
+    path("basket/bookmarked", getBookmarks,),
+    path('basket/filings', getBookmarksWithFilings),
+    path('basket/compare', getComparisonData),
+
+    # these are the correct ones :)
+    path("basket/get", getBaskets), 
+    path("basket/details", getBasketDetails),
 
 ]
