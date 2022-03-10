@@ -97,8 +97,8 @@ class Filing(models.Model):
 
 	def __str__(self):
 		if self.quarter:
-			return f'{self.company.name} - {self.form_type} - Y{self.year}Q{self.quarter}' 
-		return f'{self.company.name} - {self.form_type} - Y{self.year}' 
+			return f'{self.company.name}-{self.form_type}-Y{self.year}Q{self.quarter}' 
+		return f'{self.company.name}-{self.form_type}-Y{self.year}' 
 
 
 class KeyMetric(models.Model):
@@ -114,8 +114,8 @@ class KeyMetric(models.Model):
 
 	def __str__(self):
 		if self.filing.quarter:
-			return f'{self.company.name} - {self.metric_type} - Y{self.filing.year}Q{self.filing.quarter}' 
-		return f'{self.company.name} - {self.metric_type} - Y{self.filing.year}' 
+			return f'{self.company.name}-{self.metric_type}-Y{self.filing.year}Q{self.filing.quarter}' 
+		return f'{self.company.name}-{self.metric_type}-Y{self.filing.year}' 
 
 
 

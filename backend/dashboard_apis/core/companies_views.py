@@ -70,9 +70,8 @@ class getRecentFilings(APIView):
         company = get_company(kwargs['ticker'])
         if isinstance(company, Response):
             return company
-        print("Company:", company)
         try:
-            filings = Filing.objects.filter(company=company)
+            filings = Filing.objects.filter(company=company).order_by('-date')
         except:
             return Response(
                 {"res":"Error while fetching filings of the company"},
@@ -80,8 +79,63 @@ class getRecentFilings(APIView):
             )
 
         return Response(
-            data=FilingSerializer(query_set=filings).data,
+            data=filings.values(),
             status=status.HTTP_200_OK
+        )
+
+
+class getKeyMetrics(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):        
+        company = get_company(kwargs['ticker'])
+        metric_type = kwargs['metric_type']
+
+        if isinstance(company, Response):
+            return company
+
+        try:
+            metrics = KeyMetric.objects.filter(company=company, metric_type=metric_type)
+        except:
+            return Response(
+                {"res":"Error while fetching filings of the company"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        metrics = metrics.values()
+
+        return Response(
+            data=metrics,
+            status= status.HTTP_200_OK
+        ) 
+
+class getFilingFromMetric(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        id = kwargs['id']
+
+        try:
+            metric = KeyMetric.objects.get(id=id)
+        except:
+            return Response(
+                {"res":"Error while extracting metrics"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        filing_id = metric.filing_id
+
+        try:
+            filing = Filing.objects.filter(id=filing_id)
+        except:
+            return Response(
+                {"res":"Error while fetching filing"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        return Response(
+            data=filing.values(),
+            status = status.HTTP_200_OK
         )
 
 
