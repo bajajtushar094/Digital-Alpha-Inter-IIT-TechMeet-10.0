@@ -115,10 +115,26 @@ class getFilingFromMetric(APIView):
     def get(self, request, *args, **kwargs):
         id = kwargs['id']
 
-        metric = KeyMetric.objects.filter(id=id)
+        try:
+            metric = KeyMetric.objects.get(id=id)
+        except:
+            return Response(
+                {"res":"Error while extracting metrics"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        filing_id = metric.filing_id
+
+        try:
+            filing = Filing.objects.filter(id=filing_id)
+        except:
+            return Response(
+                {"res":"Error while fetching filing"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
         return Response(
-            data=metric.values(),
+            data=filing.values(),
             status = status.HTTP_200_OK
         )
 

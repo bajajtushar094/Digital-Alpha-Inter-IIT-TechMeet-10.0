@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from .fillings_view import *
 
 urlpatterns = [
     #Auth APIs
@@ -21,6 +22,9 @@ urlpatterns = [
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
     path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
     path('companies/getKeyMetrics/<str:ticker>/<str:metric_type>', getKeyMetrics.as_view()),
-    path('companies/getFilingMetric/<int:id>', getFilingFromMetric.as_view())
+    path('companies/getFilingMetric/<int:id>', getFilingFromMetric.as_view()),
+
+    #Filing APIs
+    path("filings/getKeyMetric/<int:id>/<str:metric_type>", getKeyMetricsOfFiling.as_view())
 
 ]
