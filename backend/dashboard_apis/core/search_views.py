@@ -1,4 +1,3 @@
-import imp
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -106,7 +105,7 @@ def searchFillings(request):
 
 
 @api_view(["POST"])
-def completeSearch(request):
+def advancedSearch(request):
     """API endpoint for the search bar
 
     Args: \n
@@ -228,6 +227,62 @@ def completeSearch(request):
         {
             "error": None,
             "type": "without date",
+            "data": {
+                "companies": searched_companies.values(),
+                "filings": filings.values(),
+            },
+        },
+        status=status.HTTP_200_OK,
+    )
+
+
+@api_view(["POST"])
+def simpleSearch(request):
+    """API endpoint for simple search
+
+    Args: \n
+        query (string): A string containing ticker or company name
+
+    Returns: \n
+        companies list[object]: details of all the companies provided \n
+        filings list[object]: details of all the fillings provided
+    """
+
+    query = request.data.get("query")
+    words = query.split(" ")
+    words = [word.upper() for word in words if word != ""]
+
+    if not query or not words:
+        return Response(
+            {"error": {"message": "No Query Found"}}, status=status.HTTP_404_NOT_FOUND
+        )
+
+    companies = Company.objects.all()
+    all_tickers = [company.ticker for company in companies]
+
+    searched_tickers = [ticker for ticker in all_tickers if ticker in words]
+    searched_companies = Company.objects.filter(ticker__in=searched_tickers)
+
+    if len(searched_companies) == 0:
+        searched_companies = Company.objects.filter(
+            name__icontains=query, ticker__in=searched_tickers
+        )
+
+    if len(searched_companies) == 0:
+        return Response(
+            {"error": {"message": "No Company Found"}}, status=status.HTTP_404_NOT_FOUND
+        )
+
+    filings = Filing.objects.filter(company__in=searched_companies)
+
+    if not filings:
+        return Response(
+            {"error": {"message": "No Filing Found"}}, status=status.HTTP_404_NOT_FOUND
+        )
+
+    return Response(
+        {
+            "error": None,
             "data": {
                 "companies": searched_companies.values(),
                 "filings": filings.values(),
