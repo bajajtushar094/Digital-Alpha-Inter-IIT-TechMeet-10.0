@@ -1,6 +1,7 @@
 import React from "react";
 import '../../../../global.scss';
 import './ticker.scss';
+import tickerSearchEnter from "../../../../images/widgets/Tickersearchenter.svg";
 
 const Ticker = () => {
     return (
@@ -11,7 +12,7 @@ const Ticker = () => {
                     <h4 className="black50">AMZN</h4>
                 </div>
                 <a href="#" className="w-inline-block">
-                    <div className="div-block-12"><img src="images/Tickersearchenter.svg" loading="lazy" alt="" /></div>
+                    <div className="div-block-12"><img src={tickerSearchEnter} loading="lazy" alt="" /></div>
                 </a>
             </div>
         </div>
