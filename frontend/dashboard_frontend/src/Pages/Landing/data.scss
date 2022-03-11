@@ -1,0 +1,26 @@
+.landingdata{
+  .top{
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+     h3{
+    font-family: Hkgrotesk, Arial, sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+    margin: 0;
+   }
+}
+.body{
+    margin-top: 1rem;
+    display: flex;
+    gap: 40px;
+}
+.cardsec{
+    flex: 2;
+   
+}
+.tablesec{
+    flex: 4;
+}
+}
