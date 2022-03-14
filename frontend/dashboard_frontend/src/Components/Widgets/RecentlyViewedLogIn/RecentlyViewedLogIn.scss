@@ -1,0 +1,118 @@
+.cardcontainer {
+  display: -ms-grid;
+  display: grid;
+  width: 305px;
+  padding: 20px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  grid-auto-columns: 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  -ms-grid-columns: 1fr;
+  grid-template-columns: 1fr;
+  -ms-grid-rows: auto auto;
+  grid-template-rows: auto auto;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e0e0e0;
+  border-radius: 15px;
+}
+
+.cardcontainer.isinfo {
+  -ms-grid-rows: auto;
+  grid-template-rows: auto;
+  background-color: #f7f7f7;
+}
+
+.metrics {
+  display: -ms-grid;
+  display: grid;
+  max-width: 955px;
+  grid-auto-columns: 1fr;
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+  -ms-grid-columns: 1fr;
+  grid-template-columns: 1fr;
+  -ms-grid-rows: auto auto;
+  grid-template-rows: auto auto;
+}
+
+.listingheader-wrapper {
+  display: inline-block;
+}
+
+.listingheadergrid {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  grid-auto-columns: 1fr;
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+  -ms-grid-columns: -webkit-min-content 1fr;
+  -ms-grid-columns: min-content 1fr;
+  grid-template-columns: -webkit-min-content 1fr;
+  grid-template-columns: min-content 1fr;
+  -ms-grid-rows: auto;
+  grid-template-rows: auto;
+}
+
+.listingheadergrid.hascheckbox {
+  -ms-grid-columns: -webkit-min-content -webkit-min-content 1fr;
+  -ms-grid-columns: min-content min-content 1fr;
+  grid-template-columns: -webkit-min-content -webkit-min-content 1fr;
+  grid-template-columns: min-content min-content 1fr;
+}
+
+.black15 {
+  color: #9b9b9c;
+}
+
+.listing {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 1000px;
+  padding: 12px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.listing:hover {
+  background-color: #f7f7f7;
+}
+
+.listing.ishover {
+  background-color: #f7f7f7;
+}
+
+.listing.issmall {
+  padding: 4px;
+}
+
+.logo-wrapper {
+  max-height: 30px;
+  max-width: 30px;
+}
+
+.logo-wrapper.isbig {
+  max-height: 40px;
+  max-width: 40px;
+}

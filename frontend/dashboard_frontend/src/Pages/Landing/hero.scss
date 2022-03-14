@@ -1,0 +1,106 @@
+.isgradient{
+    display: flex;
+    max-width: 1280px;
+    padding: 60px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 15px;
+    background-color: transparent;
+    background-image: radial-gradient(circle farthest-corner at 50% 50%, #82b1ff 26%, #765bf4 73%);
+    
+        h1{
+            margin-top: 0px;
+            margin-bottom: 0px;
+            font-family: Hkgrotesk, Arial, sans-serif;
+            color: #fff;
+            font-size: 56px;
+            line-height: 66px;
+            font-weight: 600;
+            text-align: center;
+        }
+        h2{
+            margin-top: 0px;
+            margin-bottom: 0px;
+            font-family: Hkgrotesk, Arial, sans-serif;
+            font-size: 28px;
+            line-height: 38px;
+            font-weight: 300;
+        }
+        .isinlanding{
+            color: #fff;
+            text-align: center;
+        }
+        .searchbar{
+            display: flex;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+        .searchbar.isbig {
+            width: 600px;
+            max-width: none;
+            min-width: auto;
+        }
+        .searchinput{
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            flex-direction: row;
+            -webkit-box-align: center;
+            align-items: center;
+            align-self: center;
+            -webkit-box-flex: 1;
+            flex: 1;
+    background-color: #f7f7f7;
+    box-sizing: border-box;
+        }
+        .searchinput.isbig {
+            padding: 20px;
+        }
+        .div-block-7{
+            display: flex;
+            -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    align-self: stretch;
+    background-color: #040305;
+    box-sizing: border-box;
+        }
+        .div-block-7.isbig {
+            padding:10px 20px;
+        }
+        .ui-text {
+            font-family: Hkgrotesk, Arial, sans-serif;
+            color: #9b9b9c;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 400;
+            letter-spacing: 0.02px;
+        }
+        input{
+            border: none;
+            outline: none;
+
+            &::placeholder{
+                font-family: Hkgrotesk, Arial, sans-serif;
+                color: #9b9b9c;
+                font-size: 16px;
+                line-height: 24px;
+                font-weight: 400;
+                letter-spacing: 0.02px;
+            }
+        }
+        button{
+            border: none;
+            outline: none;
+        }
+    
+}
+

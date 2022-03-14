@@ -1,0 +1,47 @@
+.landingdata{
+  .top{
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+     h3{
+    font-family: Hkgrotesk, Arial, sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+    margin: 0;
+   }
+}
+.body{
+    margin-top: 1rem;
+    display: flex;
+    gap: 40px;
+}
+.cardsec{
+    flex: 2;
+   
+}
+.tablesec{
+    flex: 4;
+   
+}
+.btn-link{
+      border: none;
+      outline: none;
+      background: none;
+      font-family: Hkgrotesk, Arial, sans-serif;
+      color: #9B9B9C;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+
+    &.active{
+        color: black;
+    }
+}
+}
+.table_top{
+    display: flex;
+    gap: 1rem;
+    // padding: 13px 0px;
+    padding-bottom: 12px;
+}
