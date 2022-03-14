@@ -24,3 +24,76 @@ setInterval(() => {
     if(localStorage.getItem('authTokens'))
         updateToken()
 }, 240000);
+
+
+export const getRecentFilings = async (dispatch) => {
+    let data;
+    await axios.get(
+        ''
+    )
+    .then((response)=>{
+        dispatch({
+            type:'GET_RECENT_FILINGS',
+            recentFilings:response.data
+        });
+        data = response.data
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+    return data;
+}
+
+export const getAllCompanies = async (dispatch) => {
+    let data;
+    await axios.get(
+        ''
+    )
+    .then((response)=>{
+        dispatch({
+            type:'GET_ALL_COMPANIES',
+            allCompanies:response.data
+        });
+        data = response.data
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+    return data;
+}
+
+export const getCurrentCompany = async (dispatch) => {
+    let data;
+    await axios.get(
+        ''
+    )
+    .then((response)=>{
+        dispatch({
+            type:'GET_CURRENT_COMPANY',
+            currentCompany:response.data
+        });
+        data = response.data
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+    return data;
+}
+
+export const getRecentlyViwedCompanies = async (dispatch) => {
+    let data;
+    await axios.get(
+        ''
+    )
+    .then((response)=>{
+        dispatch({
+            type:'GET_RECENTLY_VIEWED_COMPANIES',
+            recentlyViwedCompanies:response.data
+        });
+        data = response.data
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+    return data;
+}
