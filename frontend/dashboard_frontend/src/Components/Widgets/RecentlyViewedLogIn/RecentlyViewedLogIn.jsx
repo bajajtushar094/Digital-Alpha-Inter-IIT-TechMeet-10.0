@@ -1,4 +1,5 @@
 import React from 'react';
+import "../../../global.scss";
 import ASAN from "../../../images/widgets/ASAN.svg";
 import More from "../../../images/widgets/More.svg";
 
