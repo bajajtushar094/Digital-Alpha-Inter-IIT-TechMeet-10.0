@@ -3,6 +3,7 @@ from django.urls import path
 from .basket_views import *
 from .companies_views import *
 from .search_views import *
+from .landing_views import *
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -24,6 +25,16 @@ urlpatterns = [
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
     path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
+
+    #Landing page Apis
+    path("landingPage/recentFilings/all", getAllRecentFilings.as_view()),
+    path("landingPage/companies/all", getAllCompanies.as_view()),
+    path("landingPage/baskets/<str:user_id>", getAllBaskets.as_view()),
+    path("landingPage/bookmarkedCompanies/<str:user_id>",bookmarkedCompanies.as_view()),
+    path("landingPage/recentlyViewedCompanies/<str:user_id>",recentlyViewedCompanies.as_view()),
+    path("landingPage/recentlyFiled",recentlyFiled.as_view()),
+
+
     path('companies/getKeyMetrics/<str:ticker>/<str:metric_type>', getKeyMetrics.as_view()),
     path('companies/getFilingMetric/<int:id>', getFilingFromMetric.as_view()),
 
