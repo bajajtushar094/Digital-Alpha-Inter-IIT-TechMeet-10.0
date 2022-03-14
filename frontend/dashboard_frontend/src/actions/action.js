@@ -2,6 +2,29 @@ import axios from "axios";
 import jwt_decode from 'jwt-decode'
 
 
+export const loginUser = async (loginData,dispatch) => {
+    try {
+        const data = await axios.post(
+            'http://localhost:8000/api/auth/token/',
+            loginData
+        )
+        if(data.status===200)
+        {
+            console.log("Ok");
+            dispatch({
+                type:'LOGIN_USER',
+                user: jwt_decode(data.data.access)
+            })
+            localStorage.setItem('authTokens',JSON.stringify(data.data))
+        }
+        return data;
+    }
+    catch(error) {
+        return {status:false};
+    }
+}
+
+
 const updateToken = async () => {
     try {
         const data = await axios.post(
@@ -29,7 +52,7 @@ setInterval(() => {
 export const getRecentFilings = async (dispatch) => {
     let data;
     await axios.get(
-        ''
+        ``
     )
     .then((response)=>{
         dispatch({
