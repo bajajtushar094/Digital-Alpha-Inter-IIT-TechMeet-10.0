@@ -48,3 +48,81 @@ class getAllCompanies(APIView):  #returns company data along with filings and th
             status=status.HTTP_200_OK
         )
             
+class getAllBaskets(APIView): # ask doubt regarding fine details as the company data is not beung attched while sending the basket individual data
+    def get(self, request, *args, **kwargs):
+        try:
+            user =User.objects.filter(email=kwargs['user_id']).values()[0]
+            baskets = Basket.objects.filter(user_id = user['id'])
+            baskets_json = baskets.values()
+            for index in range(len(baskets_json)):
+                baskets_json[index]["companies"] = baskets[index].companies.all().values()
+        except:
+            Response(
+                {
+                    "res":"Error while fetching the Company data"
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        return Response(
+            data=baskets_json,
+            status=status.HTTP_200_OK
+        )
+
+class bookmarkedCompanies(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            user = User.objects.filter(email=kwargs['user_id'])
+            print(user)
+            print(user[0].bookmarked_companies.all().values())
+            
+            # for index in range(len(bookmarked_companies)):
+            #     bookmarked_companies_json[index]["filings"] = bookmarked_companies[index].filing_set.all().values()
+        except:
+            Response(
+                {
+                    "res":"Error while fetching the Company data"
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        return Response(
+            data=user[0].bookmarked_companies.all().values(),
+            status=status.HTTP_200_OK
+        )      
+
+class recentlyViewedCompanies(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            user = User.objects.filter(email=kwargs['user_id'])
+            print(user)
+            print(user[0].recently_viewed_companies.all().values())
+            
+            # for index in range(len(bookmarked_companies)):
+            #     bookmarked_companies_json[index]["filings"] = bookmarked_companies[index].filing_set.all().values()
+        except:
+            Response(
+                {
+                    "res":"Error while fetching the Company data"
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        return Response(
+            data=user[0].recently_viewed_companies.all().values(),
+            status=status.HTTP_200_OK
+        )   
+
+class recentlyFiled(APIView):
+    def get(self , request, *args, **kwargs):
+        try:
+            companies = Filing.objects.order_by('-date').values('company_id').distinct()
+            print(companies.values())
+        except:
+            Response(
+                {
+                    "res":"Error while fetching the Company data"
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        return Response(
+            data=companies.values(),
+            status=status.HTTP_200_OK
+        )   

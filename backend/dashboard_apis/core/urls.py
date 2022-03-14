@@ -26,7 +26,10 @@ urlpatterns = [
     #Landing page Apis
     path("landingPage/recentFilings/all", getAllRecentFilings.as_view()),
     path("landingPage/companies/all", getAllCompanies.as_view()),
-
+    path("landingPage/baskets/<str:user_id>", getAllBaskets.as_view()),
+    path("landingPage/bookmarkedCompanies/<str:user_id>",bookmarkedCompanies.as_view()),
+    path("landingPage/recentlyViewedCompanies/<str:user_id>",recentlyViewedCompanies.as_view()),
+    path("landingPage/recentlyFiled",recentlyFiled.as_view()),
 
 
     path('companies/getKeyMetrics/<str:ticker>/<str:metric_type>', getKeyMetrics.as_view()),
