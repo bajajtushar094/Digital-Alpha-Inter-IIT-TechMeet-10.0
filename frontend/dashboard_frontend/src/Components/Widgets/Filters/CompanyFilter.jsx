@@ -5,22 +5,18 @@ import '../../../global.scss';
 import './MainFilter.scss';
 import FilingType from './FilingType';
 import TimeFrame from './TimeFrame';
+import CompanyTitle from './CompanyTitle/CompanyTitle';
 
 
-const MainFilter = () => {
+const CompanyFilter = () => {
     return (
-        
+        <div>
             <div className="cardcontainer">
-                <div className="leftcardtitle">
-                    <h3 className="heading-2">Filter</h3>
-                </div>
-                <CompanyTabs/>
-                <Ticker/>
-                <FilingType/>
+                <CompanyTitle/>
                 <TimeFrame/>
             </div>
-        
+        </div>
     );
 }
 
-export default MainFilter;
+export default CompanyFilter;
