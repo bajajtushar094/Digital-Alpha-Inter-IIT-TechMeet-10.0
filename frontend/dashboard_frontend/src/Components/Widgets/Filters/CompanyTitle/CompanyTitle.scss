@@ -1,0 +1,34 @@
+.metrics {
+  display: -ms-grid;
+  display: grid;
+  max-width: 955px;
+  grid-auto-columns: 1fr;
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+  -ms-grid-columns: 1fr;
+  grid-template-columns: 1fr;
+  -ms-grid-rows: auto auto;
+  grid-template-rows: auto auto;
+}
+
+.metric-entry {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  color: #515051;
+}
+
+.metric-entry.istable {
+  padding-right: 12px;
+  padding-left: 12px;
+}
