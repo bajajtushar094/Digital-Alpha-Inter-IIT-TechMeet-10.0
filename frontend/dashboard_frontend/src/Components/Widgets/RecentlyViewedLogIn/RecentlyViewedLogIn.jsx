@@ -32,7 +32,7 @@ const RecentlyViewedLogIn = () => {
                     <div class="listingheader-wrapper">
                         <div class="listingheadergrid">
                             <div id="w-node-_94339718-d38c-804d-a0dd-a845e9df8ee5-5d4911ed" class="compcontainer">
-                                <div class="logo-wrapper"><img src={ASAN} loading="lazy" alt=""/></div>
+                                <div class="logo-wrapper"><img src={ASAN} height={50} width={50} loading="lazy" alt=""/></div>
                             </div>
                             <div id="w-node-_94339718-d38c-804d-a0dd-a845e9df8ee8-5d4911ed">
                                 <div class="ui-text black100">Asana Ltd.</div>
