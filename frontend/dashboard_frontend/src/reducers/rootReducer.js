@@ -11,7 +11,14 @@ const initState = {
 }
 
 const rootReducer = (state=initState,action) => {
-    console.log(action)
+    console.log(action);
+    if(action.type==="GET_BOOKMARK_COMPANY"){
+        const newArr = action.bookmarkedCompanies;
+        return {
+            ...state,
+            bookmarkedCompanies: newArr
+        }
+    }
     if(action.type==='GET_RECENT_FILINGS') {
         const newArr = action.recentFilings;
         return {
@@ -39,13 +46,7 @@ const rootReducer = (state=initState,action) => {
             ...state,
             recentlyViwedCompanies: newArr
         }
-    }
-
-
-
-
-
-    
+    }    
     // if(action.type==='ADD_COMPANIES') {
     //     const newArr = [...state.members,action.member];
     //     return {
