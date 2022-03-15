@@ -7,6 +7,7 @@ import IndividualBasket from "./Pages/IndividualBasket";
 <<<<<<< HEAD
 import BasketList from "./Pages/BasketList";
 import Company from "./Pages/Company";
+import Chart from "./Components/Widgets/Chart/Chart";
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
 					</Route>
 					<Route path='/company'>
 						<Route index element={<Company/>}/>
+					</Route>
+					<Route path='/test'>
+						<Route index element={<Chart/>}/>
 					</Route>
 				</Routes>
 			</BrowserRouter>

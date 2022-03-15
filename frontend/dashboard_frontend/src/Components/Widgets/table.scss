@@ -294,8 +294,8 @@
     justify-content: flex-end;
 
     .hide{
-       display: none;
-    }
+        display: none;
+     }
 }
 .actioncontainer {
     display: flex;
@@ -318,3 +318,9 @@ font-size: 16px;
     }
 }
 }
+
+
+.widthfull{
+    width: 100% !important;
+}
+
