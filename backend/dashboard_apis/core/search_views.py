@@ -6,7 +6,7 @@ from django.db.models import Value, TextField, F, ExpressionWrapper
 from .models import *
 from datetime import *
 import re
-
+from fuzzywuzzy import fuzz, process
 
 @api_view(["POST"])
 def searchCompanies(request):
@@ -242,13 +242,27 @@ def simpleSearch(request):
 
     Args: \n
         query (string): A string containing ticker or company name
+        num_of_companies (int): Number of companies to be returned - default is 5
+        with_filings (bool): Whether to return the filings or not - defaults is False
 
     Returns: \n
-        companies list[object]: details of all the companies provided \n
-        filings list[object]: details of all the fillings provided
+        if type=='searched_tickers_with_filings': 
+            companies list[object]: details of all the companies provided
+            filings list[object]: details of all the fillings provided
+        
+        if type=='searched_tickers': 
+            companies list[object]: details of all the companies provided
+        
+        if type=='searched_name_with_filings': 
+            companies list[object]: details of all the companies provided with filings
+        
+        if type=='seached_name': 
+            companies list[object]: details of all the companies provided without filings
     """
 
     query = request.data.get("query")
+    withFilings = request.data.get("with_filings") or False
+    num_of_companies = request.data.get("num_of_companies") or 5
     words = query.split(" ")
     words = [word.upper() for word in words if word != ""]
 
@@ -263,30 +277,76 @@ def simpleSearch(request):
     searched_tickers = [ticker for ticker in all_tickers if ticker in words]
     searched_companies = Company.objects.filter(ticker__in=searched_tickers)
 
-    if len(searched_companies) == 0:
-        searched_companies = Company.objects.filter(
-            name__icontains=query, ticker__in=searched_tickers
-        )
 
-    if len(searched_companies) == 0:
+    if len(searched_companies) != 0:
+        data = {
+            "companies": searched_companies.values(),
+        }
+        type = "searched_tickers"
+        if(withFilings):
+            filings = Filing.objects.filter(company__in=searched_companies)
+            data["filings"] = filings.values()
+            type = "searched_tickers_with_filings"
+        
         return Response(
-            {"error": {"message": "No Company Found"}}, status=status.HTTP_404_NOT_FOUND
+            {
+                "error": None,
+                "type": type,
+                "data": data
+            },
+            status=status.HTTP_200_OK,
         )
 
-    filings = Filing.objects.filter(company__in=searched_companies)
+    else:
+        ranked_companies = {}
 
-    if not filings:
-        return Response(
-            {"error": {"message": "No Filing Found"}}, status=status.HTTP_404_NOT_FOUND
-        )
+        # calculate the similarity of the company name with words provided
+        for company in companies:
+            score = fuzz.WRatio(company.name, query)
+            ranked_companies[company.ticker] = score
+        
+        # sort the ranked_companies based on the similarity score
+        ranked_companies = dict(sorted(ranked_companies.items(), key=lambda item: item[1], reverse=True))
+
+        top_ranked = []
+        for key in ranked_companies.keys():
+            top_ranked.append(key)
+            if len(top_ranked) == num_of_companies: 
+                break
+        
+        searched_companies = [company for company in companies.values() if company['ticker'] in top_ranked]
+        type = "searched_name"
+        if(withFilings):
+            type = "searched_name_with_filings"
+            res_companies = [{
+                "ticker": company['ticker'],
+                "name": company['name'],
+                "logo": company['logo'],
+                "score": ranked_companies[company['ticker']],
+                "filing": Filing.objects.filter(company=company["ticker"]).values()
+            } for company in companies.values() if company['ticker'] in top_ranked]
+        else:
+            res_companies = [{
+                "ticker": company['ticker'],
+                "name": company['name'],
+                "logo": company['logo'],
+                "score": ranked_companies[company['ticker']],
+            } for company in companies.values() if company['ticker'] in top_ranked]
+        
+
+        if(len(res_companies) != 0):
+            return Response(
+            {
+                "error": None,
+                "type": type,
+                "data": {
+                    "companies": res_companies,
+                },
+            },
+            status=status.HTTP_200_OK,
+            )
+
 
     return Response(
-        {
-            "error": None,
-            "data": {
-                "companies": searched_companies.values(),
-                "filings": filings.values(),
-            },
-        },
-        status=status.HTTP_200_OK,
-    )
+            {"error": {"message": "No Company Found"}}, status=status.HTTP_404_NOT_FOUND
+        )
