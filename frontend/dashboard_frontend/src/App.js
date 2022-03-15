@@ -9,21 +9,13 @@ import Company from "./Pages/Company";
 import { connect } from 'react-redux';
 import { getRecentFilings } from "./actions/action";
 
+const mapStateToProps = state => ({
+	...state
+   })
+
 const mapDispatchToProps = dispatch => ({
 	getRecentFilings: () => dispatch(getRecentFilings())
 })
-
-/* 
- * mapStateToProps
-*/
-const mapStateToProps = state => ({
-	...state
-})
-
-getRecentFilings = (event)=>{
-	this.props.getRecentFilings();
-}
-
 
 function App() {
 	return (
@@ -52,3 +44,4 @@ function App() {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default App;

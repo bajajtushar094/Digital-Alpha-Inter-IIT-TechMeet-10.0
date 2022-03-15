@@ -12,16 +12,14 @@ const Landing = () => {
 	const dispatch = useDispatch();
 
 	const fetchRecentFilings = async () => { 
-
-		dispatch(turnOn());
-		const response = await getRecentFilings();
-		dispatch(turnOff());
+		const response = await getRecentFilings(dispatch);
 		console.log("Response:", response);
 	};
 
-	useEffect(async ()=>{
-		await fetchRecentFilings();
-	})
+	useEffect(async () => {
+		const response = await fetchRecentFilings();
+		console.log("response:", response);
+	  }, []);
 
 	return (
 		<div className="landing">
