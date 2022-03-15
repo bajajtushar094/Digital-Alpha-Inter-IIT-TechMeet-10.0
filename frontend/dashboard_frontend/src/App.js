@@ -16,7 +16,7 @@ function App() {
 					<Route path="/">
 						<Route index element={<Landing />} />
 					</Route>
-					<Route path="/search">
+					<Route path="/search/:query">
 						<Route index element={<Search />} />
 					</Route>
 					<Route path="/individualBasket">

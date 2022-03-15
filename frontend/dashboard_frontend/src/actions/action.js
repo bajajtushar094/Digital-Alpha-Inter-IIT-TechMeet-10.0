@@ -1,11 +1,12 @@
 import axios from "axios";
 import jwt_decode from 'jwt-decode'
+import { config } from "../config";
 
 
 export const loginUser = async (loginData,dispatch) => {
     try {
         const data = await axios.post(
-            'http://localhost:8000/api/auth/token/',
+            config().auth,
             loginData
         )
         if(data.status===200)
@@ -77,6 +78,37 @@ export const getAllCompanies = async (dispatch) => {
             type:'GET_ALL_COMPANIES',
             allCompanies:response.data
         });
+        data = response.data
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+    return data;
+}
+
+export const searchCompanies = async (query,dispatch) => {
+    let data;
+    await axios.post(
+        `${config().search}/companies`,
+        {'tickers':query}
+    )
+    .then((response)=>{
+        data = response.data
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+    return data;
+}
+
+export const searchFillings = async (query,dispatch) => {
+    let data;
+    const  arr = query.split('%20');
+    await axios.post(
+        `${config().search}/filings`,
+        {'tickers':(arr.length>0)?arr[0]:'','form_type':(arr.length>1)?arr[1]:'','time_start':(arr.length>2)?arr[2]:'','time_end':(arr.length>3)?arr[3]:''}
+    )
+    .then((response)=>{
         data = response.data
     })
     .catch((err)=>{

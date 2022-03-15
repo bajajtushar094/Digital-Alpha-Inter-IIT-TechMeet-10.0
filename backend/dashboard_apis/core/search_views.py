@@ -20,6 +20,7 @@ def searchCompanies(request):
     """
 
     tickers = request.data.get("tickers")
+    print(tickers)
 
     if not tickers:
         return Response(

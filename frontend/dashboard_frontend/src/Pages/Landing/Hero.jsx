@@ -1,8 +1,15 @@
 import React from 'react'
 import './hero.scss'
 import search from '../../images/Landing/Search.svg'
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  let navigate = useNavigate();
+  const handleSearch = () => {
+    const query = document.getElementById('landing_search').value;
+    navigate(`/search/${query}`);
+  }
+
   return (
     <div className='isgradient'>
     <h1>Finding the text</h1>
@@ -16,8 +23,8 @@ const Hero = () => {
      <br />
     </h2>
     <div className='searchbar isbig'>
-    <input className="searchinput isbig" placeholder='Search companies or tickers'></input>
-    <button className="div-block-7 isbig"><img src={search} loading="lazy" alt="" /></button>
+    <input className="searchinput isbig" id="landing_search" placeholder='Search companies or tickers' />
+    <button className="div-block-7 isbig" onClick = {handleSearch}><img src={search} loading="lazy" alt="" /></button>
     </div>
     </div>
   )
