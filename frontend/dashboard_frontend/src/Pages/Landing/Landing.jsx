@@ -7,8 +7,10 @@ import Data from "./Data";
 import {getRecentFilings} from "../../actions/action"; 
 import {useDispatch} from "react-redux";
 import {turnOn, turnOff} from "../../constants/spinnerActions";
+import store from "../../store";
+import { connect } from 'react-redux';
 
-const Landing = () => {
+const Landing = (props) => {
 	const dispatch = useDispatch();
 
 	const fetchRecentFilings = async () => { 
@@ -17,6 +19,7 @@ const Landing = () => {
 	};
 
 	useEffect(async () => {
+		console.log("Data:", props.recentFilings);
 		const response = await fetchRecentFilings();
 		console.log("response:", response);
 	  }, []);
@@ -30,4 +33,12 @@ const Landing = () => {
 	);
 };
 
-export default Landing;
+const mapStateToProps = (state) => {
+	console.log("State:", state);
+    return {
+        // To get the list of employee details from store
+        recentFilings: state.user
+    };
+};
+
+export default connect(mapStateToProps, null)(Landing);
