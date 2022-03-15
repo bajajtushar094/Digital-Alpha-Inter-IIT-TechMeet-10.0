@@ -9,13 +9,13 @@ import Company from "./Pages/Company";
 import { connect } from 'react-redux';
 import { getRecentFilings } from "./actions/action";
 
-// const mapStateToProps = state => ({
-// 	...state
-//    })
+const mapStateToProps = state => ({
+	...state
+   })
 
-// const mapDispatchToProps = dispatch => ({
-// 	getRecentFilings: () => dispatch(getRecentFilings())
-// })
+const mapDispatchToProps = dispatch => ({
+	getRecentFilings: () => dispatch(getRecentFilings())
+})
 
 function App() {
 	return (
