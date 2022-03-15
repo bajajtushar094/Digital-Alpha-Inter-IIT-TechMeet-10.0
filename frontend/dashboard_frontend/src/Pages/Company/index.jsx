@@ -5,6 +5,8 @@ import SearchImage from "../../images/widgets/Search_black.svg";
 import "../../global.scss";
 
 const Company = ()=>{
+
+    
     return (
         <div>
             <Navbar/>

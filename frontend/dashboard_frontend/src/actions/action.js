@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwt_decode from 'jwt-decode'
+import {config} from "../config";
 
 
 export const loginUser = async (loginData,dispatch) => {
@@ -52,9 +53,10 @@ setInterval(() => {
 export const getRecentFilings = async (dispatch) => {
     let data;
     await axios.get(
-        ``
+        config().getRecentFilings
     )
     .then((response)=>{
+        console.log("Response:", response);
         dispatch({
             type:'GET_RECENT_FILINGS',
             recentFilings:response.data
