@@ -25,6 +25,7 @@ const Chart = () => {
     <div>
     <Line 
     options={{maintainAspectRatio:true,
+      
         plugins: {
             legend: {
               display: false
