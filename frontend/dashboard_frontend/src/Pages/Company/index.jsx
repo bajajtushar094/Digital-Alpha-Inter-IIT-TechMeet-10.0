@@ -10,6 +10,8 @@ import { Button } from '@mui/material';
 import Chart from '../../Components/Widgets/Chart/Chart';
 
 const Company = ()=>{
+
+    
     return (
         <>
             <Navbar/>
