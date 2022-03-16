@@ -2,16 +2,16 @@ import { Button } from '@mui/material'
 import React from 'react'
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
-const TableHead = () => {
+const TableHead = (props) => {
   return (
       <>
     <div style={{display:"flex",justifyContent:"space-between",width:"100%",paddingBottom:"10px"}}>
         <div>
-        <Button style={{color:'black'}}>Financials</Button>
-        <Button style={{color:'#9B9B9C'}}>Fillings</Button>
+        <Button style={{color:'black'}}>{props.childone}</Button>
+        <Button style={{color:'#9B9B9C'}}>{props.childtwo}</Button>
         </div>
         <div>
-            <Button style={{color:'#9B9B9C'}}>Download CSV <FileDownloadIcon /></Button>
+            <Button style={{color:'#9B9B9C'}}>Download stats CSV  <FileDownloadIcon /></Button>
         </div>
         
     </div>
