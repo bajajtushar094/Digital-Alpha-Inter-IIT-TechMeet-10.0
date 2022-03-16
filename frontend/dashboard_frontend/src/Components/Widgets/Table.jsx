@@ -1,13 +1,18 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState} from 'react';
+import {useDispatch} from "react-redux";
 import IconButton from '@mui/material/IconButton';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import './table.scss'
+import './table.scss';
+import { getMetricsFromFiling } from '../../actions/action';
 
-const Table = () => {
-	const [hasCheckbox, setHasCheckbox] = useState(true);
-	const [comp, setComp] = useState(true);
+const Table = (props) => {
+	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
+	const [isCompany, setIsCompany] = useState(props.isCompany);
+	const data = props.data;
+	const dispatch = useDispatch();
+	console.log("Data", data);
 
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverbg] = useState(false);
@@ -31,62 +36,58 @@ const Table = () => {
 		console.log("false")
 	};
 
+	const getMetricsFromFilingAPI = async (id) =>{
+		const response = await getMetricsFromFiling(id, dispatch);
+
+		return response;
+	};
+
 	return (
 		<div id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f379-5d4911ed" className="metrics widthfull">
 			<div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>
 
-			{comp ?
-				<div class="metric-entry istable">
-					<h4>Ticker</h4>
-					<div class="div-block-4">
-						<h4 id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f37e-5d4911ed" class="iscolumn">LTV/CAC</h4>
-						<h4 id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f380-5d4911ed" class="iscolumn">ARR(mil $)</h4>
-						<h4 id="w-node-_06af9ce0-e762-bd28-f8f4-da23828e9c33-5d4911ed" class="iscolumn">ARR(mil $)</h4>
-						<h4 id="w-node-cb07bc53-cdcb-0899-354b-99a0f44924bb-5d4911ed" class="iscolumn">ARR(mil $)</h4>
-						<h4 id="w-node-_0a377e6d-9df9-25b2-2352-cfe26081a062-5d4911ed" class="iscolumn isaction">Actions</h4>
-					</div>
+			<div class="metric-entry istable">
+				<h4>{isCompany?'Ticker':'Filing Ticker'}</h4>
+				<div class="div-block-4">
+					<h4 id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f37e-5d4911ed" class="iscolumn">ARR</h4>
+					<h4 id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f380-5d4911ed" class="iscolumn">CCR</h4>
+					<h4 id="w-node-_06af9ce0-e762-bd28-f8f4-da23828e9c33-5d4911ed" class="iscolumn">LTV</h4>
+					<h4 id="w-node-cb07bc53-cdcb-0899-354b-99a0f44924bb-5d4911ed" class="iscolumn">CAC</h4>
+					<h4 id="w-node-_0a377e6d-9df9-25b2-2352-cfe26081a062-5d4911ed" class="iscolumn isaction">Actions</h4>
 				</div>
-				:
-				<div className="metric-entry istable">
-					<h4>Filling Ticker</h4>
-					<div class="div-block-4">
-
-						<h4 id="w-node-_06af9ce0-e762-bd28-f8f4-da23828e9c33-5d4911ed" className="iscolumn">Keyword</h4>
-						<h4 id="w-node-cb07bc53-cdcb-0899-354b-99a0f44924bb-5d4911ed" className="iscolumn">Date</h4>
-						<h4 id="w-node-_0a377e6d-9df9-25b2-2352-cfe26081a062-5d4911ed" className="iscolumn isaction">Actions</h4>
-					</div>
-				</div>
-			}
+			</div>
 
 
 			<div className="separator"></div>
-			{[1, 2, 3, 4, 5, 6, 7].map(() => {
+			{data.map((filing, i) => {
+				const metrics = filing['metrics'];
 				return (
 					<div className={hoverbg ? "listing ishover" : "listing"} onMouseOver={handleMouseInBg} onMouseLeave={handleMouseOutBg}>
 						<div className="listingheader-wrapper">
 
 							<div class={hasCheckbox ? "listingheadergrid hascheckbox" : "listingheadergrid"}>
-								<div className="actiondiv">
+
+								{hasCheckbox && <div className="actiondiv">
 									<input className='checkbox' type="checkbox" />
-								</div>
-								{comp ? <>
+								</div>}
+								{isCompany ? <>
 									<div id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194db-5d4911ed" class="compcontainer">
 										<div class="logo-wrapper">
 											<img src="https://uploads-ssl.webflow.com/6223552248fd5d64304911ec/622788b6ed5b1301d589b856_ASAN.svg" loading="lazy" alt="" />
 										</div>
 									</div>
 									<div id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194de-5d4911ed">
-										<div class="ui-text black100">Asana Ltd.</div>
-										<h4 class="black15">ASAN</h4>
+										<div class="ui-text black100">{filing['company_id']}</div>
+										<h4 class="black15">{filing['company_id']}</h4>
 									</div>
 								</> :
 									<>
 										<div class="filingcontainer">
-											<div class="ui-text issecondarybutton isfiling">8K</div>
+											<div class="ui-text issecondarybutton isfiling">{filing['form_type']}</div>
 										</div>
 										<div id="w-node-b6ad1064-49e9-79f3-df7a-f41125cb80fe-5d4911ed">
-											<div class="ui-text black100">Adobe Inc.</div>
-											<h4 class="black15">ADBE</h4>
+											<div class="ui-text black100">{filing['company_id']}</div>
+											<h4 class="black15">{filing['company_id']}</h4>
 										</div>
 									</>
 								}

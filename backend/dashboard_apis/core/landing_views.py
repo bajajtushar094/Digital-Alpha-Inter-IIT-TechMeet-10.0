@@ -22,8 +22,18 @@ class getAllRecentFilings(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+        print("Filing Values:",filings.values())
+
+        filings_list = []
+
+        for i in filings.values():
+            metrics = KeyMetric.objects.filter(filing=i['id'])
+
+            i['metrics'] = metrics.values()
+
+            filings_list.append(i)
         return Response(
-            data=filings.values(),
+            data=filings_list,
             status=status.HTTP_200_OK
         )
 
