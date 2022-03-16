@@ -5,12 +5,12 @@ import More from "../../../../images/widgets/More.svg";
 
 const CompanyTitle = (props) => {
     return (
-        <div>
-            <div id="w-node-a4d716ba-89a8-25f8-efb6-9256467879f7-5d4911ed" class="listing issmall">
+        <>
+            <div id="w-node-a4d716ba-89a8-25f8-efb6-9256467879f7-5d4911ed" class="listing issmall comptitle">
                 <div class="listingheader-wrapper">
                     <div class="listingheadergrid">
                         <div class="compcontainer isbig">
-                            <div class="logo-wrapper isbig"><img src={More} loading="lazy" alt=""/></div>
+                            <div class="logo-wrapper isbig"><img src="https://uploads-ssl.webflow.com/6223552248fd5d64304911ec/622788b6ed5b1301d589b856_ASAN.svg" loading="lazy" alt=""/></div>
                         </div>
                         <div id="w-node-a76e39fc-47ab-e63f-05cc-34673b655eb5-5d4911ed">
                             <h3>Asana Ltd.</h3>
@@ -38,7 +38,7 @@ const CompanyTitle = (props) => {
                 </div>
                 <div class="separator"></div>
             </div>
-        </div>
+        </>
     );
 }
 
