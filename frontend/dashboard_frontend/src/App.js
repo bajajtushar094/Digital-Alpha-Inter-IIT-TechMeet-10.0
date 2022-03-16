@@ -7,6 +7,7 @@ import IndividualBasket from "./Pages/IndividualBasket";
 import BasketList from "./Pages/BasketList";
 import Company from "./Pages/Company";
 import Chart from "./Components/Widgets/Chart/Chart";
+import File from "./Pages/Files/file";
 import { connect } from 'react-redux';
 import { getRecentFilings, loginUser } from "./actions/action";
 import { useEffect } from "react";
@@ -42,7 +43,7 @@ function App() {
 						<Route index element={<Chart/>}/>
 					</Route>
 					<Route path='/file'>
-						<Route index element={<Chart/>}/>
+						<Route index element={<File/>}/>
 					</Route>
 				</Routes>
 			</BrowserRouter>
