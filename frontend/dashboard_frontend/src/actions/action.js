@@ -192,3 +192,19 @@ export const bookmarkCompany = async (company,dispatch) => {
         return {status:false};
     }
 }
+
+export const getKeyMetrics = async (metric, dispatch) => {
+    let data;
+    console.log("here")
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        }
+    }
+    data = await axios.get(
+        `http://localhost:8000/api/companies/getKeyMetrics/${metric.ticker}/${metric.metric_type}`,
+        config
+    )
+    
+    return data;
+}

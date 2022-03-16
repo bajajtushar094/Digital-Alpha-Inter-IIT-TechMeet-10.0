@@ -24,18 +24,59 @@ const CompanyTitle = (props) => {
                 </div>
             </div>
             <div id="w-node-_38f3be73-8770-01e7-500a-24cc065575f2-5d4911ed" class="metrics">
-                <div class="metric-entry">
-                    <h4 class="black50">LTV/CAC</h4>
-                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">2.66</h4>
-                </div>
-                <div class="metric-entry">
-                    <h4 class="black50">CAC Recovery</h4>
-                    <h4 id="w-node-_12a758a7-925e-3862-0d63-6416fb8d6160-5d4911ed" class="iscolumn black50">13 M</h4>
-                </div>
-                <div class="metric-entry">
-                    <h4 class="black50">Product-Market Fit</h4>
-                    <h4 id="w-node-_0816c7f6-b3dd-460d-58e6-fd2302d1d09d-5d4911ed" class="iscolumn black50">34%</h4>
-                </div>
+                {props.isMetricLoading?
+                    <div></div>
+                        :
+                    <div>
+                        {props.arrMetric.map((item)=>{
+                            return(
+                                <div class="metric-entry">
+                                    <h4 class="black50">{item.metric_type}</h4>
+                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
+                                </div>
+                            )
+                            
+                        })}
+                            {props.ccrMetric.map((item)=>{
+                            return(
+                                <div class="metric-entry">
+                                    <h4 class="black50">{item.metric_type}</h4>
+                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
+                                </div>
+                            )
+                            
+                        })}
+                            {props.ltvMetric.map((item)=>{
+                            return(
+                                <div class="metric-entry">
+                                    <h4 class="black50">{item.metric_type}</h4>
+                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
+                                </div>
+                            )
+                            
+                        })}
+                            {props.cacMetric.map((item)=>{
+                            return(
+                                <div class="metric-entry">
+                                    <h4 class="black50">{item.metric_type}</h4>
+                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
+                                </div>
+                            )
+                            
+                        })}
+                            {props.rcrMetric.map((item)=>{
+                            return(
+                                <div class="metric-entry">
+                                    <h4 class="black50">{item.metric_type}</h4>
+                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
+                                </div>
+                            )
+                            
+                        })}
+
+                    </div>
+                }
+                
                 <div class="separator"></div>
             </div>
         </>
