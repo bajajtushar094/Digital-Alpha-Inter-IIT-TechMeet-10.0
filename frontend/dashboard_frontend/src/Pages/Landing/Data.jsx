@@ -6,9 +6,11 @@ import vector1 from '../../images/nav/Market.svg';
 import PerformerCard from '../../Components/Widgets/PerformerCard'
 import ViewedCard from '../../Components/Widgets/ViewedCard';
 import Table from '../../Components/Widgets/Table';
+import { connect } from 'react-redux';
 
 const Data = () => {
-  const[selected,setsetselected]=useState(true)
+  const [selected, setSelected] = useState(1);
+
   return (
     <div className='landingdata'>
          <div className='top'>
@@ -22,15 +24,24 @@ const Data = () => {
            </div>
            <div className='tablesec'>
                <div className="table_top">
-                 <button className={selected?'btn-link active':'btn-link'}>Recent fillings</button>
-                 <button className='btn-link'>Bookmarked</button>
-                 <button className='btn-link'>All Companies</button>
+                 <button className={selected===1?'btn-link active':'btn-link'} onClick={()=>{setSelected(1)}}>Recent fillings</button>
+                 <button className={selected===2?'btn-link active':'btn-link'} onClick={()=>{setSelected(2)}}>Bookmarked</button>
+                 <button className={selected===3?'btn-link active':'btn-link'} onClick={()=>{setSelected(3)}}>All Companies</button>
                </div>
-               <Table />
+               <Table/>
             </div>
          </div>
     </div>
   )
 }
 
-export default Data
+// export default Data;
+const mapStateToProps = (state) => {
+	console.log("State:", state);
+    return {
+        // To get the list of employee details from store
+        state: state
+    };
+};
+
+export default connect(mapStateToProps, null)(Data);
