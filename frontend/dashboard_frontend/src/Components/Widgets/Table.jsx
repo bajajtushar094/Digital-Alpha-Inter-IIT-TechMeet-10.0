@@ -121,7 +121,7 @@ const Table = (props) => {
 	const [isCompany, setIsCompany] = useState(props.isCompany);
 	const data = props.data;
 	const dispatch = useDispatch();
-	console.log("Data", data);
+	// console.log("Data", data);
 
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverbg] = useState(false);
@@ -138,11 +138,9 @@ const Table = (props) => {
 
 	const handleMouseInBg = () => {
 		setHoverbg(true);
-		console.log("enter")
 	};
 	const handleMouseOutBg = () => {
 		setHoverbg(false);
-		console.log("false")
 	};
 
 	const getMetricsFromFilingAPI = async (id) =>{

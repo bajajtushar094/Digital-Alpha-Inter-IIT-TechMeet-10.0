@@ -3,6 +3,11 @@ import jwt_decode from 'jwt-decode'
 import {config} from "../config";
 import { turnOff, turnOn } from "../constants/spinnerActions";
 
+const configHeaders = {
+    headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+    }
+}
 
 export const loginUser = async (loginData,dispatch) => {
     try {
@@ -12,7 +17,7 @@ export const loginUser = async (loginData,dispatch) => {
         )
         if(data.status===200)
         {
-            console.log(data);
+            // console.log(data);
             dispatch({
                 type:'LOGIN_USER',
                 user: jwt_decode(data.data.access)
@@ -75,7 +80,8 @@ export const getRecentFilings = async (dispatch) => {
 export const getAllCompanies = async (dispatch) => {
     let data;
     await axios.get(
-        ''
+        `${config().getAllCompanies}`,
+        configHeaders
     )
     .then((response)=>{
         dispatch({
@@ -174,19 +180,24 @@ export const getRecentlyViwedCompanies = async (dispatch) => {
 }
 
 
-export const bookmarkCompany = async (company,dispatch) => {
+export const getBookmarkCompanies = async (id,dispatch) => {
     const config = {
         headers: {
             'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
         }
     }
     try {
-        const data = await axios.post(
-            `${config().companies}/${company}`,
-            company,
-            config
+        // console.log("Id:", id);
+        const response = await axios.get(
+            `http://localhost:8000/api/landingPage/bookmarkedCompanies/${1}`,
+            configHeaders
         )
-        return data;
+        dispatch({
+            type:'GET_BOOKMARK_COMPANY',
+            bookmarkedCompanies:response.data
+        });
+        console.log("Bookmark Companies:", response.data);
+        return response.data;
     }
     catch(error) {
         return {status:false};
@@ -195,11 +206,6 @@ export const bookmarkCompany = async (company,dispatch) => {
 
 export const getMetricsFromFiling = async (id, dispatch) => {
     let data;
-    const configHeaders = {
-        headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
-        }
-    }
     try{
         const response = await axios.get(
             `${config().getMetricsFromFiling}/${id}`,

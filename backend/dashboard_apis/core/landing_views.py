@@ -93,11 +93,13 @@ class getAllBaskets(APIView): # ask doubt regarding fine details as the company 
         )
 
 class bookmarkedCompanies(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request, *args, **kwargs):
         try:
-            user = User.objects.filter(email=kwargs['user_id'])
-            print(user)
-            print(user[0].bookmarked_companies.all().values())
+            user = User.objects.get(id=kwargs['user_id'])
+            # print(user)
+            # print(user[0].bookmarked_companies.all().values())
             
             # for index in range(len(bookmarked_companies)):
             #     bookmarked_companies_json[index]["filings"] = bookmarked_companies[index].filing_set.all().values()
@@ -108,8 +110,14 @@ class bookmarkedCompanies(APIView):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+        # companies = user.bookmarked_companies.all().values()
+        # print("Companies:", companies)
+
+        # for i in companies:
+            
         return Response(
-            data=user[0].bookmarked_companies.all().values(),
+            data=user.bookmarked_companies.all().values(),
             status=status.HTTP_200_OK
         )      
 
