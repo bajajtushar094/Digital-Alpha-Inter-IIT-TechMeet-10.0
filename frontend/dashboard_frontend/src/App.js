@@ -8,17 +8,15 @@ import BasketList from "./Pages/BasketList";
 import Company from "./Pages/Company";
 import Chart from "./Components/Widgets/Chart/Chart";
 import { connect } from 'react-redux';
-import { getRecentFilings } from "./actions/action";
+import { getRecentFilings, loginUser } from "./actions/action";
+import { useEffect } from "react";
 
-const mapStateToProps = state => ({
-	...state
-   })
 
-const mapDispatchToProps = dispatch => ({
-	getRecentFilings: () => dispatch(getRecentFilings())
-})
 
 function App() {
+
+	
+
 	return (
 		<div className="App">
 			<BrowserRouter>

@@ -12,7 +12,7 @@ export const loginUser = async (loginData,dispatch) => {
         )
         if(data.status===200)
         {
-            console.log("Ok");
+            console.log(data);
             dispatch({
                 type:'LOGIN_USER',
                 user: jwt_decode(data.data.access)
@@ -180,17 +180,19 @@ export const getRecentlyViwedCompanies = async (dispatch) => {
 }
 
 
-export const bookmarkCompany = async (newMember,dispatch) => {
+export const bookmarkCompany = async (company,dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        }
+    }
     try {
-        dispatch({
-            type:'ADD_MEMBER',
-            member:newMember
-        });
-        await axios.post(
-            'http://localhost:8000/api/member-create/',
-            newMember
+        const data = await axios.post(
+            `${config().companies}/${company}`,
+            company,
+            config
         )
-        return {status:true};
+        return data;
     }
     catch(error) {
         return {status:false};

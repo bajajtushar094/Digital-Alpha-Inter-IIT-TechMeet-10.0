@@ -4,11 +4,12 @@ import "./landing.scss";
 import Navbar from "../../Components/Global/Navbar/Navbar";
 import Hero from "./Hero";
 import Data from "./Data";
-import {getRecentFilings} from "../../actions/action"; 
+import {getRecentFilings, loginUser} from "../../actions/action"; 
 import {useDispatch} from "react-redux";
 import {turnOn, turnOff} from "../../constants/spinnerActions";
 import store from "../../store";
 import { connect } from 'react-redux';
+import {config} from "../../config";
 
 const Landing = (props) => {
 	const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const Landing = (props) => {
 		console.log("Data:", props.recentFilings);
 		const response = await fetchRecentFilings();
 		console.log("response:", response);
+
+		const data = await loginUser({email:config().email, password:config().password}, dispatch);
 	  }, []);
 
 	return (
