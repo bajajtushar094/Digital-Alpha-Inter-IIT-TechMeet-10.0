@@ -8,6 +8,8 @@ import "../../global.scss";
 import TableHead from '../../Components/Widgets/TableHead/TableHead';
 import { Button } from '@mui/material';
 import Chart from '../../Components/Widgets/Chart/Chart';
+import Watchlist from '../../Components/Widgets/Watchlist';
+import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 
 const Company = ()=>{
 
@@ -21,7 +23,10 @@ const Company = ()=>{
               <h2 style={{lineHeight:"20px",fontWeight:"400"}}>Company</h2>
                 </div>
                 <div className="companycontent">
+                    <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
             <CompanyFilter/>
+            <RecentlyViewedLogIn />
+            </div>
             {/* <div > */}
             <div style={{width:"70%"}}>
             <div className="padchart" style={{padding:"0px 25px"}}>
