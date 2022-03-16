@@ -30,7 +30,7 @@ export const loginUser = async (loginData,dispatch) => {
 const updateToken = async () => {
     try {
         const data = await axios.post(
-            'http://localhost:8000/auth/token/refresh/',
+            'http://localhost:8000/api/auth/token/refresh/',
             {'refresh':localStorage.getItem('authTokens')?JSON.parse(localStorage.getItem('authTokens')).refresh:null}
         )
         if(data.status===200)
@@ -191,4 +191,26 @@ export const bookmarkCompany = async (company,dispatch) => {
     catch(error) {
         return {status:false};
     }
+}
+
+export const getMetricsFromFiling = async (id, dispatch) => {
+    let data;
+    const configHeaders = {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        }
+    }
+    try{
+        const response = await axios.get(
+            `${config().getMetricsFromFiling}/${id}`,
+            configHeaders
+        );
+
+        data = response.data;
+    }
+    catch(err){
+        console.log("Error:", err);
+    }
+
+    return data;
 }

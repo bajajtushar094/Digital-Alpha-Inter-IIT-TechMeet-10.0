@@ -1,3 +1,4 @@
+from os import stat
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -45,6 +46,29 @@ class drilldownKeyMetric(APIView):
             )
         
         
+class getMetricsFromFiling(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        id = kwargs['id']
+        
+        try:
+            metrics = KeyMetric.objects.filter(filing=id)
+        except:
+            return Response(
+                {"res":"Error while fetching metrics"}
+            )
+
+
+        return Response(
+            data=metrics.values(),
+            status=status.HTTP_200_OK
+            )
+
+
+
+
+
 
 
 
