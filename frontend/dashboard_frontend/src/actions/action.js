@@ -1,11 +1,7 @@
 import axios from "axios";
 import jwt_decode from 'jwt-decode'
-<<<<<<< HEAD
 import { config } from "../config";
-=======
-import {config} from "../config";
 import { turnOff, turnOn } from "../constants/spinnerActions";
->>>>>>> 488954b4f6ee479c823c434bfbc4b5b505a36177
 
 
 export const loginUser = async (loginData,dispatch) => {
