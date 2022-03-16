@@ -39,6 +39,9 @@ function App() {
 					<Route path='/test'>
 						<Route index element={<Chart/>}/>
 					</Route>
+					<Route path='/file'>
+						<Route index element={<Chart/>}/>
+					</Route>
 				</Routes>
 			</BrowserRouter>
 		</div>
