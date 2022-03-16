@@ -11,7 +11,7 @@ const initState = {
 }
 
 const rootReducer = (state=initState,action) => {
-    console.log(action);
+    // console.log(action);
 
     if(action.type==='LOGIN_USER') {
         return {

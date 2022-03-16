@@ -12,7 +12,7 @@ const Table = (props) => {
 	const [isCompany, setIsCompany] = useState(props.isCompany);
 	const data = props.data;
 	const dispatch = useDispatch();
-	console.log("Data", data);
+	// console.log("Data", data);
 
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverbg] = useState(false);
@@ -29,11 +29,9 @@ const Table = (props) => {
 
 	const handleMouseInBg = () => {
 		setHoverbg(true);
-		console.log("enter")
 	};
 	const handleMouseOutBg = () => {
 		setHoverbg(false);
-		console.log("false")
 	};
 
 	const getMetricsFromFilingAPI = async (id) =>{
@@ -59,10 +57,10 @@ const Table = (props) => {
 
 
 			<div className="separator"></div>
-			{data.map((filing, i) => {
+			{/* {data.length>0&&data.map((filing, i) => {
 				const metrics = filing['metrics'];
 				let ARR, CCR, LTV, CAC, ARPA, RCC;
-				for(let i=0;i<metrics.length;i++){
+				for(let i=0;metrics!=undefined&&i<metrics.length;i++){
 					if(metrics[i]['metric_type']==="ARR"){
 						ARR=metrics[i]['metric_value'];
 					}
@@ -146,7 +144,7 @@ const Table = (props) => {
 							</div>
 						</div>
 					</div>)
-			})}
+			})} */}
 
 		</div>
 	)
