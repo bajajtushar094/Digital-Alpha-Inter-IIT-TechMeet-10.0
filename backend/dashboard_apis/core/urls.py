@@ -50,5 +50,8 @@ urlpatterns = [
     # these are the correct ones :)
     path("basket/get", getBaskets), 
     path("basket/details", getBasketDetails),
+    path("basket/create", createBasket),
+    path("basket/update", updateBasketName),
+    path("basket/delete", deleteBasket),
 
 ]

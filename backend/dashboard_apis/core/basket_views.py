@@ -14,13 +14,12 @@ def getBookmarks(request):
     Returns: \n
         company_details list[object]: details of all the companies provided
     """
-    # user = request.user
-    # print(user)
-    # if not user.is_authenticated:
-    #     return Response(
-    #         {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
-    #     )
-    res = User.objects.filter(email="aman@test.com")
+    user = request.user
+    if not user.is_authenticated:
+        return Response(
+            {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
+        )
+    res = User.objects.get(email= user)
     if(len(res) == 0):
         return Response(
             {"error": {"message": "User not found"}}, status=status.HTTP_404_NOT_FOUND
@@ -45,13 +44,12 @@ def getBookmarksWithFilings(request):
         companies list[object]: details of all the companies provided
         filings list[object]: all the filings of companies provided
     """
-    # user = request.user
-    # print(user)
-    # if not user.is_authenticated:
-    #     return Response(
-    #         {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
-    #     )
-    res = User.objects.filter(email="aman@test.com")
+    user = request.user
+    if not user.is_authenticated:
+        return Response(
+            {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
+        )
+    res = User.objects.filter(email= user)
     if(len(res) == 0):
         return Response(
             {"error": {"message": "User not found"}}, status=status.HTTP_404_NOT_FOUND
@@ -111,26 +109,25 @@ def getBaskets(request):
     Returns: \n
         baskets list[object]: details of all the baskets provided
     """
-    # user = request.user
-    # print(user)
-    # if not user.is_authenticated:
-    #     return Response(
-    #         {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
-    #     )
-    res = User.objects.filter(email="aman@test.com")
+    user = request.user
+    if not user.is_authenticated:
+        return Response(
+            {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
+        )
+    res = User.objects.filter(email= user)
     if(len(res) == 0):
         return Response(
             {"error": {"message": "User not found"}}, status=status.HTTP_404_NOT_FOUND
         )
     user = res[0]
-    basketData = {}
+    basketData = []
     for basket in user.baskets.all():
-        basketData[basket.name] = {
+        basketData.append({
             "id": basket.id,
             "name": basket.name,
             "companies": basket.companies.values(),
             "companies_count": basket.companies.count()
-        }
+        })
 
     return Response(
         {
@@ -151,12 +148,11 @@ def getBasketDetails(request):
         basket_details object: details of the basket provided
         filings list[object]: all the filings of companies provided
     """
-    # user = request.user
-    # print(user)
-    # if not user.is_authenticated:
-    #     return Response(
-    #         {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
-    #     )
+    user = request.user
+    if not user.is_authenticated:
+        return Response(
+            {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
+        )
     basket_id = request.query_params["basket_id"]
     baskets = Basket.objects.filter(id=basket_id)
     if(len(baskets) == 0):
@@ -164,6 +160,10 @@ def getBasketDetails(request):
             {"error": {"message": "Basket not found"}}, status=status.HTTP_404_NOT_FOUND
         )
     basket = baskets[0]
+    if(basket.user != user):
+        return Response(
+            {"error": {"message": "Not authorized for accessing this basket"}}, status=status.HTTP_404_NOT_FOUND
+        )
     filings = {}
     for company in basket.companies.all():
         filings[company.ticker] = company.filings.values()
@@ -181,3 +181,83 @@ def getBasketDetails(request):
         },
         status=status.HTTP_200_OK
     )
+
+@api_view(["POST"])
+def createBasket(request):
+    """API endpoint for creating a basket
+    
+    Args: \n
+        name string: name of the basket
+        tickers list[string]: list of companies to add to the basket
+    
+    Returns: \n
+        Null
+    """
+    user = request.user
+    if not user.is_authenticated:
+        return Response(
+            {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
+        )
+    name = request.data["name"]
+    tickers = request.data["tickers"]
+    companies = Company.objects.filter(ticker__in=tickers)
+    user = User.objects.get(email= user)
+    basket = Basket(name=name, user= user)
+    basket.save()
+    basket.companies.set(companies)
+
+    return Response(status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def updateBasketName(request):
+    """API endpoint for updating a basket name
+    
+    Args: \n
+        basket_id (int): id of the basket
+        name (string): new name of the basket
+    
+    Returns: \n
+        Null
+    """
+    user = request.user
+    if not user.is_authenticated:
+        return Response(
+            {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
+        )
+    basket_id = request.data["basket_id"]
+
+    basket = Basket.objects.get(id=basket_id)
+    if(basket.user != user):
+        return Response(
+            {"error": {"message": "Not authorized for accessing this basket"}}, status=status.HTTP_404_NOT_FOUND
+        )
+    basket.name = request.data["name"]
+    basket.save()
+
+    return Response({"message": "Basket updated"}, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+def deleteBasket(request):
+    """API endpoint for deleting a basket
+    
+    Args: \n
+        basket_id (int): id of the basket
+    
+    Returns: \n
+        Null
+    """
+    user = request.user
+    if not user.is_authenticated:
+        return Response(
+            {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
+        )
+    basket_id = request.data["basket_id"]
+    basket = Basket.objects.get(id=basket_id)
+    if(basket.user != user):
+        return Response(
+            {"error": {"message": "Not authorized for accessing this basket"}}, status=status.HTTP_404_NOT_FOUND
+        )
+    basket.delete()
+
+    return Response({"message": "Basket deleted"}, status=status.HTTP_200_OK)
