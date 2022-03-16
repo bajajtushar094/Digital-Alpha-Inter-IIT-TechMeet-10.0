@@ -61,6 +61,28 @@ const Table = (props) => {
 			<div className="separator"></div>
 			{data.map((filing, i) => {
 				const metrics = filing['metrics'];
+				let ARR, CCR, LTV, CAC, ARPA, RCC;
+				for(let i=0;i<metrics.length;i++){
+					if(metrics[i]['metric_type']==="ARR"){
+						ARR=metrics[i]['metric_value'];
+					}
+					else if(metrics[i]['metric_type']==="CCR"){
+						CCR = metrics[i]['metric_value'];
+					}
+					else if(metrics[i]['metric_type']==="LTV"){
+						LTV = metrics[i]['metric_value'];
+					}
+					else if(metrics[i]['metric_type']==="CAC"){
+						CAC = metrics[i]['metric_value'];
+					}
+					else if(metrics[i]['metric_type']==="ARPA"){
+						ARPA = metrics[i]['metric_value'];
+					}
+					else if(metrics[i]['metric_type']==="RCC"){
+						RCC = metrics[i]['metric_value'];
+					}
+					
+				}
 				return (
 					<div className={hoverbg ? "listing ishover" : "listing"} onMouseOver={handleMouseInBg} onMouseLeave={handleMouseOutBg}>
 						<div className="listingheader-wrapper">
@@ -96,10 +118,10 @@ const Table = (props) => {
 						</div>
 						<div className="div-block-4">
 
-							<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e4-5d4911ed" className="iscolumn black50">24.55</h4>
-							<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e6-5d4911ed" className="iscolumn black50">23.2</h4>
-							<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">3.44</h4>
-							<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">2.41</h4>
+							<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e4-5d4911ed" className="iscolumn black50">{ARR?ARR:'-'}</h4>
+							<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e6-5d4911ed" className="iscolumn black50">{CCR?CCR:'-'}</h4>
+							<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{LTV?LTV:'-'}</h4>
+							<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{CAC?CAC:'-'}</h4>
 							<div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
 								<div className={hover ? "actioncontainer " : "actioncontainer hide"}>
 									<IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">

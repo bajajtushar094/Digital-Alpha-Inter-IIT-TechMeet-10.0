@@ -29,8 +29,22 @@ class getAllRecentFilings(APIView):
         for i in filings.values():
             metrics = KeyMetric.objects.filter(filing=i['id'])
 
-            i['metrics'] = metrics.values()
+            # i['metrics'] = {
+            #     'metric_type':metrics.values()['metric_type'],
+            #     'metric_value':metrics.values()['metric_value'],
+            #     'metric_unit':metrics.values()['metric_unit']
+            # }
 
+            metrics_list = []
+            for j in metrics.values():
+                metric = {
+                    'metric_type':j['metric_type'],
+                    'metric_value':j['metric_value'],
+                    'metric_unit':j['metric_unit']
+                }
+                metrics_list.append(metric)
+
+            i['metrics'] = metrics_list
             filings_list.append(i)
         return Response(
             data=filings_list,
