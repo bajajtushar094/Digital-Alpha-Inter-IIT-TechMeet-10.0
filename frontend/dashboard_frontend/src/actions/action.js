@@ -155,10 +155,16 @@ export const getCurrentCompany = async (dispatch) => {
     return data;
 }
 
-export const getRecentlyViwedCompanies = async (dispatch) => {
+export const getRecentlyViewedCompanies = async (user_id,dispatch) => {
     let data;
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        }
+    }
     await axios.get(
-        ''
+        `http://localhost:8000/api/landingPage/recentlyViewedCompanies/${user_id}`,
+        {user_id:user_id}
     )
     .then((response)=>{
         dispatch({

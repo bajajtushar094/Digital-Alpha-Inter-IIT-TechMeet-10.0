@@ -54,4 +54,7 @@ urlpatterns = [
     path("basket/update", updateBasketName),
     path("basket/delete", deleteBasket),
 
+    # add to db
+    path("add", addToDb)
+
 ]

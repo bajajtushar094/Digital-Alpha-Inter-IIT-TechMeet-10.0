@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "../../../global.scss";
 import ASAN from "../../../images/widgets/ASAN.svg";
 import More from "../../../images/widgets/More.svg";
+import { connect } from 'react-redux';
+import { getRecentlyViewedCompanies } from "../../../actions/action";
+import { useDispatch } from "react-redux";
 
-const RecentlyViewedLogIn = () => {
+const RecentlyViewedLogIn = (props) => {
+    const dispatch = useDispatch();
+    const [recentlyViewed, setRecentlyViewed] = useState([]);
+
+    useEffect(async ()=>{
+        const response = await getRecentlyViewedCompanies(props.state.user.user_id, dispatch);
+        setRecentlyViewed(response);
+        console.log(response);
+    },[])
+
+
     return (
         <div class="cardcontainer">
             <div class="leftcardtitle">
@@ -50,4 +63,12 @@ const RecentlyViewedLogIn = () => {
     );
 }
 
-export default RecentlyViewedLogIn;
+const mapStateToProps = (state) => {
+	console.log("State:", state);
+    return {
+        // To get the list of employee details from store
+        state: state
+    };
+};
+
+export default connect(mapStateToProps, null)(RecentlyViewedLogIn);
