@@ -117,6 +117,22 @@ export const searchFillings = async (query,dispatch) => {
     return data;
 }
 
+
+export const simpleSearch = async (query,dispatch) => {
+    let data;
+    await axios.post(
+        `${config().search}`,
+        {'query':query}
+    )
+    .then((response)=>{
+        data = response.data
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+    return data;
+}
+
 export const getCurrentCompany = async (dispatch) => {
     let data;
     await axios.get(

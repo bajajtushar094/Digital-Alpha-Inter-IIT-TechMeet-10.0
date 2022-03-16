@@ -5,16 +5,22 @@ import SearchImage from "../../images/widgets/Search_black.svg";
 import "../../global.scss";
 import { useParams } from "react-router-dom";
 import { connect } from 'react-redux';
-import { searchFillings } from '../../actions/action';
+import { simpleSearch } from '../../actions/action';
 
 const Search = (props)=>{
     const [companies, setCompanies] = useState([]);
     const query = useParams().query;
     useEffect(async () => {
-        const data = await props.searchFillings(query);
+        const data = await props.simpleSearch(query);
         console.log(data);
         setCompanies(data);
     }, [])
+
+    const handleSearchFillings = () => {
+        console.log("Hello")
+    }
+
+
     return (
         <div>
             <Navbar/>
@@ -22,7 +28,7 @@ const Search = (props)=>{
                 <img src={SearchImage} loading="lazy" alt=""/>
                 <h1 className="heading heading-2">Filter</h1>
             </div>
-            <MainFilter/>
+            <MainFilter handleSearchFillings = {handleSearchFillings} />
         </div>
 
     );
@@ -30,7 +36,7 @@ const Search = (props)=>{
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        searchFillings: (query) => searchFillings(query, dispatch)
+        simpleSearch: (query) => simpleSearch(query, dispatch)
     }
 }
 
