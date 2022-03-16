@@ -12,6 +12,14 @@ const initState = {
 
 const rootReducer = (state=initState,action) => {
     console.log(action);
+
+    if(action.type==='LOGIN_USER') {
+        return {
+            ...state,
+            isAuthenticated:true,
+            user: action.user,
+        }
+    }
     if(action.type==="GET_BOOKMARK_COMPANY"){
         const newArr = action.bookmarkedCompanies;
         return {
@@ -54,13 +62,7 @@ const rootReducer = (state=initState,action) => {
     //         members: newArr
     //     }
     // }
-    if(action.type==='LOGIN_USER') {
-        return {
-            ...state,
-            isAuthenticated:true,
-            user: action.user,
-        }
-    }
+    
     if(action.type==='LOGOUT_USER') {
         localStorage.removeItem('authTokens');
         return {

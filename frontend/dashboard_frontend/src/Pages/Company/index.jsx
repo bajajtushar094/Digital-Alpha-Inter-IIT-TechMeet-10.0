@@ -22,7 +22,8 @@ const Company = ()=>{
                 </div>
                 <div className="companycontent">
             <CompanyFilter/>
-            <div style={{width:"100%"}}>
+            {/* <div > */}
+            <div style={{width:"70%"}}>
             <div className="padchart" style={{padding:"0px 25px"}}>
                 <TableHead />
                 <h4 style={{padding:"12px 10px"}}>Key Metrices</h4>
