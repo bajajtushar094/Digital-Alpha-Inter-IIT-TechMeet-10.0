@@ -10,13 +10,12 @@ import Chart from "./Components/Widgets/Chart/Chart";
 import { connect } from 'react-redux';
 import { getRecentFilings, loginUser } from "./actions/action";
 import { useEffect } from "react";
+import RecentlyViewed from "./Pages/RecentlyViewed";
+
 
 
 
 function App() {
-
-	
-
 	return (
 		<div className="App">
 			<BrowserRouter>
@@ -33,6 +32,9 @@ function App() {
 					<Route path='/basketList'>
 						<Route index element={<BasketList/>}/>
 					</Route>
+					<Route path='/recentlyviewed'>
+						<Route index element={<RecentlyViewed/>}/>
+					</Route>
 					<Route path='/company'>
 						<Route index element={<Company/>}/>
 					</Route>
@@ -47,5 +49,6 @@ function App() {
 		</div>
 	);
 }
+
 
 export default App;
