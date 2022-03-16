@@ -4,8 +4,33 @@ import logo1 from '../../../images/nav/nav1.png';
 import item1 from '../../../images/nav/Market.svg';
 import item2 from '../../../images/nav/Basket.svg';
 import { Link } from 'react-router-dom';
+import MaxWidthDialog from '../../Widgets/DialogBox';
 
 const Navbar = () => {
+  const [open, setOpen] = React.useState(false);
+  const [fullWidth, setFullWidth] = React.useState(true);
+  const [maxWidth, setMaxWidth] = React.useState('xs');
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+   const handleDialogButton =() =>{
+     setOpen(!open);
+   }
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleMaxWidthChange = (event) => {
+    setMaxWidth(
+      // @ts-expect-error autofill of arbitrary value is not handled.
+      event.target.value,
+    );
+  };
+
+  const handleFullWidthChange = (event) => {
+    setFullWidth(event.target.checked);
+  };
+
   return (
     <div className='nav'>
      
@@ -27,10 +52,11 @@ const Navbar = () => {
        </Link>
        <Link to="/">
         <div className='navicon'>
-          <button className='btn-primary'>Log In</button>
+          <button className='btn-primary' onClick={handleDialogButton}>Log In</button>
          </div>
        </Link>
       </div>
+      <MaxWidthDialog open={[open,setOpen]} fullWidth={[fullWidth,setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen ={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange}/>
     </div>
   )
 }
