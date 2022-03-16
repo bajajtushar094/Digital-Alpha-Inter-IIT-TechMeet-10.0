@@ -10,12 +10,12 @@ import CompanyTitle from './CompanyTitle/CompanyTitle';
 
 const CompanyFilter = () => {
     return (
-        <div>
-            <div className="cardcontainer">
+       
+            <div className="cardcontainer" >
                 <CompanyTitle/>
                 <TimeFrame/>
             </div>
-        </div>
+        
     );
 }
 

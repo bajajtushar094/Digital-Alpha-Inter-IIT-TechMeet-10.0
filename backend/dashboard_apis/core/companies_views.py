@@ -64,7 +64,7 @@ class addToBasket(APIView):
         )
 
 class getRecentFilings(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         company = get_company(kwargs['ticker'])
