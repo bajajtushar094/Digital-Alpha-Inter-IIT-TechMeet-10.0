@@ -9,7 +9,7 @@ import TimeFrame from './TimeFrame';
 
 const MainFilter = ({handleSearchFillings}) => {
     return (
-        <div>
+        
             <div className="cardcontainer">
                 <div className="leftcardtitle">
                     <h3 className="heading-2">Filter</h3>
@@ -19,7 +19,7 @@ const MainFilter = ({handleSearchFillings}) => {
                 <FilingType handleSearchFillings = {handleSearchFillings} />
                 <TimeFrame handleSearchFillings = {handleSearchFillings} />
             </div>
-        </div>
+        
     );
 }
 

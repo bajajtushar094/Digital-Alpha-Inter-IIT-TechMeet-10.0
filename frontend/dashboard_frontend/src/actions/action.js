@@ -1,6 +1,11 @@
 import axios from "axios";
 import jwt_decode from 'jwt-decode'
+<<<<<<< HEAD
 import { config } from "../config";
+=======
+import {config} from "../config";
+import { turnOff, turnOn } from "../constants/spinnerActions";
+>>>>>>> 488954b4f6ee479c823c434bfbc4b5b505a36177
 
 
 export const loginUser = async (loginData,dispatch) => {
@@ -52,19 +57,28 @@ setInterval(() => {
 
 export const getRecentFilings = async (dispatch) => {
     let data;
-    await axios.get(
-        ``
-    )
-    .then((response)=>{
-        dispatch({
-            type:'GET_RECENT_FILINGS',
-            recentFilings:response.data
-        });
-        data = response.data
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
+    const response = await axios.get(
+        config().getRecentFilings
+    );
+    // .then((response)=>{
+    //     console.log("Response:", response);
+        // dispatch(turnOn());
+        // dispatch({
+        //     type:'GET_RECENT_FILINGS',
+        //     recentFilings:response.data
+        // });
+        // dispatch(turnOff());
+        // data = response.data
+    // })
+    // .catch((err)=>{
+    //     console.log("Error",err);
+    // })
+    dispatch({
+        type:'GET_RECENT_FILINGS',
+        recentFilings:response.data
+    });
+
+    data = response.data;
     return data;
 }
 

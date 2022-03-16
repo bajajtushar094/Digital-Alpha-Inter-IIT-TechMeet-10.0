@@ -6,7 +6,17 @@ import Search from "./Pages/Search";
 import IndividualBasket from "./Pages/IndividualBasket";
 import BasketList from "./Pages/BasketList";
 import Company from "./Pages/Company";
+import Chart from "./Components/Widgets/Chart/Chart";
+import { connect } from 'react-redux';
+import { getRecentFilings } from "./actions/action";
 
+const mapStateToProps = state => ({
+	...state
+   })
+
+const mapDispatchToProps = dispatch => ({
+	getRecentFilings: () => dispatch(getRecentFilings())
+})
 
 function App() {
 	return (
@@ -27,6 +37,9 @@ function App() {
 					</Route>
 					<Route path='/company'>
 						<Route index element={<Company/>}/>
+					</Route>
+					<Route path='/test'>
+						<Route index element={<Chart/>}/>
 					</Route>
 				</Routes>
 			</BrowserRouter>
