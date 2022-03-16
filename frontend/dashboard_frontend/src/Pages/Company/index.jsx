@@ -12,7 +12,8 @@ import Chart from '../../Components/Widgets/Chart/Chart';
 import { connect } from 'react-redux';
 import {getKeyMetrics} from "../../actions/action"; 
 import {useDispatch} from "react-redux";
-
+import Watchlist from '../../Components/Widgets/Watchlist';
+import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 // const metric_types = [
 // 	{'ARR': 'Annual Recurring Revenue'},
 // 	{'Customer Churn Rate': 'Customer Churn Rate'},
@@ -72,6 +73,8 @@ const Company = ()=>{
                 </div>
                 <div className="companycontent">
             <CompanyFilter arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} />
+
+            <RecentlyViewedLogIn />
             {/* <div > */}
             <div style={{width:"70%"}}>
             <div className="padchart" style={{padding:"0px 25px"}}>

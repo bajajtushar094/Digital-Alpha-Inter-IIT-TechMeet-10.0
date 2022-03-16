@@ -44,6 +44,11 @@
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+
+  .react-datepicker-wrapper input[type=text] {
+    outline: none;
+    border: none;
+}
 }
 
 #w-node-_6a908ad0-02ce-84fb-5195-d4c0f43f65e9-5d4911ed {
@@ -121,4 +126,8 @@
   grid-row-start: span 1;
   -ms-grid-row-span: 1;
   grid-row-end: span 1;
+}
+
+.react-datepicker-wrapper input[type="text"]{
+  border: none;
 }

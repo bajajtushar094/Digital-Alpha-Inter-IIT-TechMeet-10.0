@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { useRef } from "react";
 import '../../../../global.scss';
 import './timeframe.scss';
 import Calendar from "../../../../images/widgets/Calendar.svg";
@@ -6,6 +7,8 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 const TimeFrame = () => {
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
     return (
         <div id="w-node-_6a908ad0-02ce-84fb-5195-d4c0f43f65e9-5d4911ed" className="filter-timeframe">
             <div className="ui-text black100">Timeframe</div>
@@ -15,7 +18,7 @@ const TimeFrame = () => {
                 </div>
                 <div className="tickersearch">
                     <div className="tickerinput">
-                        <DatePicker selected={new Date()} className="black-50"/>
+                        <DatePicker selected={selectedDate} onChange={date=>setSelectedDate(date)} value={selectedDate}   className="black-50"/>
                     </div>
                     <a href="#" className="w-inline-block">
                         <div className="div-block-12"><img src={Calendar} loading="lazy" alt="" /></div>
@@ -28,11 +31,14 @@ const TimeFrame = () => {
                 </div>
                 <div className="tickersearch">
                     <div className="tickerinput">
-                        <h4 className="black50">27 MAR’20</h4>
+             
+                    <DatePicker   selected={selectedDate} onChange={date=>setSelectedDate(date)} value={selectedDate}  wrapperClassName="datePicker"   className="black-50"/>
+                    
                     </div>
-                    <a href="#" className="w-inline-block">
+                    <div href="#" className="w-inline-block">
                         <div className="div-block-12"><img src={Calendar} loading="lazy" alt="" /></div>
-                    </a>
+                    </div>
+            
                 </div>
             </div>
         </div>
