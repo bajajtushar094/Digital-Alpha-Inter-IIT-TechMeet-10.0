@@ -32,7 +32,7 @@ const Search = (props)=>{
                 <h1 className="heading heading-2">Filter</h1>
             </div>
             <div className="searchcontent">
-            <MainFilter/>
+            <MainFilter handleSearchFillings = {handleSearchFillings}/>
             <Table />
             </div>
             </div>

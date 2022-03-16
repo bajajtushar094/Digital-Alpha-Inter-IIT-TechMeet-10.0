@@ -8,7 +8,7 @@ export const config = ()=>{
             'auth':`${LOCAL_SERVER_URL}auth/token/`,
             'search': `${LOCAL_SERVER_URL}search`,
             'getRecentFilings':`${LOCAL_SERVER_URL}landingPage/recentFilings/all`,
-            'companies': `${LOCAL_SERVER_URL}companies`,
+            'getAllCompanies':`${LOCAL_SERVER_URL}/landingPage/companies/all`,
         }
     }
 
