@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "../../../../global.scss";
 import "./CompanyTitle.scss";
 import More from "../../../../images/widgets/More.svg";
+import { IconButton } from '@mui/material';
+import MoreVert from '@mui/icons-material/MoreVert';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
 const CompanyTitle = (props) => {
+
+    const[hover,setHover]=useState(false)
+
+    const handleMouseIn = () => {
+        setHover(true);
+        console.log("enter")
+      };
+
+      const handleMouseOut = () => {
+        setHover(false);
+        console.log("false")
+      };
+
     return (
         <>
             <div id="w-node-a4d716ba-89a8-25f8-efb6-9256467879f7-5d4911ed" class="listing issmall comptitle">
@@ -19,8 +35,13 @@ const CompanyTitle = (props) => {
                     </div>
                 </div>
                 <div class="actions issmall">
-                    <div class="actioncontainer"></div>
-                    <div class="actioncontainer"><img src={More} loading="lazy" alt=""/></div>
+                 
+                    <div class="actioncontainer" style={{display:"flex",justifyContent:"center",alignItems:"center"}} onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} >
+                  
+                    <MoreVert className={hover&&"hide"}/>
+                        <IconButton  className={!hover&&"hide"} style={{display:"flex",background:"transparent"}}>
+                       <BookmarkBorderIcon />
+                        </IconButton></div>
                 </div>
             </div>
             <div id="w-node-_38f3be73-8770-01e7-500a-24cc065575f2-5d4911ed" class="metrics">
