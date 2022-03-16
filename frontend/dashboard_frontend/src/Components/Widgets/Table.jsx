@@ -119,7 +119,7 @@ const Row_custom = (props) => {
 const Table = (props) => {
 	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
 	const [isCompany, setIsCompany] = useState(props.isCompany);
-	const data = props.data;
+	const data = props.data || [];
 	const dispatch = useDispatch();
 	// console.log("Data", data);
 

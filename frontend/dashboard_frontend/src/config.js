@@ -10,7 +10,9 @@ export const config = ()=>{
             'getRecentFilings':`${LOCAL_SERVER_URL}landingPage/recentFilings/all`,
             'getAllCompanies':`${LOCAL_SERVER_URL}landingPage/companies/all`,
             'getMetricsFromFiling':`${LOCAL_SERVER_URL}filings/getMetricsFromFilings`,
-            'getBookmarkCompany':`${LOCAL_SERVER_URL}landingPage/bookmarkedCompanies`
+            'getBookmarkCompany':`${LOCAL_SERVER_URL}landingPage/bookmarkedCompanies`,
+            'getRecentlyViewedCompanies': `${LOCAL_SERVER_URL}landingPage/recentlyViewedCompanies/aman@test.com`,
+            'getBasket': `${LOCAL_SERVER_URL}basket/get`,
         }
     }
 
