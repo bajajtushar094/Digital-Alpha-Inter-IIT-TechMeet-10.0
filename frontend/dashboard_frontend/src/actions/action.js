@@ -53,28 +53,22 @@ setInterval(() => {
 
 export const getRecentFilings = async (dispatch) => {
     let data;
-    const response = await axios.get(
-        config().getRecentFilings
-    );
-    // .then((response)=>{
-    //     console.log("Response:", response);
-        // dispatch(turnOn());
-        // dispatch({
-        //     type:'GET_RECENT_FILINGS',
-        //     recentFilings:response.data
-        // });
-        // dispatch(turnOff());
-        // data = response.data
-    // })
-    // .catch((err)=>{
-    //     console.log("Error",err);
-    // })
-    dispatch({
-        type:'GET_RECENT_FILINGS',
-        recentFilings:response.data
-    });
+    try{
+        const response = await axios.get(
+            config().getRecentFilings
+        );
+    
+        dispatch({
+            type:'GET_RECENT_FILINGS',
+            recentFilings:response.data
+        });
 
-    data = response.data;
+        data = response.data;
+    }
+    catch(err){
+        console.log("Error:", err);
+    }
+
     return data;
 }
 
