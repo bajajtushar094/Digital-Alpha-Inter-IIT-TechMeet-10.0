@@ -3,15 +3,15 @@ import "../../../global.scss";
 import ASAN from "../../../images/widgets/ASAN.svg";
 import More from "../../../images/widgets/More.svg";
 import { useDispatch } from "react-redux";
-import { getRecentlyViwedCompanies } from "../../../actions/action";
+import { getRecentlyViewedCompanies } from "../../../actions/action";
 import { connect } from "react-redux";
 const RecentlyViewedLogIn = (props) => {
   const dispatch = useDispatch();
-  const data = props.state.recentlyViwedCompanies || [];
+  const data = props.state.recentlyViewedCompanies || [];
   console.log("Props from RecentlyViewedLogIn;", props);
   useEffect(() => {
     const getRecentViewFunc = async () => {
-      await getRecentlyViwedCompanies(props.state.user.user_id, dispatch);
+      await getRecentlyViewedCompanies(props.state.user.user_id, dispatch);
     }
     getRecentViewFunc();
   }, [dispatch]);

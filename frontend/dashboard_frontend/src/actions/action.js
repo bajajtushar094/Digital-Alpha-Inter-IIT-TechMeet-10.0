@@ -179,7 +179,7 @@ export const getRecentlyViewedCompanies = async (user_id,dispatch) => {
         .then((response) => {
             dispatch({
                 type: 'GET_RECENTLY_VIEWED_COMPANIES',
-                recentlyViwedCompanies: response.data
+                recentlyViewedCompanies: response.data
             });
             data = response.data
         })
@@ -259,6 +259,22 @@ export const getKeyMetrics = async (metric, dispatch) => {
     data = await axios.get(
         `http://localhost:8000/api/companies/getKeyMetrics/${metric.ticker}/${metric.metric_type}`,
         config
+    )
+    
+    return data;
+}
+
+export const addRecentlyViewedCompany = async (company_ticker) => {
+    let data;
+    console.log("here")
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        }
+    }
+    data = await axios.post(
+        `${config().addRecentlyViewedCompany}/${company_ticker}`,
+        configHeaders
     )
     
     return data;

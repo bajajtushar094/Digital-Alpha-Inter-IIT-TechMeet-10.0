@@ -9,28 +9,6 @@ from .utils import *
 from .models import *
 from .serializers import *
 
-def add_recently_viewed_company(user_id, company_ticker):
-    MAX_RECENTLY_VIEWED_COMPANIES = 5
-    try:
-        user = User.objects.get(id=user_id)
-        company = Company.objects.get(ticker=company_ticker)
-        
-        try:
-            entry = RecentlyViewed.objects.get(user=user, company=company)
-            entry.save()
-            # print("hello")
-        except Exception as e:
-            # print(e)
-            ids = RecentlyViewed.objects.order_by("-timestamp").values_list("pk", flat=True)[MAX_RECENTLY_VIEWED_COMPANIES-1:]
-            RecentlyViewed.objects.filter(pk__in=list(ids)).delete()
-
-            RecentlyViewed.objects.create(user=user, company=company)
-
-    except Exception as e:
-        # print(e)
-        pass
-
-
 
 class bookmarkCompanyView(APIView):
 
@@ -85,6 +63,43 @@ class addToBasket(APIView):
             {"res":"Company added in the basket of user"},
             status=status.HTTP_200_OK
         )
+
+class addToRecentlyViewed(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+
+        MAX_RECENTLY_VIEWED_COMPANIES = 5
+        user_id = request.user.id
+        ticker = kwargs['ticker']
+        try:
+
+            user = User.objects.get(id=user_id)
+            company = Company.objects.get(ticker=company_ticker)
+            
+            try:
+                entry = RecentlyViewed.objects.get(user=user, company=company)
+                entry.save()
+                # print("hello")
+            except Exception as e:
+                # print(e)
+                ids = RecentlyViewed.objects.order_by("-timestamp").values_list("pk", flat=True)[MAX_RECENTLY_VIEWED_COMPANIES-1:]
+                RecentlyViewed.objects.filter(pk__in=list(ids)).delete()
+
+                RecentlyViewed.objects.create(user=user, company=company)
+
+            return Response(
+                {"res":"Company added to recently viewed"},
+                status=status.HTTP_200_OK
+            )
+
+
+        except Exception as e:
+            return Response(
+                    {"res":"Not able to add company to recently viewed"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
 
 class getRecentFilings(APIView):
     # permission_classes = [permissions.IsAuthenticated]

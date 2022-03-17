@@ -10,7 +10,7 @@ import TableHead from '../../Components/Widgets/TableHead/TableHead';
 import { Button } from '@mui/material';
 import Chart from '../../Components/Widgets/Chart/Chart';
 import { connect } from 'react-redux';
-import { getKeyMetrics, searchCompanies } from "../../actions/action";
+import { getKeyMetrics, searchCompanies, addRecentlyViewedCompany } from "../../actions/action";
 import { useDispatch } from "react-redux";
 import Watchlist from '../../Components/Widgets/Watchlist';
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
@@ -51,6 +51,7 @@ const Company = () => {
         const response = await searchCompanies(url_ticker, dispatch);
         setCompany(response.data[0]);
 
+        addRecentlyViewedCompany(url_ticker);
 
         const response1 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARR' }, dispatch);
         setArrMetric(response1.data);

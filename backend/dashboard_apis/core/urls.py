@@ -25,6 +25,7 @@ urlpatterns = [
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
     path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
+    path("companies/company_viewed/<str:ticker>",addToRecentlyViewed.as_view()),
 
     #Landing page Apis
     path("landingPage/recentFilings/all", getAllRecentFilings.as_view()),
