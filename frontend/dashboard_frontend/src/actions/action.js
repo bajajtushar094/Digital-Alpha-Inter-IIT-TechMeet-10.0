@@ -165,8 +165,13 @@ export const getCurrentCompany = async (dispatch) => {
     return data;
 }
 
-export const getRecentlyViwedCompanies = async (id, dispatch) => {
+export const getRecentlyViewedCompanies = async (user_id,dispatch) => {
     let data;
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        }
+    }
     await axios.get(
         config().getRecentlyViewedCompanies,
         configHeaders
@@ -174,7 +179,7 @@ export const getRecentlyViwedCompanies = async (id, dispatch) => {
         .then((response) => {
             dispatch({
                 type: 'GET_RECENTLY_VIEWED_COMPANIES',
-                recentlyViwedCompanies: response.data
+                recentlyViewedCompanies: response.data
             });
             data = response.data
         })
@@ -242,6 +247,7 @@ export const getBaskets = async (dispatch) => {
     }
 }
 
+
 export const getBasketDetails = async (basket_id, dispatch) => {
     try {
         const response = await axios.get(
@@ -282,4 +288,35 @@ export const deselectInBasket = (company, dispatch) => {
 export const refreshSelectedCompanies = (dispatch) => {
     dispatch({type: 'RESET_BASKET_SELECTION'});
     return "Selections removed";
+}
+export const getKeyMetrics = async (metric, dispatch) => {
+    let data;
+    console.log("here")
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        }
+    }
+    data = await axios.get(
+        `http://localhost:8000/api/companies/getKeyMetrics/${metric.ticker}/${metric.metric_type}`,
+        config
+    )
+    
+    return data;
+}
+
+export const addRecentlyViewedCompany = async (company_ticker) => {
+    let data;
+    console.log("here")
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        }
+    }
+    data = await axios.post(
+        `${config().addRecentlyViewedCompany}/${company_ticker}`,
+        configHeaders
+    )
+    
+    return data;
 }

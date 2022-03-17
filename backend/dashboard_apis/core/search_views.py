@@ -27,7 +27,7 @@ def searchCompanies(request):
             {"error": {"message": "No Ticker Found"}}, status=status.HTTP_404_NOT_FOUND
         )
 
-    companies = Company.objects.filter(ticker__in=tickers)
+    companies = Company.objects.filter(ticker=tickers)
 
     if not companies:
         return Response(
