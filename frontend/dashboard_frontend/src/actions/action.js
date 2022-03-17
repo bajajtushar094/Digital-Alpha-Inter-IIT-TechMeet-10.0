@@ -241,3 +241,18 @@ export const getBaskets = async (dispatch) => {
         console.log("Error:", err);
     }
 }
+
+export const getKeyMetricOfCompany = async (ticker, metric_type) => {
+    try{
+        const response = await axios.get(
+            `http://localhost:8000/api/companies/getKeyMetrics/AAPL/ARR`,
+            configHeaders
+        );
+
+        console.log("response:", response);
+        return response.data;
+    }
+    catch(err) {
+        console.log("Error:", err);
+    }
+}

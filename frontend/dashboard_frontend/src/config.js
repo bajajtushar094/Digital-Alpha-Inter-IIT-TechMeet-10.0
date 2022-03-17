@@ -13,6 +13,7 @@ export const config = ()=>{
             'getBookmarkCompany':`${LOCAL_SERVER_URL}landingPage/bookmarkedCompanies`,
             'getRecentlyViewedCompanies': `${LOCAL_SERVER_URL}landingPage/recentlyViewedCompanies`,
             'getBasket': `${LOCAL_SERVER_URL}basket/get`,
+            'getKeyMetricOfCompanyAPI':`${LOCAL_SERVER_URL}companies/getKeyMetrics`
         }
     }
 

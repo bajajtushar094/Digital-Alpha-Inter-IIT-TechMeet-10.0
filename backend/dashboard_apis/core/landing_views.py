@@ -31,11 +31,15 @@ class getAllCompanies(APIView):  #returns company data along with filings and th
     def get(self, request, *args, **kwargs):
         try:
             companies = Company.objects.all().values()
+            companies_list = []
+            print(companies)
             for company in companies:
                 filings = Filing.objects.filter(company_id = company['ticker']).values()
                 for filing in filings:
-                    filing["key metrics"] = KeyMetric.objects.filter(company_id=company['ticker'], filing_id=filing['id']).values()
+                    filing["key_metrics"] = KeyMetric.objects.filter(company_id=company['ticker'], filing_id=filing['id']).values()
                 company["filings"] = filings
+
+            companies_list.append(company)
         except:
             Response(
                 {
@@ -43,8 +47,10 @@ class getAllCompanies(APIView):  #returns company data along with filings and th
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+        print("Companies List:", companies_list)
         return Response(
-            data=companies,
+            data=companies_list,
             status=status.HTTP_200_OK
         )
             
