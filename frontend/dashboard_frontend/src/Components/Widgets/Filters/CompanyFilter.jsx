@@ -8,11 +8,11 @@ import TimeFrame from './TimeFrame';
 import CompanyTitle from './CompanyTitle/CompanyTitle';
 
 
-const CompanyFilter = () => {
+const CompanyFilter = (props) => {
     return (
        
             <div className="cardcontainer" >
-                <CompanyTitle/>
+                <CompanyTitle company={props.company} arrMetric={props.arrMetric} ccrMetric={props.ccrMetric} ltvMetric={props.ltvMetric} cacMetric={props.cacMetric} arpaMetric={props.arpaMetric} rcrMetric={props.rcrMetric} isMetricLoading={props.isMetricLoading} />
                 <TimeFrame/>
             </div>
         

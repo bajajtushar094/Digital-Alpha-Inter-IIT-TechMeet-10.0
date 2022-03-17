@@ -25,13 +25,14 @@ urlpatterns = [
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
     path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
+    path("companies/company_viewed/<str:ticker>",addToRecentlyViewed.as_view()),
 
     #Landing page Apis
     path("landingPage/recentFilings/all", getAllRecentFilings.as_view()),
     path("landingPage/companies/all", getAllCompanies.as_view()),
     path("landingPage/baskets/<int:user_id>", getAllBaskets.as_view()),
     path("landingPage/bookmarkedCompanies/<int:user_id>",bookmarkedCompanies.as_view()),
-    path("landingPage/recentlyViewedCompanies/<str:user_id>",recentlyViewedCompanies.as_view()),
+    path("landingPage/recentlyViewedCompanies/<int:user_id>",recentlyViewedCompanies.as_view()),
     path("landingPage/recentlyFiled",recentlyFiled.as_view()),
 
 
@@ -54,5 +55,8 @@ urlpatterns = [
     path("basket/create", createBasket),
     path("basket/update", updateBasketName),
     path("basket/delete", deleteBasket),
+
+    # add to db
+    path("add", addToDb)
 
 ]
