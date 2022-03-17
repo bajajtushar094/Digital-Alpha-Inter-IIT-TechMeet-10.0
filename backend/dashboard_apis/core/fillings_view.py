@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from os import stat
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -6,6 +7,7 @@ from rest_framework import permissions
 from .utils import *
 from .models import *
 from .serializers import *
+import csv
 
 class getKeyMetricsOfFiling(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -72,5 +74,15 @@ class getMetricsFromFiling(APIView):
 
 
 
-
-
+def addToDb(request):
+    file = open('/home/ankit/Projects/Inter IIT/SaaS 2022/Digital-Alpha-Inter-IIT-TechMeet-10.0/backend/dashboard_apis/core/csv_files/company_random.csv')
+    csvreader = csv.reader(file)
+    headers = next(csvreader)
+    rows = []
+    for row in csvreader:
+        rows.append(row)
+    
+    
+    
+    file.close()
+    return HttpResponse('Hi')

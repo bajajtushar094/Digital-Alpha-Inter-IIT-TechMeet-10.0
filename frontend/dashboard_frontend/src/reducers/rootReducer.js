@@ -57,10 +57,10 @@ const rootReducer = (state=initState,action) => {
         }
     }
     if(action.type==='GET_RECENTLY_VIEWED_COMPANIES') {
-        const newArr = action.recentlyViwedCompanies;
+        const newArr = action.recentlyViewedCompanies;
         return {
             ...state,
-            recentlyViwedCompanies: newArr
+            recentlyViewedCompanies: newArr
         }
     }
     if(action.type==='UPDATE_QUERY_FILINGS') {

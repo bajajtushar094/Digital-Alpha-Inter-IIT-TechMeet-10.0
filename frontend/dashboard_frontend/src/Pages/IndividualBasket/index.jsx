@@ -8,6 +8,7 @@ import BasketImage from "../../images/widgets/Basket.svg";
 import './indibasket.scss'
 
 const IndividualBasket = ()=>{
+    
     return (
         <>
             <Navbar/>

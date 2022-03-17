@@ -25,6 +25,7 @@ urlpatterns = [
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
     path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
+    path("companies/addRecentlyViewedCompany/<str:ticker>",addRecentlyViewedCompany.as_view()),
 
     #Landing page Apis
     path("landingPage/recentFilings/all", getAllRecentFilings.as_view()),
@@ -54,5 +55,8 @@ urlpatterns = [
     path("basket/create", createBasket),
     path("basket/update", updateBasketName),
     path("basket/delete", deleteBasket),
+
+    # add to db
+    path("add", addToDb)
 
 ]

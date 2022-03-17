@@ -15,6 +15,7 @@ import { turnOn, turnOff } from "../../constants/spinnerActions";
 import store from "../../store";
 import { connect } from "react-redux";
 import { config } from "../../config";
+import DataSec from "./DataSec";
 
 const Landing = (props) => {
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const Landing = (props) => {
       <Navbar />
       <Hero />
       <Data />
+      {/* <DataSec /> */}
     </div>
   );
 };
