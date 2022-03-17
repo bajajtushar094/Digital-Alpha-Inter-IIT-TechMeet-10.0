@@ -12,9 +12,9 @@ import CompanyRow from "./CompanyRow.jsx"
 const Table = (props) => {
 	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
 	const [isCompany, setIsCompany] = useState(props.isCompany);
-	const data = props.data;
+	const data = props.data || [];
 	const dispatch = useDispatch();
-	// console.log("Data", data);
+	console.log("Props", props);
 
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverbg] = useState(false);

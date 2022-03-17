@@ -7,8 +7,29 @@ const initState = {
     recentFilings: [],
     allCompanies: [],
     currentCompany: {},
-    recentlyViewedCompanies: [],
-    baskets: []
+    recentlyViwedCompanies: [],
+    baskets: [],
+    queryFilings: {
+        "tickers": [],
+        "form_type": [],
+        "time_start": "",
+        "time_end": ""
+    },
+    queryFilingsData: null ,
+    searchFilings: [],
+    basketDetails: {
+        error: "",
+        data: {
+            basket:{
+                id: 0,
+                name:"",
+                user_id:""
+            },
+            companies:[],
+            filings:[],
+        }
+    },
+    basketSelectedCompanies:[]
 }
 
 const rootReducer = (state=initState,action) => {
@@ -55,7 +76,21 @@ const rootReducer = (state=initState,action) => {
             ...state,
             recentlyViewedCompanies: newArr
         }
-    }    
+    }
+    if(action.type==='UPDATE_QUERY_FILINGS') {
+        const newObj = action.queryFilings;
+        return {
+            ...state,
+            queryFilings: newObj
+        }
+    }
+    if(action.type==='UPDATE_QUERY_FILINGS_DATA') {
+        const newObj = action.queryFilingsData;
+        return {
+            ...state,
+            queryFilingsData: newObj
+        }
+    }
     // if(action.type==='ADD_COMPANIES') {
     //     const newArr = [...state.members,action.member];
     //     return {
@@ -79,6 +114,49 @@ const rootReducer = (state=initState,action) => {
             baskets: newArr
         }
     }
+    if(action.type === "STORE_SEARCH_FILINGS"){
+        const newArr = action.searchFilings;
+        return {
+            ...state,
+            searchFilings: newArr
+        }
+    }
+
+    if(action.type === 'GET_BASKET_DETAILS') {
+        const newArr = action.basketDetails;
+        return {
+            ...state,
+            basketDetails: newArr
+        }
+    }
+
+    if(action.type === 'SELECT_IN_BASKET') {
+        const company_to_add = action.company;
+        let temp = state.basketSelectedCompanies 
+        temp.push(company_to_add);
+        return {
+            ...state,
+            basketSelectedCompanies: temp
+        }
+    }
+
+    if(action.type === 'DESELECT_IN_BASKET') {
+        const company_to_remove = action.company;
+        let temp = state.basketSelectedCompanies 
+        temp = temp.filter((company)=> company.ticker !== company_to_remove.ticker)
+        return {
+            ...state,
+            basketSelectedCompanies: temp
+        }
+    }
+
+    if(action.type === 'RESET_BASKET_SELECTION') {
+        return{
+            ...state,
+            basketSelectedCompanies: []
+        }
+    }
+
     return state;
 }
 

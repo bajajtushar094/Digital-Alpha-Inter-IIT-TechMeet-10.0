@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { getRecentFilings, loginUser } from "./actions/action";
 import { useEffect } from "react";
 import RecentlyViewed from "./Pages/RecentlyViewed";
+import Aman from "./Pages/Aman/aman";
 
 
 
@@ -27,7 +28,10 @@ function App() {
 					<Route path="/search/:query">
 						<Route index element={<Search />} />
 					</Route>
-					<Route path="/individualBasket">
+					<Route path="/aman/:query">
+						<Route index element={<Aman />} />
+					</Route>
+					<Route path="/individualBasket/:basket_id">
 						<Route index element={<IndividualBasket />} />
 					</Route>
 					<Route path='/basketList'>

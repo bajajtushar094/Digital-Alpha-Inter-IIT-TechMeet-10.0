@@ -44,7 +44,8 @@ def searchCompanies(request):
         error = {"message": errorMsg, "data": notFound}
 
     return Response(
-        {"error": error, "data": companies.values()}, status=status.HTTP_200_OK
+        data=companies.values(), 
+        status=status.HTTP_200_OK
     )
 
 
@@ -102,7 +103,7 @@ def searchFillings(request):
         errorMsg = "No Company Found for Tickers: " + ", ".join(notFound)
         error = {"message": errorMsg, "data": notFound}
 
-    return Response({"error": error, "data": res}, status=status.HTTP_200_OK)
+    return Response(data= res, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
