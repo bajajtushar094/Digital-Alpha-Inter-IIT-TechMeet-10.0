@@ -10,37 +10,19 @@ import { connect } from 'react-redux';
 
 const Data = (props) => {
 	const [selected, setSelected] = useState(1);
-	const [hasCheckbox, setHasCheckbox] = useState(false);
-	const [isCompany, setIsCompany] = useState(false);
+	// const [hasCheckbox, setHasCheckbox] = useState(false);
+	// const [isCompany, setIsCompany] = useState(false);
 	// console.log("State from data:", props);
+	console.log("Props State:", props.state);
 	const recentFilings = props.state.recentFilings;
-	const bookmarkedCompanies = props.state.bookmarkedCompanies;
+	// const bookmarkedCompanies = props.state.bookmarkedCompanies;
 	const allCompanies = props.state.allCompanies;
-	const [data, setData] = useState(recentFilings);
+	// const [data, setData] = useState(recentFilings);
 	// let data=recentFilings;
 
 
 	const handleTable = (selectedTemp)=>{
 		setSelected(selectedTemp);
-		console.log("Selected:", typeof selected);
-		if (selected == 1) {
-			setData(recentFilings);
-			console.log("Data to table:", data);
-			setHasCheckbox(false);
-			setIsCompany(false);
-		}
-		else if (selected == 2) {
-			setData(bookmarkedCompanies);
-			setHasCheckbox(false);
-			setIsCompany(true);
-		}
-		else if(selected == 3) {
-			setData(allCompanies);
-			setHasCheckbox(false);
-			setIsCompany(true);
-		}
-
-		return 0;
 	}
 
 	return (
@@ -56,11 +38,11 @@ const Data = (props) => {
 				</div>
 				<div className='tablesec'>
 					<div className="table_top">
-						<button className={selected === 1 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(1); }}>Recent fillings</button>
-						<button className={selected === 2 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(2); }}>Bookmarked</button>
-						<button className={selected === 3 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(3); }}>All Companies</button>
+						<button className={selected === 1 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(1); }}>All Companies</button>
+						<button className={selected === 2 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(2); }}>Recent Filings</button>
 					</div>
-					{<Table data={data} hasCheckbox={hasCheckbox} isCompany={isCompany} />}
+					{selected==1&&<Table data={allCompanies} hasCheckbox={false} isCompany={true} />}
+					{selected==2&&<Table data={recentFilings} hasCheckbox={false} isCompany={false} />}
 				</div>
 			</div>
 		</div>

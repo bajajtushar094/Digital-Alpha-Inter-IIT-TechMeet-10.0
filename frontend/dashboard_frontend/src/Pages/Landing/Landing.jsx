@@ -61,8 +61,8 @@ const Landing = (props) => {
     <div className='landing'>
       <Navbar />
       <Hero />
-      {/* <Data /> */}
-      <DataSec />
+      <Data />
+      {/* <DataSec /> */}
     </div>
   );
 };
