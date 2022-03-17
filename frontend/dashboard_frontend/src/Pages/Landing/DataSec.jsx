@@ -4,7 +4,7 @@ import TableTwo from '../../Components/Widgets/TableTwo/TableTwo'
 
 const DataSec = () => {
   return (
-    <div style={{display:"flex"}}>
+    <div style={{display:"flex",gap:"2rem",marginTop:"2rem"}}>
         <RecentlyViewedLogIn />
         <TableTwo />
     </div>
