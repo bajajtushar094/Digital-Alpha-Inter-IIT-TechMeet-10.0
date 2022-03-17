@@ -3,11 +3,11 @@ import jwt_decode from 'jwt-decode'
 import { config } from "../config";
 import { turnOff, turnOn } from "../constants/spinnerActions";
 
-const configHeaders = {
+const configHeaders = localStorage.getItem('authTokens')?{
     headers: {
         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
     }
-}
+}:""
 
 export const loginUser = async (loginData, dispatch) => {
     try {
