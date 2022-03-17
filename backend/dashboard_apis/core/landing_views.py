@@ -124,9 +124,9 @@ class bookmarkedCompanies(APIView):
 class recentlyViewedCompanies(APIView):
     def get(self, request, *args, **kwargs):
         try:
-            user = User.objects.filter(email=kwargs['user_id'])
-            print(user)
-            print(user[0].recently_viewed_companies.all().values())
+            user = User.objects.get(id=kwargs['user_id'])
+            # print(user)
+            # print(user[0].recently_viewed_companies.all().values())
             
             # for index in range(len(bookmarked_companies)):
             #     bookmarked_companies_json[index]["filings"] = bookmarked_companies[index].filing_set.all().values()
@@ -138,7 +138,7 @@ class recentlyViewedCompanies(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
         return Response(
-            data=user[0].recently_viewed_companies.all().values(),
+            data=user.recently_viewed_companies.all().values(),
             status=status.HTTP_200_OK
         )   
 

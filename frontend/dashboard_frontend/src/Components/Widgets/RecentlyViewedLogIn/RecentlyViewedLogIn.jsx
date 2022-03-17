@@ -10,8 +10,8 @@ const RecentlyViewedLogIn = (props) => {
   const data = props.state.recentlyViwedCompanies || [];
   console.log("Props from RecentlyViewedLogIn;", props);
   useEffect(() => {
-    async function getRecentViewFunc() {
-      await getRecentlyViwedCompanies(dispatch);
+    const getRecentViewFunc = async () => {
+      await getRecentlyViwedCompanies(props.state.user.user_id, dispatch);
     }
     getRecentViewFunc();
   }, [dispatch]);
