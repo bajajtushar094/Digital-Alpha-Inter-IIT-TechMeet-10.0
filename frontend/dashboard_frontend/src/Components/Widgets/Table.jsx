@@ -121,7 +121,7 @@ const Table = (props) => {
 	const [isCompany, setIsCompany] = useState(props.isCompany);
 	const data = props.data || [];
 	const dispatch = useDispatch();
-	// console.log("Data", data);
+	console.log("Props", props);
 
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverbg] = useState(false);
