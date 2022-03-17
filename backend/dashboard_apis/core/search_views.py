@@ -52,13 +52,11 @@ def searchCompanies(request):
 @api_view(["POST"])
 def searchFillings(request):
     """API endpoint for searching fillings of given companies
-
     Args: \n
         tickers (list[string]): Unique ids to identify the company \n
         form_type (list[string]): types of filling to include; options- 10K, 10Q, 8K \n
         time_start (string): start date of the filling; format- YYYY-MM-DD \n
         time_end (string): end date of the filling; format- YYYY-MM-DD \n
-
     Returns: \n
         fillings list[object]: details of all the fillings provided
     """
@@ -102,9 +100,23 @@ def searchFillings(request):
     if len(notFound):
         errorMsg = "No Company Found for Tickers: " + ", ".join(notFound)
         error = {"message": errorMsg, "data": notFound}
+    
+    for companies in res.keys():
+        for index , filing in enumerate(res[companies]):
+            metrics = KeyMetric.objects.filter(company=filing['company_id'])
+            res[companies][index]['key_metrics'] = metrics.values()
 
-    return Response(data= res, status=status.HTTP_200_OK)
 
+    return Response({"error": error, "data": res}, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def companyMetric(request):
+    ticker = request.data.get("ticker")
+    metrics = KeyMetric.objects.filter(company=ticker)
+    company = Company.objects.filter(ticker=ticker)
+    res = company.values()[0]
+    res['metrics'] = metrics.values()
+    return Response( {"data": res}, status=status.HTTP_200_OK)
 
 @api_view(["POST"])
 def advancedSearch(request):

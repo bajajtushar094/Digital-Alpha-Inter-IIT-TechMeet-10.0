@@ -22,6 +22,7 @@ urlpatterns = [
     path('search', simpleSearch,),
 
     #Company APIs
+    path('company/metric/all', companyMetric),
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
     path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
