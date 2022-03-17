@@ -5,6 +5,7 @@ import More from "../../../images/widgets/More.svg";
 import { useDispatch } from "react-redux";
 import { getRecentlyViwedCompanies } from "../../../actions/action";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 const RecentlyViewedLogIn = (props) => {
   const dispatch = useDispatch();
   const data = props.state.recentlyViwedCompanies || [];
@@ -20,9 +21,7 @@ const RecentlyViewedLogIn = (props) => {
     <div class='cardcontainer'>
       <div class='leftcardtitle'>
         <h3 class='heading-2'>Recently Viewed</h3>
-        <a href='/#' class='button issecondary issmall w-button'>
-          view all
-        </a>
+        <Link to="/basketList" className='button issecondary issmall w-button'>View All</Link>
       </div>
       <div
         id='w-node-_633401c4-a210-5c3e-5b31-05fd06f3863e-5d4911ed'
