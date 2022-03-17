@@ -7,6 +7,7 @@ import Pen from "../../../images/widgets/Pen.svg";
 import { useDispatch } from "react-redux";
 import { getBaskets } from "../../../actions/action";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Watchlist = (props) => {
   const dispatch = useDispatch();
@@ -26,13 +27,14 @@ const Watchlist = (props) => {
         <img src={Plus} loading='lazy' alt='' />
       </div>
       {data.map((el) => (
-        <Component name={el.name} companies_count={el.companies_count} />
+        <Component name={el.name} companies_count={el.companies_count} basket_id={el.id} />
       ))}
     </div>
   );
 };
 
-const Component = ({ name, companies_count }) => (
+const Component = ({ name, companies_count, basket_id }) => (
+  <Link to={`/individualBasket/${basket_id}`} style={{textDecoration: "none"}}>
   <div
     id='w-node-_303deb7f-543b-7e3b-b9af-eb356f928477-5d4911ed'
     class='listing issmall'
@@ -50,6 +52,7 @@ const Component = ({ name, companies_count }) => (
       </div>
     </div>
   </div>
+  </Link>
 );
 
 // export default Watchlist;

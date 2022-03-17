@@ -7,8 +7,21 @@ const initState = {
     recentFilings: [],
     allCompanies: [],
     currentCompany: {},
-    recentlyViewedCompanies: [],
-    baskets: []
+    recentlyViwedCompanies: [],
+    baskets: [],
+    basketDetails: {
+        error: "",
+        data: {
+            basket:{
+                id: 0,
+                name:"",
+                user_id:""
+            },
+            companies:[],
+            filings:[],
+        }
+    },
+    basketSelectedCompanies:[]
 }
 
 const rootReducer = (state=initState,action) => {
@@ -79,6 +92,42 @@ const rootReducer = (state=initState,action) => {
             baskets: newArr
         }
     }
+
+    if(action.type === 'GET_BASKET_DETAILS') {
+        const newArr = action.basketDetails;
+        return {
+            ...state,
+            basketDetails: newArr
+        }
+    }
+
+    if(action.type === 'SELECT_IN_BASKET') {
+        const company_to_add = action.company;
+        let temp = state.basketSelectedCompanies 
+        temp.push(company_to_add);
+        return {
+            ...state,
+            basketSelectedCompanies: temp
+        }
+    }
+
+    if(action.type === 'DESELECT_IN_BASKET') {
+        const company_to_remove = action.company;
+        let temp = state.basketSelectedCompanies 
+        temp = temp.filter((company)=> company.ticker !== company_to_remove.ticker)
+        return {
+            ...state,
+            basketSelectedCompanies: temp
+        }
+    }
+
+    if(action.type === 'RESET_BASKET_SELECTION') {
+        return{
+            ...state,
+            basketSelectedCompanies: []
+        }
+    }
+
     return state;
 }
 
