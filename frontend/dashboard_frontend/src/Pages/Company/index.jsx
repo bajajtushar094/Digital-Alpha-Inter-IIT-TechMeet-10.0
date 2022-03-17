@@ -12,8 +12,6 @@ import Watchlist from '../../Components/Widgets/Watchlist';
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 
 const Company = ()=>{
-
-    
     return (
         <>
             <Navbar/>
@@ -24,7 +22,7 @@ const Company = ()=>{
                 </div>
                 <div className="companycontent">
                     <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
-            <CompanyFilter/>
+            <CompanyFilter isCompany={true}/>
             <RecentlyViewedLogIn />
             </div>
             {/* <div > */}

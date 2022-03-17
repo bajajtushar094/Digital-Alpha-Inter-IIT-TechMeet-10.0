@@ -3,11 +3,11 @@ import jwt_decode from 'jwt-decode'
 import { config } from "../config";
 import { turnOff, turnOn } from "../constants/spinnerActions";
 
-const configHeaders = {
+const configHeaders = localStorage.getItem('authTokens')?{
     headers: {
         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
     }
-}
+}:""
 
 export const loginUser = async (loginData, dispatch) => {
     try {
@@ -165,7 +165,7 @@ export const getCurrentCompany = async (dispatch) => {
     return data;
 }
 
-export const getRecentlyViwedCompanies = async (dispatch) => {
+export const getRecentlyViwedCompanies = async (id, dispatch) => {
     let data;
     await axios.get(
         config().getRecentlyViewedCompanies,
@@ -192,7 +192,6 @@ export const getBookmarkCompanies = async (id, dispatch) => {
         }
     }
     try {
-        // console.log("Id:", id);
         const response = await axios.get(
             `http://localhost:8000/api/landingPage/bookmarkedCompanies/${1}`,
             configHeaders
@@ -259,4 +258,28 @@ export const getBasketDetails = async (basket_id, dispatch) => {
     catch(err){
         return {status: false}
     }
+}
+
+export const selectInBasket = (company, dispatch) => {
+    dispatch({
+        type: 'SELECT_IN_BASKET',
+        company:company
+    })
+    console.log("Company being added to basket: ", company);
+    return company;
+}
+
+export const deselectInBasket = (company, dispatch) => {
+    dispatch({
+        type:'DESELECT_IN_BASKET',
+        company: company
+    })
+
+    console.log("Company being removed from selection: ", company);
+    return company;
+}
+
+export const refreshSelectedCompanies = (dispatch) => {
+    dispatch({type: 'RESET_BASKET_SELECTION'});
+    return "Selections removed";
 }

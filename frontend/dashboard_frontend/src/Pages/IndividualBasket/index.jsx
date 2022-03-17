@@ -7,14 +7,33 @@ import "../../global.scss";
 import BasketImage from "../../images/widgets/Basket.svg";
 import './indibasket.scss';
 import { useDispatch, connect } from 'react-redux';
-import {getBasketDetails} from "../../actions/action";
+import {deselectInBasket, getBasketDetails, selectInBasket} from "../../actions/action";
 import { useParams } from 'react-router-dom';
 import { Checkbox, List, ListItem } from '@mui/material';
+import Chart from '../../Components/Widgets/Chart/Chart'
+import { Box } from '@mui/system';
+import { ResponsiveContainer } from 'recharts';
 
 const IndividualBasket = (props)=>{
     const dispatch = useDispatch();
     const basket_id = useParams().basket_id;
-    const basketDetails = props.state.basketDetails;
+    let basketDetails = props.state.basketDetails;
+    const addSelector = () => {
+        for(let company in basketDetails.data.companies){
+            company["selected"] = false;
+        }
+    }
+
+    const handleChange = (event, company) => {
+        if(company.selected === true) {
+            company.selected=false;
+            const response = deselectInBasket(company, dispatch);
+            console.log(basketDetails.data);
+        } else {
+            company.selected = true;
+            const response = selectInBasket(company, dispatch);
+        }
+    }
     useEffect(async ()=>{
         const fetchBasketDetails = async () => {
             try {
@@ -26,6 +45,7 @@ const IndividualBasket = (props)=>{
             }
         };
         fetchBasketDetails();
+        addSelector();
     }, []);
 
 
@@ -42,16 +62,20 @@ const IndividualBasket = (props)=>{
             <InfoCard/>
             </div>
             {/* <Table /> */}
-            <List>
+            {/* <List>
                 {basketDetails.data.companies.map((company)=> {
                     return(
                         <ListItem>
-                            <Checkbox/>
+                            <Checkbox checked={company.selected} onChange={(event) => handleChange(event,company)}/>
                             {company.name}
                         </ListItem>
                     )
                 })}
-            </List>
+            </List> */}
+            
+                <Chart/>
+            
+            
             </div>
         </>
     )

@@ -11,7 +11,7 @@ import ShareIcon from '@mui/icons-material/Share';
 const CompanyTitle = (props) => {
 
     const[hover,setHover]=useState(false)
-    const[bool,setBool]=useState(false)
+    const[bool,setBool]=useState(props.isCompany)
 
     const handleMouseIn = () => {
         setHover(true);

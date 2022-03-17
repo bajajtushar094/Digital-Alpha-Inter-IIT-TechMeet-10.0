@@ -24,7 +24,7 @@ const File= (props) => {
            </div>
            <div className="companycontent">
                     <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
-            <CompanyFilter/>
+            <CompanyFilter isCompany={false}/>
             <RecentlyViewedLogIn />
             </div>
             {/* <div > */}
