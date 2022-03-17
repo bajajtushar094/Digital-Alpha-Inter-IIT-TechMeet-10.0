@@ -15,11 +15,8 @@ const initState = {
         "time_start": "",
         "time_end": ""
     },
-<<<<<<< HEAD
     queryFilingsData: null ,
-    searchFilings: []
-=======
-    queryFilingsData: null,
+    searchFilings: [],
     basketDetails: {
         error: "",
         data: {
@@ -33,7 +30,6 @@ const initState = {
         }
     },
     basketSelectedCompanies:[]
->>>>>>> a261322ea9df4ee1bedeb972e02a55551d886a70
 }
 
 const rootReducer = (state=initState,action) => {
