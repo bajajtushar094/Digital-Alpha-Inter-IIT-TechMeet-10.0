@@ -20,7 +20,21 @@ const IndividualBasket = ()=>{
             <BasketFilter/>
             <InfoCard/>
             </div>
-            <Table />
+            {/* <Table /> */}
+            {/* <List>
+                {basketDetails.data.companies.map((company)=> {
+                    return(
+                        <ListItem>
+                            <Checkbox checked={company.selected} onChange={(event) => handleChange(event,company)}/>
+                            {company.name}
+                        </ListItem>
+                    )
+                })}
+            </List> */}
+            
+                {/* <Chart/> */}
+            
+            
             </div>
         </>
     )
