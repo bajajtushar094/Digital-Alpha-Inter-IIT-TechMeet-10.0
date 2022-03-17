@@ -34,7 +34,7 @@ const IndividualBasket = (props)=>{
             const response = selectInBasket(company, dispatch);
         }
     }
-    useEffect(async ()=>{
+    useEffect(()=>{
         const fetchBasketDetails = async () => {
             try {
                 const response = await getBasketDetails(basket_id, dispatch);
