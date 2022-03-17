@@ -15,7 +15,8 @@ const initState = {
         "time_start": "",
         "time_end": ""
     },
-    queryFilingsData: null 
+    queryFilingsData: null ,
+    searchFilings: []
 }
 
 const rootReducer = (state=initState,action) => {
@@ -98,6 +99,13 @@ const rootReducer = (state=initState,action) => {
         return {
             ...state,
             baskets: newArr
+        }
+    }
+    if(action.type === "STORE_SEARCH_FILINGS"){
+        const newArr = action.searchFilings;
+        return {
+            ...state,
+            searchFilings: newArr
         }
     }
     return state;
