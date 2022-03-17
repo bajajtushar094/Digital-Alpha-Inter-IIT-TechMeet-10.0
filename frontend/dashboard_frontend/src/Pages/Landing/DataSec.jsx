@@ -1,14 +1,27 @@
 import React from 'react'
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn'
 import TableTwo from '../../Components/Widgets/TableTwo/TableTwo'
+import { connect } from "react-redux";
+const DataSec = (props) => {
+  console.log("Data from DataSec:", props.state);
 
-const DataSec = () => {
+  const data = props.state.recentFilings;
   return (
     <div style={{display:"flex",gap:"2rem",marginTop:"2rem"}}>
         <RecentlyViewedLogIn />
-        <TableTwo />
+        <TableTwo data={data}/>
     </div>
   )
 }
 
-export default DataSec
+
+const mapStateToProps = (state) => {
+  // console.log("State:", state);
+  return {
+    // To get the list of employee details from store
+    state: state,
+  };
+};
+
+export default connect(mapStateToProps, null)(DataSec);
+// export default DataSec;
