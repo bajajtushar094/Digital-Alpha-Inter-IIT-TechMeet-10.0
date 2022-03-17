@@ -165,15 +165,21 @@ export const getCurrentCompany = async (dispatch) => {
     return data;
 }
 
-export const getRecentlyViwedCompanies = async (id, dispatch) => {
+export const getRecentlyViewedCompanies = async (user_id,dispatch) => {
     let data;
+    // const config = {
+    //     headers: {
+    //         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+    //     }
+    // }
     await axios.get(
-        `${config().getRecentlyViewedCompanies}/${id}`
+        config().getRecentlyViewedCompanies,
+        configHeaders
     )
         .then((response) => {
             dispatch({
                 type: 'GET_RECENTLY_VIEWED_COMPANIES',
-                recentlyViwedCompanies: response.data
+                recentlyViewedCompanies: response.data
             });
             data = response.data
         })
@@ -185,11 +191,11 @@ export const getRecentlyViwedCompanies = async (id, dispatch) => {
 
 
 export const getBookmarkCompanies = async (id, dispatch) => {
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
-        }
-    }
+    // const config = {
+    //     headers: {
+    //         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+    //     }
+    // }
     try {
         // console.log("Id:", id);
         const response = await axios.get(
@@ -240,4 +246,57 @@ export const getBaskets = async (dispatch) => {
     catch(err) {
         console.log("Error:", err);
     }
+}
+
+
+export const getBasketDetails = async (basket_id, dispatch) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:8000/api/basket/details?basket_id=${basket_id}`,
+            configHeaders
+        );
+        dispatch({
+            type: 'GET_BASKET_DETAILS',
+            basketDetails: response.data
+        })
+        console.log("Basket Details :", response.data)
+        return response.data;
+    }
+    catch(err){
+        return {status: false}
+    }
+}
+
+export const getKeyMetrics = async (metric, dispatch) => {
+    let data;
+    console.log("here")
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        }
+    }
+    data = await axios.get(
+        `http://localhost:8000/api/companies/getKeyMetrics/${metric.ticker}/${metric.metric_type}`,
+        config
+    )
+    
+    return data;
+}
+
+export const addRecentlyViewedCompany = async (company_ticker) => {
+    let data;
+    console.log("addRecentlyViewedCompany")
+    // const config = {
+    //     headers: {
+    //         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+    //     }
+    // }
+    console.log(configHeaders)
+    data = await axios.post(
+        `${config().addRecentlyViewedCompany}/${company_ticker}`,
+        {},
+        configHeaders
+    )
+    
+    return data;
 }

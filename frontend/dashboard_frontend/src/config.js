@@ -12,6 +12,7 @@ export const config = ()=>{
             'getMetricsFromFiling':`${LOCAL_SERVER_URL}filings/getMetricsFromFilings`,
             'getBookmarkCompany':`${LOCAL_SERVER_URL}landingPage/bookmarkedCompanies`,
             'getRecentlyViewedCompanies': `${LOCAL_SERVER_URL}landingPage/recentlyViewedCompanies`,
+            'addRecentlyViewedCompany': `${LOCAL_SERVER_URL}companies/addRecentlyViewedCompany`,
             'getBasket': `${LOCAL_SERVER_URL}basket/get`,
         }
     }

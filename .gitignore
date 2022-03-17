@@ -16,3 +16,5 @@ frontend/dashboard_frontend/node_modules
 
 migrations/
 node_modules/
+
+backend/dashboard_apis/digialpha
