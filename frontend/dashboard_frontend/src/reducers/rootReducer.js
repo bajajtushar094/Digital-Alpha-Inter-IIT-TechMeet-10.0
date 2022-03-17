@@ -8,7 +8,19 @@ const initState = {
     allCompanies: [],
     currentCompany: {},
     recentlyViwedCompanies: [],
-    baskets: []
+    baskets: [],
+    basketDetails: {
+        error: "",
+        data: {
+            basket:{
+                id: 0,
+                name:"",
+                user_id:""
+            },
+            companies:[],
+            filings:[],
+        }
+    },
 }
 
 const rootReducer = (state=initState,action) => {
@@ -77,6 +89,14 @@ const rootReducer = (state=initState,action) => {
         return {
             ...state,
             baskets: newArr
+        }
+    }
+
+    if(action.type === 'GET_BASKET_DETAILS') {
+        const newArr = action.basketDetails;
+        return {
+            ...state,
+            basketDetails: newArr
         }
     }
     return state;

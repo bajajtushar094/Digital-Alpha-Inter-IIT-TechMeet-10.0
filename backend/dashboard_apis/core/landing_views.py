@@ -122,9 +122,10 @@ class bookmarkedCompanies(APIView):
         )      
 
 class recentlyViewedCompanies(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request, *args, **kwargs):
         try:
-            user = User.objects.filter(email=kwargs['user_id'])
+            user = User.objects.filter(email=request.user)
             print(user)
             print(user[0].recently_viewed_companies.all().values())
             
