@@ -1,5 +1,5 @@
-import React from 'react'
-import { LineChart, Line } from 'recharts';
+// import React from 'react'
+// import { LineChart, Line } from 'recharts';
 
 // import React from 'react'
 // import { Line} from 'react-chartjs-2';
@@ -17,7 +17,7 @@ import { LineChart, Line } from 'recharts';
 //     }
 //   ],
 
-const data = [{ name: 'Page A', uv: 400, pv: 2400, amt: 2400 },{ name: 'Page B', uv: 300, pv: 2400, amt: 2400 },{ name: 'Page C', uv: 300, pv: 2400, amt: 2400 },{ name: 'Page D', uv: 200, pv: 2400, amt: 2400 },{ name: 'Page E', uv: 280, pv: 2400, amt: 2400 },{ name: 'Page F', uv: 180, pv: 2400, amt: 2400 }];
+// const data = [{ name: 'Page A', uv: 400, pv: 2400, amt: 2400 },{ name: 'Page B', uv: 300, pv: 2400, amt: 2400 },{ name: 'Page C', uv: 300, pv: 2400, amt: 2400 },{ name: 'Page D', uv: 200, pv: 2400, amt: 2400 },{ name: 'Page E', uv: 280, pv: 2400, amt: 2400 },{ name: 'Page F', uv: 180, pv: 2400, amt: 2400 }];
 
 // export const data ={ 
 //     labels:["mar 20","apr 20","may 20","june 20"],
@@ -35,19 +35,19 @@ const data = [{ name: 'Page A', uv: 400, pv: 2400, amt: 2400 },{ name: 'Page B',
 // }
 
 
-const Chart = () => {
-  return (
-    <div>
-      <div style={{display:"flex",justifyContent:"center",marginTop:"30px"}}>
-      <LineChart width={400} height={400} data={data}>
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-      </LineChart>
-      </div>
-    </div>
-  )
-}
+// const Chart = () => {
+//   return (
+//     <div>
+//       <div style={{display:"flex",justifyContent:"center",marginTop:"30px"}}>
+//       <LineChart width={400} height={400} data={data}>
+//         <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+//       </LineChart>
+//       </div>
+//     </div>
+//   )
+// }
 
-export default Chart
+// export default Chart
 // }
 
 
