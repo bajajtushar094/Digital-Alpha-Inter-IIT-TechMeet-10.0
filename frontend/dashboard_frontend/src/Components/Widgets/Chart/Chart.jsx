@@ -90,6 +90,7 @@ export default Chart
 // export default Chart
 
 // import "./styles.css";
+import { useDispatch, connect } from 'react-redux';
 import React from "react";
 import {
   BarChart,
@@ -147,9 +148,18 @@ const data = [
   }
 ];
 
-export default function Chart() {
+function Chart(props) {
+  const companies = props.state.basketSelectedCompanies;
+  console.log(companies);
+  let company_ticker = [];
+  for(let i=0;i<companies.length;i++){
+    console.log(companies[i]);
+    company_ticker.push(companies[i].ticker);
+  }
+  console.log(company_ticker);
+
   return (
-    <ResponsiveContainer height={600} width="50%">
+    <ResponsiveContainer height={600} width="90%">
     <BarChart
       data={data}
       margin={{
@@ -170,3 +180,12 @@ export default function Chart() {
     </ResponsiveContainer>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    state:state
+  }
+};
+
+export default connect(mapStateToProps, null)(Chart);
+

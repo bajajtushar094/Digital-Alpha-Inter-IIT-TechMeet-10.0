@@ -322,3 +322,7 @@ export const addRecentlyViewedCompany = async (company_ticker) => {
     
     return data;
 }
+
+export const enableVisualize = (dispatch) => {
+    
+}

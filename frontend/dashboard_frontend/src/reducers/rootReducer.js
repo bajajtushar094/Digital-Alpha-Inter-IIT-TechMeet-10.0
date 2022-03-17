@@ -21,7 +21,8 @@ const initState = {
             filings:[],
         }
     },
-    basketSelectedCompanies:[]
+    basketSelectedCompanies:[],
+    visualize: false
 }
 
 const rootReducer = (state=initState,action) => {
@@ -125,6 +126,20 @@ const rootReducer = (state=initState,action) => {
         return{
             ...state,
             basketSelectedCompanies: []
+        }
+    }
+
+    if( action.type == "ENABLE_VISUALIZE"){
+        return {
+            ...state,
+            visualize: true
+        }
+    }
+
+    if(action.type == 'DISABLE_VISUALIZE'){
+        return {
+            ...state,
+            visualize: false
         }
     }
 
