@@ -22,12 +22,12 @@ class getAllRecentFilings(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-        print("Filing Values:",filings.values())
+        # print("Filing Values:",filings.values())
 
         filings_list = []
 
-        for i in filings.values():
-            metrics = KeyMetric.objects.filter(filing=i['id'])
+        for filing in filings.values():
+            metrics = KeyMetric.objects.filter(filing=filing['id'])
 
             # i['metrics'] = {
             #     'metric_type':metrics.values()['metric_type'],
@@ -36,16 +36,16 @@ class getAllRecentFilings(APIView):
             # }
 
             metrics_list = []
-            for j in metrics.values():
+            for metrix in metrics.values():
                 metric = {
-                    'metric_type':j['metric_type'],
-                    'metric_value':j['metric_value'],
-                    'metric_unit':j['metric_unit']
+                    'metric_type':metrix['metric_type'],
+                    'metric_value':metrix['metric_value'],
+                    'metric_unit':metrix['metric_unit']
                 }
                 metrics_list.append(metric)
 
-            i['metrics'] = metrics_list
-            filings_list.append(i)
+            filing['metrics'] = metrics_list
+            filings_list.append(filing)
         return Response(
             data=filings_list,
             status=status.HTTP_200_OK
@@ -124,9 +124,11 @@ class bookmarkedCompanies(APIView):
 class recentlyViewedCompanies(APIView):
     def get(self, request, *args, **kwargs):
         try:
-            user = User.objects.filter(email=kwargs['user_id'])
-            print(user)
-            print(user[0].recently_viewed_companies.all().values())
+            user = User.objects.get(id=kwargs['user_id'])
+            # print(user)
+            # print(user.recently_viewed_companies.all().values())
+            # print(user.recently_viewed_companies.all())
+            # print(user.recently_viewed_companies)
             
             # for index in range(len(bookmarked_companies)):
             #     bookmarked_companies_json[index]["filings"] = bookmarked_companies[index].filing_set.all().values()
@@ -138,7 +140,7 @@ class recentlyViewedCompanies(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
         return Response(
-            data=user[0].recently_viewed_companies.all().values(),
+            data=user.recently_viewed_companies.all().values().order_by('-timestamp'),
             status=status.HTTP_200_OK
         )   
 
@@ -146,7 +148,7 @@ class recentlyFiled(APIView):
     def get(self , request, *args, **kwargs):
         try:
             companies = Filing.objects.order_by('-date').values('company_id').distinct()
-            print(companies.values())
+            # print(companies.values())
         except:
             Response(
                 {
@@ -163,7 +165,7 @@ class getTop5(APIView):
     def get(self, request, *args, **kwargs):
         try:
             companies = Filing.objects.order_by('-date').values('company_id').distinct()
-            print(companies.values())
+            # print(companies.values())
         except:
             Response(
                 {

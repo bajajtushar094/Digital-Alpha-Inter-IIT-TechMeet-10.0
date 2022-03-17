@@ -9,6 +9,29 @@ from .utils import *
 from .models import *
 from .serializers import *
 
+def add_recently_viewed_company(user_id, company_ticker):
+    MAX_RECENTLY_VIEWED_COMPANIES = 5
+    try:
+        user = User.objects.get(id=user_id)
+        company = Company.objects.get(ticker=company_ticker)
+        
+        try:
+            entry = RecentlyViewed.objects.get(user=user, company=company)
+            entry.save()
+            # print("hello")
+        except Exception as e:
+            # print(e)
+            ids = RecentlyViewed.objects.order_by("-timestamp").values_list("pk", flat=True)[MAX_RECENTLY_VIEWED_COMPANIES-1:]
+            RecentlyViewed.objects.filter(pk__in=list(ids)).delete()
+
+            RecentlyViewed.objects.create(user=user, company=company)
+
+    except Exception as e:
+        # print(e)
+        pass
+
+
+
 class bookmarkCompanyView(APIView):
 
     permission_classes = [permissions.IsAuthenticated]
