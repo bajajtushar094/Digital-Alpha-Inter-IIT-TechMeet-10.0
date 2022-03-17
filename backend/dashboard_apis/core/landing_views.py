@@ -22,6 +22,31 @@ class getAllRecentFilings(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+        # print("Filing Values:",filings.values())
+
+        filings_list = []
+
+        for filing in filings.values():
+            metrics = KeyMetric.objects.filter(filing=filing['id'])
+
+            # i['metrics'] = {
+            #     'metric_type':metrics.values()['metric_type'],
+            #     'metric_value':metrics.values()['metric_value'],
+            #     'metric_unit':metrics.values()['metric_unit']
+            # }
+
+            metrics_list = []
+            for metrix in metrics.values():
+                metric = {
+                    'metric_type':metrix['metric_type'],
+                    'metric_value':metrix['metric_value'],
+                    'metric_unit':metrix['metric_unit']
+                }
+                metrics_list.append(metric)
+
+            filing['metrics'] = metrics_list
+            filings_list.append(filing)
+
         return Response(
             data=filings.values(),
             status=status.HTTP_200_OK
@@ -102,7 +127,6 @@ class recentlyViewedCompanies(APIView):
         try:
             user = User.objects.get(id=kwargs['user_id'])
             # print(user)
-            # print(user[0].recently_viewed_companies.all().values())
             
             # for index in range(len(bookmarked_companies)):
             #     bookmarked_companies_json[index]["filings"] = bookmarked_companies[index].filing_set.all().values()
@@ -114,7 +138,8 @@ class recentlyViewedCompanies(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
         return Response(
-            data=user.recently_viewed_companies.all().values(),
+
+            data=user.recently_viewed_companies.all().values().order_by('-timestamp'),
             status=status.HTTP_200_OK
         )   
 
@@ -122,7 +147,7 @@ class recentlyFiled(APIView):
     def get(self , request, *args, **kwargs):
         try:
             companies = Filing.objects.order_by('-date').values('company_id').distinct()
-            print(companies.values())
+            # print(companies.values())
         except:
             Response(
                 {
@@ -139,7 +164,7 @@ class getTop5(APIView):
     def get(self, request, *args, **kwargs):
         try:
             companies = Filing.objects.order_by('-date').values('company_id').distinct()
-            print(companies.values())
+            # print(companies.values())
         except:
             Response(
                 {

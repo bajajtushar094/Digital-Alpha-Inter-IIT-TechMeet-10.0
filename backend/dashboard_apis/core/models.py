@@ -53,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)
 	is_superuser = models.BooleanField(default=False)
-	recently_viewed_companies = models.ManyToManyField(Company, related_name='recently_viewed_by_user', blank=True)
+	# recently_viewed_companies = models.ManyToManyField(Company, related_name='recently_viewed_by_user', blank=True)
 	bookmarked_companies = models.ManyToManyField(Company, related_name='bookmarked_by_user', blank=True)
 	objects = UserManager()
 
@@ -119,5 +119,11 @@ class KeyMetric(models.Model):
 
 
 
-
+class RecentlyViewed(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recently_viewed_companies')
+	company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='recently_viewed_by')
+	timestamp = models.DateTimeField(auto_now=True)
+	
+	def __str__(self):
+		return f'{self.user.first_name}-{self.company.name}-{self.timestamp.timestamp()}'
 
