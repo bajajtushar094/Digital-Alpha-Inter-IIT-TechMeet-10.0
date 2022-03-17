@@ -25,14 +25,14 @@ urlpatterns = [
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
     path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
-    path("companies/company_viewed/<str:ticker>",addToRecentlyViewed.as_view()),
+    path("companies/addRecentlyViewedCompany/<str:ticker>",addRecentlyViewedCompany.as_view()),
 
     #Landing page Apis
     path("landingPage/recentFilings/all", getAllRecentFilings.as_view()),
     path("landingPage/companies/all", getAllCompanies.as_view()),
     path("landingPage/baskets/<int:user_id>", getAllBaskets.as_view()),
     path("landingPage/bookmarkedCompanies/<int:user_id>",bookmarkedCompanies.as_view()),
-    path("landingPage/recentlyViewedCompanies/<int:user_id>",recentlyViewedCompanies.as_view()),
+    path("landingPage/recentlyViewedCompanies",recentlyViewedCompanies.as_view()),
     path("landingPage/recentlyFiled",recentlyFiled.as_view()),
 
 

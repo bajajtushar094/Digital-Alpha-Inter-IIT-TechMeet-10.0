@@ -64,25 +64,25 @@ class addToBasket(APIView):
             status=status.HTTP_200_OK
         )
 
-class addToRecentlyViewed(APIView):
+class addRecentlyViewedCompany(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-
-        MAX_RECENTLY_VIEWED_COMPANIES = 5
-        user_id = request.user.id
+        print("HELLo")
+        MAX_RECENTLY_VIEWED_COMPANIES = 3
+        # user_id = request.user.id
         ticker = kwargs['ticker']
         try:
 
-            user = User.objects.get(id=user_id)
-            company = Company.objects.get(ticker=company_ticker)
+            user = request.user
+            company = Company.objects.get(ticker=ticker)
             
             try:
                 entry = RecentlyViewed.objects.get(user=user, company=company)
                 entry.save()
                 # print("hello")
             except Exception as e:
-                # print(e)
+                print(e)
                 ids = RecentlyViewed.objects.order_by("-timestamp").values_list("pk", flat=True)[MAX_RECENTLY_VIEWED_COMPANIES-1:]
                 RecentlyViewed.objects.filter(pk__in=list(ids)).delete()
 
@@ -95,6 +95,7 @@ class addToRecentlyViewed(APIView):
 
 
         except Exception as e:
+            print(e)
             return Response(
                     {"res":"Not able to add company to recently viewed"},
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
