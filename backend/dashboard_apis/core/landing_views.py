@@ -145,35 +145,36 @@ class recentlyViewedCompanies(APIView):
 		)   
 
 class recentlyFiled(APIView):
-	def get(self , request, *args, **kwargs):
-		try:
-			companies = Filing.objects.order_by('-date').values('company_id').distinct()
-			# print(companies.values())
-		except:
-			Response(
-				{
-					"res":"Error while fetching the Company data"
-				},
-				status=status.HTTP_500_INTERNAL_SERVER_ERROR
-			)
-		return Response(
-			data=companies.values(),
-			status=status.HTTP_200_OK
-		)   
+    def get(self , request, *args, **kwargs):
+        try:
+            companies = Filing.objects.order_by('-date').values('company_id').distinct()
+            print(companies.values())
+        except:
+            Response(
+                {
+                    "res":"Error while fetching the Company data"
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        return Response(
+            data=companies.company.all().values(),
+            status=status.HTTP_200_OK
+        )   
 
-class getTop5(APIView):
-	def get(self, request, *args, **kwargs):
-		try:
-			companies = Filing.objects.order_by('-date').values('company_id').distinct()
-			# print(companies.values())
-		except:
-			Response(
-				{
-					"res":"Error while fetching the Company data"
-				},
-				status=status.HTTP_500_INTERNAL_SERVER_ERROR
-			)
-		return Response(
-			data=companies.values(),
-			status=status.HTTP_200_OK
-		)   
+# class getTop5(APIView):
+#     def get(self, request, *args, **kwargs):
+#         try:
+#             companies = Filing.objects.order_by('-date').values('company_id').distinct()
+#             print(companies.values())
+#         except:
+#             Response(
+#                 {
+#                     "res":"Error while fetching the Company data"
+#                 },
+#                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
+#             )
+#         return Response(
+#             data=companies.values(),
+#             status=status.HTTP_200_OK
+#         )   
+
