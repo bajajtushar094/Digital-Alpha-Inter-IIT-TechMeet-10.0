@@ -165,10 +165,10 @@ export const getCurrentCompany = async (dispatch) => {
     return data;
 }
 
-export const getRecentlyViwedCompanies = async (dispatch) => {
+export const getRecentlyViwedCompanies = async (id, dispatch) => {
     let data;
     await axios.get(
-        config().getRecentlyViewedCompanies
+        `${config().getRecentlyViewedCompanies}/${id}`
     )
         .then((response) => {
             dispatch({
