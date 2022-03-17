@@ -239,7 +239,6 @@ export const getBookmarkCompanies = async (id, dispatch) => {
     //     }
     // }
     try {
-        // console.log("Id:", id);
         const response = await axios.get(
             `http://localhost:8000/api/landingPage/bookmarkedCompanies/${1}`,
             configHeaders
@@ -323,6 +322,29 @@ export const getBasketDetails = async (basket_id, dispatch) => {
     }
 }
 
+export const selectInBasket = (company, dispatch) => {
+    dispatch({
+        type: 'SELECT_IN_BASKET',
+        company:company
+    })
+    console.log("Company being added to basket: ", company);
+    return company;
+}
+
+export const deselectInBasket = (company, dispatch) => {
+    dispatch({
+        type:'DESELECT_IN_BASKET',
+        company: company
+    })
+
+    console.log("Company being removed from selection: ", company);
+    return company;
+}
+
+export const refreshSelectedCompanies = (dispatch) => {
+    dispatch({type: 'RESET_BASKET_SELECTION'});
+    return "Selections removed";
+}
 export const getKeyMetrics = async (metric, dispatch) => {
     let data;
     console.log("here")
