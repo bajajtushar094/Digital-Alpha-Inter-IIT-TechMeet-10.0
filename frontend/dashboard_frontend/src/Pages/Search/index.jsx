@@ -47,7 +47,7 @@ const Search = (props) => {
     }
 
     const [selected, setSelected] = useState(1);
-    console.log("Search Filings:", typeof props.state.searchFilings)
+    console.log("Search Filings:",props.state.searchFilings)
 
     const [filingsData, setFilingsData] = useState([]);
 
