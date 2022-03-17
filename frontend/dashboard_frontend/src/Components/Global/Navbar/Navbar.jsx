@@ -45,7 +45,7 @@ const Navbar = () => {
           <img src={item1} alt="" />
          </div>
        </Link>
-       <Link to="/">
+       <Link to="/basketList">
         <div className='navicon'>
           <img src={item2} alt="" />
          </div>

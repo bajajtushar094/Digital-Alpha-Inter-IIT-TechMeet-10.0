@@ -167,11 +167,11 @@ export const getCurrentCompany = async (dispatch) => {
 
 export const getRecentlyViewedCompanies = async (user_id,dispatch) => {
     let data;
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
-        }
-    }
+    // const config = {
+    //     headers: {
+    //         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+    //     }
+    // }
     await axios.get(
         config().getRecentlyViewedCompanies,
         configHeaders
@@ -191,11 +191,11 @@ export const getRecentlyViewedCompanies = async (user_id,dispatch) => {
 
 
 export const getBookmarkCompanies = async (id, dispatch) => {
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
-        }
-    }
+    // const config = {
+    //     headers: {
+    //         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+    //     }
+    // }
     try {
         const response = await axios.get(
             `http://localhost:8000/api/landingPage/bookmarkedCompanies/${1}`,
@@ -307,14 +307,16 @@ export const getKeyMetrics = async (metric, dispatch) => {
 
 export const addRecentlyViewedCompany = async (company_ticker) => {
     let data;
-    console.log("here")
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
-        }
-    }
+    console.log("addRecentlyViewedCompany")
+    // const config = {
+    //     headers: {
+    //         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+    //     }
+    // }
+    console.log(configHeaders)
     data = await axios.post(
         `${config().addRecentlyViewedCompany}/${company_ticker}`,
+        {},
         configHeaders
     )
     

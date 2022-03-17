@@ -19,3 +19,8 @@ METRIC_UNITS = [
 	('K', 'Thousand'),
 	('%', 'Percent')
 ]
+
+SOURCE_TYPES = [
+    ('url', 'URL'), 
+    ('filing', 'Filing')
+]

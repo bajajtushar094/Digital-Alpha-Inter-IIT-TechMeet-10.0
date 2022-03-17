@@ -120,12 +120,15 @@ class bookmarkedCompanies(APIView):
 		return Response(
 			data=user.bookmarked_companies.all().values(),
 			status=status.HTTP_200_OK
-		)      
+		)
 
 class recentlyViewedCompanies(APIView):
+	permission_classes = [permissions.IsAuthenticated]
 	def get(self, request, *args, **kwargs):
 		try:
-			user = User.objects.get(id=kwargs['user_id'])
+			# print("HI")
+			# request.user
+			user = request.user
 			print(user.recently_viewed_companies.all().values().order_by('-timestamp'))
 			
 			# for index in range(len(bookmarked_companies)):
@@ -138,9 +141,12 @@ class recentlyViewedCompanies(APIView):
 				},
 				status=status.HTTP_500_INTERNAL_SERVER_ERROR
 			)
+
+		recently_viewed_companies = user.recently_viewed_companies.all().values('company__ticker', 'company__name', 'company__logo', 'timestamp').order_by('-timestamp')
+		
 		return Response(
 
-			data=user.recently_viewed_companies.all().values().order_by('-timestamp'),
+			data=recently_viewed_companies,
 			status=status.HTTP_200_OK
 		)   
 
