@@ -46,8 +46,9 @@ class getAllRecentFilings(APIView):
 
             filing['metrics'] = metrics_list
             filings_list.append(filing)
+
         return Response(
-            data=filings_list,
+            data=filings.values(),
             status=status.HTTP_200_OK
         )
 
@@ -126,9 +127,6 @@ class recentlyViewedCompanies(APIView):
         try:
             user = User.objects.get(id=kwargs['user_id'])
             # print(user)
-            # print(user.recently_viewed_companies.all().values())
-            # print(user.recently_viewed_companies.all())
-            # print(user.recently_viewed_companies)
             
             # for index in range(len(bookmarked_companies)):
             #     bookmarked_companies_json[index]["filings"] = bookmarked_companies[index].filing_set.all().values()
@@ -140,6 +138,7 @@ class recentlyViewedCompanies(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
         return Response(
+
             data=user.recently_viewed_companies.all().values().order_by('-timestamp'),
             status=status.HTTP_200_OK
         )   
