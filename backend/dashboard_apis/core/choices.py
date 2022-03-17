@@ -6,11 +6,11 @@ FILING_TYPES = [
 
 METRIC_TYPES = [
 	('ARR', 'Annual Recurring Revenue'),
-	('Customer Churn Rate', 'Customer Churn Rate'),
+	('CCR', 'Customer Churn Rate'),
 	('LTV', 'Lifetime Value'),
 	('CAC', 'Customer Acquisition Cost'),
 	('ARPA', 'Average Run Per Account'),
-	('Revenue Churn Rate', 'Revenue Churn Rate')
+	('RCC', 'Revenue Churn Rate')
 ]
 
 METRIC_UNITS = [

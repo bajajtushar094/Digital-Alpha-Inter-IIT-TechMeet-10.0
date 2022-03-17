@@ -7,16 +7,16 @@ import IndividualBasket from "./Pages/IndividualBasket";
 import BasketList from "./Pages/BasketList";
 import Company from "./Pages/Company";
 import Chart from "./Components/Widgets/Chart/Chart";
+import File from "./Pages/Files/file";
 import { connect } from 'react-redux';
 import { getRecentFilings, loginUser } from "./actions/action";
 import { useEffect } from "react";
+import RecentlyViewed from "./Pages/RecentlyViewed";
+
 
 
 
 function App() {
-
-	
-
 	return (
 		<div className="App">
 			<BrowserRouter>
@@ -36,13 +36,20 @@ function App() {
 					<Route path='/company/:ticker'>
 						<Route index element={<Company/>}/>
 					</Route>
+					<Route path='/recentlyviewed'>
+						<Route index element={<RecentlyViewed/>}/>
+					</Route>
 					<Route path='/test'>
 						<Route index element={<Chart/>}/>
+					</Route>
+					<Route path='/file'>
+						<Route index element={<File/>}/>
 					</Route>
 				</Routes>
 			</BrowserRouter>
 		</div>
 	);
 }
+
 
 export default App;

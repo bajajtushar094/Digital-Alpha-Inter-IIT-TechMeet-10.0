@@ -69,7 +69,6 @@ const Company = () => {
         setIsMetricLoading(false);
     }, [])
 
-
     return (
         <>
             <Navbar />

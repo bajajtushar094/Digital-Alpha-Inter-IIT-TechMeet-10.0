@@ -29,9 +29,9 @@ urlpatterns = [
     #Landing page Apis
     path("landingPage/recentFilings/all", getAllRecentFilings.as_view()),
     path("landingPage/companies/all", getAllCompanies.as_view()),
-    path("landingPage/baskets/<str:user_id>", getAllBaskets.as_view()),
-    path("landingPage/bookmarkedCompanies/<str:user_id>",bookmarkedCompanies.as_view()),
-    path("landingPage/recentlyViewedCompanies/<str:user_id>",recentlyViewedCompanies.as_view()),
+    path("landingPage/baskets/<int:user_id>", getAllBaskets.as_view()),
+    path("landingPage/bookmarkedCompanies/<int:user_id>",bookmarkedCompanies.as_view()),
+    path("landingPage/recentlyViewedCompanies/<int:user_id>",recentlyViewedCompanies.as_view()),
     path("landingPage/recentlyFiled",recentlyFiled.as_view()),
 
 
@@ -40,6 +40,7 @@ urlpatterns = [
 
     #Filing APIs
     path("filings/getKeyMetric/<int:id>/<str:metric_type>", getKeyMetricsOfFiling.as_view()),
+    path("filings/getMetricsFromFilings/<int:id>", getMetricsFromFiling.as_view()),
 
     #Basket APIs
     # I think these are wrong APIs, makes no sense to me :(

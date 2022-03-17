@@ -7,11 +7,12 @@ const initState = {
     recentFilings: [],
     allCompanies: [],
     currentCompany: {},
-    recentlyViwedCompanies: []
+    recentlyViwedCompanies: [],
+    baskets: []
 }
 
 const rootReducer = (state=initState,action) => {
-    console.log(action);
+    // console.log(action);
 
     if(action.type==='LOGIN_USER') {
         return {
@@ -69,6 +70,13 @@ const rootReducer = (state=initState,action) => {
             ...state,
             isAuthenticated:false,
             user: null,
+        }
+    }
+    if(action.type === 'GET_BASKETS') {
+        const newArr = action.baskets;
+        return {
+            ...state,
+            baskets: newArr
         }
     }
     return state;
