@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
-from datetime import *
+from datetime import date
 
 @api_view(["GET"])
 def getBookmarks(request):
@@ -70,7 +70,14 @@ def getBookmarksWithFilings(request):
         status=status.HTTP_200_OK
     )
 
-@api_view(["POST"])
+def getDate(dateS):
+    return dateS + '-01'
+
+def simpleDate(date):
+    print(date, f'{str(date.year)}-{str(date.month)}-01')
+    return f'{str(date.year)}-{str(date.month)}-01'
+
+@api_view(["GET"])
 def getComparisonData(request):
     """API endpoint for getting comparison data
     
@@ -78,21 +85,41 @@ def getComparisonData(request):
         tickers list[string]: list of tickers to compare
     
     Returns: \n
-        companies list[object]: details of all the companies provided
-        filings list[object]: all the filings of companies provided
+        # companies list[object]: details of all the companies provided
+        # filings list[object]: all the filings of companies provided
+        metrices[]
     """
     tickers = request.data["tickers"]
-    filings = {}
-    companies = Company.objects.filter(ticker__in=tickers)
-    for company in companies.all():
-        filings[company.ticker] = company.filings.values()
+    start_date = getDate(request.data["start_date"])
+    end_date = getDate(request.data["end_date"])
+    metric_type = request.data["metric_type"]
+
+    dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], yearly=False, metric_type=metric_type).values("date").distinct()
+
+    print(dates)
+    metrices = []
+    for date in dates:
+        print(date, str(date["date"]))
+        metrices.append({"date": str(date["date"])})
+        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], yearly=False, metric_type=metric_type)
+        for ticker in tickers:
+            metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
+
+    print(metrices)
+
+    
+    # # metrices = []
+    # for ticker in tickers:
+    #     for 
+    #     metrices[]
+    #     metrices_l = KeyMetric.objects.filter(company__ticker=ticker, date>=start_time, date<=end_time, yearly=False, metric_type=metric_type)
+    #     metrices.append(metrices_l)
+    
+
     
     return Response(
         {
-            "data": {
-                "companies": companies.values(), 
-                "filings": filings
-            },
+            "data": metrices,
             "error": None
         }, 
         status=status.HTTP_200_OK

@@ -178,9 +178,4 @@ class getFilingFromMetric(APIView):
         )
 
 
-        
-        
-
-
-
 
