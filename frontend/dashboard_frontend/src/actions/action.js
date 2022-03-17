@@ -168,7 +168,8 @@ export const getCurrentCompany = async (dispatch) => {
 export const getRecentlyViwedCompanies = async (dispatch) => {
     let data;
     await axios.get(
-        config().getRecentlyViewedCompanies
+        config().getRecentlyViewedCompanies,
+        configHeaders
     )
         .then((response) => {
             dispatch({
@@ -239,5 +240,23 @@ export const getBaskets = async (dispatch) => {
     }
     catch(err) {
         console.log("Error:", err);
+    }
+}
+
+export const getBasketDetails = async (basket_id, dispatch) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:8000/api/basket/details?basket_id=${basket_id}`,
+            configHeaders
+        );
+        dispatch({
+            type: 'GET_BASKET_DETAILS',
+            basketDetails: response.data
+        })
+        console.log("Basket Details :", response.data)
+        return response.data;
+    }
+    catch(err){
+        return {status: false}
     }
 }
