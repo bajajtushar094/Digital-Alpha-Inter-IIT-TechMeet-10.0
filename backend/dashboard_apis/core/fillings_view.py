@@ -58,4 +58,7 @@ def addToDb(request):
     for row in csvreader:
         rows.append(row)
     
+    
+    
+    file.close()
     return HttpResponse('Hi')
