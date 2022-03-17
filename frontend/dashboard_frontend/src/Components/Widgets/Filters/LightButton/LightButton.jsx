@@ -10,6 +10,7 @@ const LightButton = (props)=>{
     const destination = props.to || "#";
     const handleClick = () => {
         const response = refreshSelectedCompanies(dispatch);
+        dispatch({type:"DISABLE_VISUALIZE"});
         navigate(props.to)
     }
     return(

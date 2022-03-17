@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../Components/Global/Navbar/Navbar';
 import BasketFilter from "../../Components/Widgets/Filters/BasketFilter";
 import InfoCard from '../../Components/Widgets/Filters/InfoCard/InfoCard';
@@ -13,20 +13,24 @@ import { Checkbox, List, ListItem } from '@mui/material';
 import Chart from '../../Components/Widgets/Chart/Chart'
 import { Box } from '@mui/system';
 import { ResponsiveContainer } from 'recharts';
+import MetricTabs from './MetricTabs';
 
 const IndividualBasket = (props)=>{
     const dispatch = useDispatch();
     const basket_id = useParams().basket_id;
+    // const [visualize, setVisualize] = useState(false);
     let basketDetails = props.state.basketDetails;
     const addSelector = () => {
         for(let company in basketDetails.data.companies){
             company["selected"] = false;
         }
     }
+    let visualize = props.state.visualize;
+    
 
     const handleChange = (event, company) => {
         if(company.selected === true) {
-            company.selected=false;
+            company.selected = false;
             const response = deselectInBasket(company, dispatch);
             console.log(basketDetails.data);
         } else {
@@ -58,24 +62,24 @@ const IndividualBasket = (props)=>{
             </div>
             <div className='indibasketcontent'>
             <div style={{display:'flex', flexDirection:'column',  justifyItems:'space-around'}}>
-            <BasketFilter basketDetails={basketDetails}/>
+            <BasketFilter basketDetails={basketDetails} />
             <InfoCard/>
             </div>
             {/* <Table /> */}
-            {/* <List>
-                {basketDetails.data.companies.map((company)=> {
-                    return(
-                        <ListItem>
-                            <Checkbox checked={company.selected} onChange={(event) => handleChange(event,company)}/>
-                            {company.name}
-                        </ListItem>
-                    )
-                })}
-            </List> */}
-            
-                <Chart/>
             
             
+            {visualize?<MetricTabs/>:
+            <List>
+            {basketDetails.data.companies.map((company)=> {
+                return(
+                    <ListItem>
+                        <Checkbox checked={company.selected} onChange={(event) => handleChange(event,company)}/>
+                        {company.name}
+                    </ListItem>
+                )
+            })}
+            </List>
+            }
             </div>
         </>
     )

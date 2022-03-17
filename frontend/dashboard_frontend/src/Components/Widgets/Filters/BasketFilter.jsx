@@ -7,18 +7,24 @@ import LightButton from './LightButton/LightButton';
 import DarkButton from './DarkButton/DarkButton';
 import InfoCard from './InfoCard/InfoCard';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, Alert } from '@mui/material';
+import {connect, useDispatch} from 'react-redux';
 
 const BasketFilter = (props)=>{
-    
+    const dispatch = useDispatch();
     const basketDetails = props.basketDetails;
+    const basketSelectedCompanies = props.state.basketSelectedCompanies;
     const checkImport = () => {
         console.log("checkImport")
         console.log(basketDetails);
     }
 
     const handleClick = () => {
-        
+        if(basketSelectedCompanies.length <= 1){
+            alert("Data comparison can be done for 2 or more companies only");
+        } else {
+            dispatch({type:"ENABLE_VISUALIZE"});
+        }
     };
 
     useEffect(()=>{checkImport();},[])
@@ -36,5 +42,10 @@ const BasketFilter = (props)=>{
     )
 }
 
+const mapStateToProps = (state)=>{
+    return {
+        state:state,
+    }
+}
 
-export default BasketFilter;
+export default connect(mapStateToProps, null)(BasketFilter);
