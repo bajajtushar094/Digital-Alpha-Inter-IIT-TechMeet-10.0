@@ -3,7 +3,7 @@ import "../../../global.scss";
 import ASAN from "../../../images/widgets/ASAN.svg";
 import More from "../../../images/widgets/More.svg";
 import { useDispatch } from "react-redux";
-import { getRecentlyViwedCompanies } from "../../../actions/action";
+import { getRecentlyViewedCompanies } from "../../../actions/action";
 import { connect } from "react-redux";
 const RecentlyViewedLogIn = (props) => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const RecentlyViewedLogIn = (props) => {
   console.log("Props from RecentlyViewedLogIn;", props);
   useEffect(() => {
     async function getRecentViewFunc() {
-      await getRecentlyViwedCompanies(dispatch);
+      await getRecentlyViewedCompanies(dispatch);
     }
     getRecentViewFunc();
   }, [dispatch]);
