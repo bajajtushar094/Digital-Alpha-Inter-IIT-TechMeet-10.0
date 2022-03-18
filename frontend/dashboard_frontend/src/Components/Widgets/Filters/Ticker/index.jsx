@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React , {useEffect, useRef, useState} from "react";
 import '../../../../global.scss';
 import './ticker.scss';
 import tickerSearchEnter from "../../../../images/widgets/Tickersearchenter.svg";
@@ -66,11 +66,11 @@ const Ticker = ({ state }) => {
 // export default Ticker;
 
 const mapStateToProps = (state) => {
-	// console.log("State:", state);
-	return {
-		// To get the list of employee details from store
-		state: state,
-	};
+  // console.log("State:", state);
+  return {
+    // To get the list of employee details from store
+    state: state,
+  };
 };
 
 export default connect(mapStateToProps, null)(Ticker);

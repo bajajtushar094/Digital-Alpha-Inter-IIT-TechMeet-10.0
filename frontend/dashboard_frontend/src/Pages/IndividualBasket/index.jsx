@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../Components/Global/Navbar/Navbar';
 import BasketFilter from "../../Components/Widgets/Filters/BasketFilter";
 import InfoCard from '../../Components/Widgets/Filters/InfoCard/InfoCard';
@@ -13,22 +13,26 @@ import { Checkbox, List, ListItem } from '@mui/material';
 import Chart from '../../Components/Widgets/Chart/Chart'
 import { Box } from '@mui/system';
 import { ResponsiveContainer } from 'recharts';
+import MetricTabs from './MetricTabs';
 
 const IndividualBasket = (props)=>{
     const dispatch = useDispatch();
     const basket_id = useParams().basket_id;
+    const state = props.state;
+    // const [visualize, setVisualize] = useState(false);
     let basketDetails = props.state.basketDetails;
     const addSelector = () => {
-        for(let company in basketDetails.data.companies){
-            company["selected"] = false;
+        for(let i=0;i<basketDetails.data.companies.length;i++){
+            basketDetails.data.companies[i].selected = true;
         }
     }
+    let visualize = props.state.visualize;
+    let tickers = props.state.queryFilings.tickers;
 
     const handleChange = (event, company) => {
         if(company.selected === true) {
-            company.selected=false;
+            company.selected = false;
             const response = deselectInBasket(company, dispatch);
-            console.log(basketDetails.data);
         } else {
             company.selected = true;
             const response = selectInBasket(company, dispatch);
@@ -38,8 +42,6 @@ const IndividualBasket = (props)=>{
         const fetchBasketDetails = async () => {
             try {
                 const response = await getBasketDetails(basket_id, dispatch);
-                console.log(response.data);
-                console.log(basketDetails);
             } catch(err) {
                 console.log("Error: ", err);
             }
@@ -58,7 +60,7 @@ const IndividualBasket = (props)=>{
             </div>
             <div className='indibasketcontent'>
             <div style={{display:'flex', flexDirection:'column',  justifyItems:'space-around'}}>
-            <BasketFilter basketDetails={basketDetails}/>
+            <BasketFilter basketDetails={basketDetails} />
             <InfoCard/>
             </div>
             {/* <Table /> */}
@@ -76,6 +78,18 @@ const IndividualBasket = (props)=>{
                 {/* <Chart/> */}
             
             
+            {visualize?<MetricTabs/>:
+            <List>
+            {basketDetails.data.companies.map((company)=> {
+                return(
+                    <ListItem>
+                        <Checkbox checked={company.selected} onChange={(event) => handleChange(event,company)}/>
+                        {company.name}
+                    </ListItem>
+                )
+            })}
+            </List>
+            }
             </div>
         </>
     )

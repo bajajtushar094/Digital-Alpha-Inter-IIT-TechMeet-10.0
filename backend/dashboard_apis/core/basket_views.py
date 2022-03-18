@@ -2,7 +2,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
-from datetime import date
+from datetime import datetime
+from .choices import *
+
 
 @api_view(["GET"])
 def getBookmarks(request):
@@ -72,7 +74,7 @@ def simpleDate(date):
     print(date, f'{str(date.year)}-{str(date.month)}-01')
     return f'{str(date.year)}-{str(date.month)}-01'
 
-@api_view(["GET"])
+@api_view(["POST"])
 def getComparisonData(request):
     """API endpoint for getting comparison data
     
@@ -84,9 +86,10 @@ def getComparisonData(request):
         # filings list[object]: all the filings of companies provided
         metrices[]
     """
+    print("Request data: ",request.data)
     tickers = request.data["tickers"]
-    start_date = getDate(request.data["start_date"])
-    end_date = getDate(request.data["end_date"])
+    start_date = request.data["time_start"]
+    end_date = request.data["time_end"]
     metric_type = request.data["metric_type"]
 
     dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], yearly=False, metric_type=metric_type).values("date").distinct()
@@ -100,9 +103,14 @@ def getComparisonData(request):
         # print(metrices_l)
         for ticker in tickers:
             metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
+            
 
-    print(metrices)
-
+    print("Metrics",metrices)
+    for i in metrices:
+        # i['date'] = i['date'].strftime("%d-%B-%Y")
+        date_parts = i['date'].split('-')
+        print("DateTime",MONTH_MAPPING[date_parts[1]])
+        i['date'] = MONTH_MAPPING[date_parts[1]]+' '+date_parts[0]
     
     # # metrices = []
     # for ticker in tickers:
@@ -133,6 +141,7 @@ def getBaskets(request):
         baskets list[object]: details of all the baskets provided
     """
     user = request.user
+    print(user)
     if not user.is_authenticated:
         return Response(
             {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
@@ -151,7 +160,7 @@ def getBaskets(request):
             "companies": basket.companies.values(),
             "companies_count": basket.companies.count()
         })
-
+    print(basketData)
     return Response(
         {
         "error":None,

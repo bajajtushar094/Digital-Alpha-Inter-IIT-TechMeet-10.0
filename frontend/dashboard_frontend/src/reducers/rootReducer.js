@@ -11,12 +11,12 @@ const initState = {
     baskets: [],
     queryFilings: {
         "tickers": [],
-        "form_type": [],
+        "metric_type": [],
+        "form_type":[],
         "time_start": "",
         "time_end": ""
     },
-    queryFilingsData: null ,
-    searchFilings: [],
+    queryFilingsData: null,
     basketDetails: {
         error: "",
         data: {
@@ -29,7 +29,8 @@ const initState = {
             filings:[],
         }
     },
-    basketSelectedCompanies:[]
+    basketSelectedCompanies:[],
+    visualize: false
 }
 
 const rootReducer = (state=initState,action) => {
@@ -179,6 +180,20 @@ const rootReducer = (state=initState,action) => {
         }
     }
 
+    if( action.type == "ENABLE_VISUALIZE"){
+        return {
+            ...state,
+            visualize: true
+        }
+    }
+
+    if(action.type == 'DISABLE_VISUALIZE'){
+        return {
+            ...state,
+            visualize: false
+        }
+    }
+    
     if(action.type === 'RESET_QUERY_FILINGS'){
         return{
             ...state,

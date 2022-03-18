@@ -293,6 +293,7 @@ export const getBaskets = async (dispatch) => {
             type: 'GET_BASKETS',
             baskets: response.data
         });
+        return response.data
     }
     catch(err) {
         console.log("Error:", err);

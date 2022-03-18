@@ -127,11 +127,11 @@ const Search = (props) => {
 // }
 
 const mapStateToProps = (state) => {
-    console.log("State:", state);
-    return {
-        // To get the list of employee details from store
-        state: state,
-    };
+  // console.log("State:", state);
+  return {
+    // To get the list of employee details from store
+    state: state,
+  };
 };
 
 export default connect(mapStateToProps, null)(Search);

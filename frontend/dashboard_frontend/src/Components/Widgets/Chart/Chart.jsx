@@ -1,77 +1,5 @@
-// import React from 'react'
-// import { Line} from 'react-chartjs-2';
-// import { Chart as ChartJS } from "chart.js/auto";
-
-// export const data ={ 
-//     labels:["mar 20","apr 20","may 20","june 20"],
-//    datasets: [
-//     { fill: true,
-//         data:[12,33,40,25],
-//         borderColor: '#5EE6EB',
-//         tension: 0.3,
-//         backgroundColor: "rgba(75,192,192,0.2)",
-//         // backgroundColor:["red","green","black","pink"]
-//     }
-//   ],
-
-// const data = [{ name: 'Page A', uv: 400, pv: 2400, amt: 2400 },{ name: 'Page B', uv: 300, pv: 2400, amt: 2400 },{ name: 'Page C', uv: 300, pv: 2400, amt: 2400 },{ name: 'Page D', uv: 200, pv: 2400, amt: 2400 },{ name: 'Page E', uv: 280, pv: 2400, amt: 2400 },{ name: 'Page F', uv: 180, pv: 2400, amt: 2400 }];
-
-// export const data ={ 
-//     labels:["mar 20","apr 20","may 20","june 20"],
-//    datasets: [
-//     { fill: true,
-//         data:[12,33,40,25],
-//         borderColor: '#5EE6EB',
-//         tension: 0.3,
-//         backgroundColor: "rgba(75,192,192,0.2)",
-//         // backgroundColor:["red","green","black","pink"]
-//     }
-//   ],
-
-
-// }
-
-
-// const Chart = () => {
-//   return (
-//     <div>
-//     <Line 
-//     options={{maintainAspectRatio:true,
-      
-//         plugins: {
-//             legend: {
-//               display: false
-//             }
-//           },
-      
-//         scales:{
-//             x: {
-//                 grid: {
-//                   display: false
-//                 }
-//               },
-          
-//             y:{
-//    beginAtZero:true,
-//    grid: {
-//     display: false
-//   }
-//             },
-//             // gridLines: {
-//             //     display:false
-//             // } 
-//         }
-//     }}
-//     data={data}
-//     />    
-//   </div>
-//   )
-// }
-
-// export default Chart
-
-// import "./styles.css";
-import React from "react";
+import { useDispatch, connect } from 'react-redux';
+import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -80,24 +8,28 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  LineChart
 } from "recharts";
+import axios from 'axios';
+
+let counter = 0;
 
 const data = [
   {
-    date:"Mar 2020",
+    date:"Mar 2017",
     uv: 4000,
     pv: 2400,
     amt: 2400
   },
   {
-    date:"Mar 2020",
+    date:"Mar 2018",
     uv: 3000,
     pv: 1398,
     amt: 2210
   },
   {
-    date:"Mar 2020",
+    date:"Mar 2019",
     uv: 2000,
     pv: 9800,
     amt: 2290
@@ -115,24 +47,91 @@ const data = [
     amt: 2181
   },
   {
-    date:"Mar 2020",
+    date:"Mar 2021",
     uv: 2390,
     pv: 3800,
     amt: 2500
   },
   {
-    date:"Mar 2020",
+    date:"Mar 2022",
     uv: 3490,
     pv: 4300,
     amt: 2100
   }
 ];
 
-export default function Chart() {
+function Chart(props) {
+  const dispatch = useDispatch();
+  const queryFilings = props.state.queryFilings;
+  const companies = props.state.basketSelectedCompanies;
+  const [dependency, setDependency] = useState(false);
+  const metric = props.metric;
+  const [chartData, setChartData] = useState([]);
+  // console.log(companies);
+  console.log(queryFilings);
+  let company_ticker = [];
+  const fetchChartData = async () => {
+    console.log("Query Filings:", queryFilings)
+    const configHeaders = localStorage.getItem('authTokens')?{
+      headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+      }
+    }:"";
+
+    try{
+      const response = await axios.post(
+        "http://localhost:8000/api/basket/compare", props.state.queryFilings,
+        {
+          headers: {
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+          },
+        }
+      )
+      let dummyArray = response.data.data;
+      setChartData(dummyArray);
+      console.log("Chart Data", chartData);
+    }
+    catch(err){
+      console.log("Error", err);
+    }
+
+// }
+
+    
+      // .then((response) => {
+        // dummyArray = response.data.data;
+        // setChartData(dummyArray);
+      //   console.log("Data of charts",dummyArray);
+      // })
+      // .catch((err) => {
+      //     console.log(err);
+      // })
+  // fetch("http://localhost:8000/api/basket/compare", {method:"POST", headers:configHeaders, body:queryFilings})
+  // .then(response => response.text())
+  // .then(result => console.log(result))
+  // .catch(error => console.log('error', error));
+  }
+
+  
+  useEffect(()=>{
+    const func = async () => {
+      await fetchChartData();
+    }
+    func();
+  },[queryFilings]);
+
+  const listOfBars = [];
+  for (const [i, ticker] of props.state.queryFilings.tickers.entries()) {
+    listOfBars.push(<Bar dataKey={ticker}/>)
+  }
+
   return (
-    <ResponsiveContainer height={600} width="50%">
+    <>
+    {chartData.length!=0&&
+    <>
+    <ResponsiveContainer height={600} width="90%">
     <BarChart
-      data={data}
+      data={chartData}
       margin={{
         top: 5,
         right: 30,
@@ -141,13 +140,24 @@ export default function Chart() {
       }}
     >
       <CartesianGrid strokeDasharray="1 1" />
-      <XAxis dataKey="date" />
-      <YAxis />
+      <XAxis dataKey="date"/>
+      <YAxis domain={[0, 1]}/>
       <Tooltip />
       <Legend />
-      <Bar dataKey="pv" fill="#8884d8" />
-      <Bar dataKey="uv" fill="#82ca9d" />
+      {listOfBars}
     </BarChart>
     </ResponsiveContainer>
+    </>}
+    
+    </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    state:state
+  }
+};
+
+export default connect(mapStateToProps, null)(Chart);
+

@@ -4,7 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
 from .choices import FILING_TYPES, METRIC_TYPES, METRIC_UNITS, SOURCE_TYPES
 from django.utils.translation import gettext_lazy as _
-from datetime import date
+from datetime import date, datetime
 
 class Company(models.Model):
 	# cik = models.CharField(max_length=20, primary_key=True)
@@ -111,7 +111,7 @@ class KeyMetric(models.Model):
 	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='key_metrics')	# Filing for drilldown
 	# source = models.CharField(max_length=8, choices=SOURCE_TYPES)
 	# 
-	date = models.DateField()
+	date = models.DateField(default=datetime.now())
 	yearly = models.BooleanField(_('Yearly or quaterly'), default=False)
 	drilldown_offset = models.IntegerField()								# Drilldown Highlight offset
 	drilldown_length = models.IntegerField()								# Drilldown Highlight length
