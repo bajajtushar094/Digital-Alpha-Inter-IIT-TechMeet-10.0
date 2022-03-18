@@ -56,6 +56,7 @@ urlpatterns = [
     path("basket/create", createBasket),
     path("basket/update", updateBasketName),
     path("basket/delete", deleteBasket),
+    path("basket/insertIntoBasket", insertIntoBasket)
 
     # add to db
     path("add", addToDb)
