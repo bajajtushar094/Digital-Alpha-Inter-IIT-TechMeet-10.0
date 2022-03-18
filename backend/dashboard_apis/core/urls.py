@@ -33,7 +33,7 @@ urlpatterns = [
     path("landingPage/companies/all", getAllCompanies.as_view()),
     path("landingPage/baskets/<int:user_id>", getAllBaskets.as_view()),
     path("landingPage/bookmarkedCompanies/<int:user_id>",bookmarkedCompanies.as_view()),
-    path("landingPage/recentlyViewedCompanies/<str:user_id>",recentlyViewedCompanies.as_view()),
+    path("landingPage/recentlyViewedCompanies",recentlyViewedCompanies.as_view()),
     path("landingPage/recentlyFiled",recentlyFiled.as_view()),
 
 
@@ -57,7 +57,7 @@ urlpatterns = [
     path("basket/create", createBasket),
     path("basket/update", updateBasketName),
     path("basket/delete", deleteBasket),
-    path("basket/insertIntoBasket", insertIntoBasket)
+    path("basket/insertIntoBasket", insertIntoBasket),
 
     # add to db
     path("add", addToDb)

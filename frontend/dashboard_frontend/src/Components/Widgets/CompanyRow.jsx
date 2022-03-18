@@ -7,17 +7,17 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import './table.scss';
-import { getMetricsFromFiling, getKeyMetricOfCompany, searchFillings } from '../../actions/action';
+import { getMetricsFromFiling, getKeyMetricOfCompany, searchFilings } from '../../actions/action';
 
 const CompanyRow = (props) => {
     const dispatch = useDispatch();
     const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
     const [isCompany, setIsCompany] = useState(props.isCompany);
-    let filings;
+    let filings=[];
     const fromSearch = props.fromSearch
     console.log("Props from Row:", props)
     if(fromSearch==false){
-        filings = props.filing.filings;
+        filings = props.filing.filings
     }
     else{
         filings = props.filing
@@ -50,7 +50,7 @@ const CompanyRow = (props) => {
         <>
             {
                 filings.map((filing, i) => {
-                    const key_metrics = filing.key_metrics?searchFillings.key_metrics:[];
+                    const key_metrics = filing.key_metrics?searchFilings.key_metrics:[];
                     let ARR, CCR, LTV, CAC, ARPA, RCC;
 
                     for(let i=0;i<key_metrics.length;i++){
