@@ -32,12 +32,14 @@ const RecentlyViewedLogIn = (props) => {
             >
                 {data.map((el, index) => {
                     return (
+                        <Link to={`/company/${el.company__ticker}`} style={{textDecoration:'None'}}>
                         <Component
                             key={index}
                             logo={el.company__logo || ASAN}
                             name={el.company__name}
                             ticker={el.company__ticker}
                         />
+                        </ Link>
                     );}
     )}
             </div>

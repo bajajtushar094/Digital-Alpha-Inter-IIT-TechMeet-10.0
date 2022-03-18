@@ -1,6 +1,6 @@
 import React from 'react'
 import './performerCard.scss'
-
+import { Link } from 'react-router-dom'
 const PerformerCard = () => {
 
   const seeder = [
@@ -62,7 +62,7 @@ const PerformerCard = () => {
         {
           seeder.map((data) => {
             return (
-              <div key={data.key} className="metric-entry"><h4 className="black50">{data.company}</h4>
+              <div key={data.key} className="metric-entry"><Link to={`/company/${data.company}`} style={{textDecoration:'None'}}><h4 className="black50">{data.company}</h4></Link>
                 <div className="div-block-4 issmall col-gap">
                   <h4 id="w-node-_80763e3e-9349-a4a1-f787-d6302e9ddf5e-5d4911ed" className="iscolumn black50">{data.value1}</h4>
                   <h4 id="w-node-_80763e3e-9349-a4a1-f787-d6302e9ddf60-5d4911ed" className={data.bool ? "positive iscolumn black50" : "negative iscolumn black50"}>{data.value2}</h4>

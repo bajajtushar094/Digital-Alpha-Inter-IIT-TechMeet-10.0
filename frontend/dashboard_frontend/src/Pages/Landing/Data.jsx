@@ -7,6 +7,7 @@ import PerformerCard from '../../Components/Widgets/PerformerCard'
 import ViewedCard from '../../Components/Widgets/ViewedCard';
 import Table from '../../Components/Widgets/Table';
 import { connect } from 'react-redux';
+import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 
 const Data = (props) => {
 	const [selected, setSelected] = useState(1);
@@ -24,7 +25,9 @@ const Data = (props) => {
 	const handleTable = (selectedTemp)=>{
 		setSelected(selectedTemp);
 	}
-
+	const handleClick = (selectedTemp)=>{
+		console.log("Hello")
+	}
 	return (
 		<div className='landingdata'>
 			<div className='top'>
@@ -34,7 +37,7 @@ const Data = (props) => {
 			<div className='body'>
 				<div className='cardsec'>
 					<PerformerCard />
-					<ViewedCard />
+					<RecentlyViewedLogIn />
 				</div>
 				<div className='tablesec'>
 					<div className="table_top">
