@@ -19,12 +19,6 @@ def getBookmarks(request):
         return Response(
             {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
         )
-    res = User.objects.get(email= user)
-    if(len(res) == 0):
-        return Response(
-            {"error": {"message": "User not found"}}, status=status.HTTP_404_NOT_FOUND
-        )
-    user = res[0]
     return Response(
         {
         "error":None, 
@@ -32,6 +26,7 @@ def getBookmarks(request):
         },  
         status=status.HTTP_200_OK
     )
+
 
 @api_view(["GET"])
 def getBookmarksWithFilings(request):
@@ -96,12 +91,13 @@ def getComparisonData(request):
 
     dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], yearly=False, metric_type=metric_type).values("date").distinct()
 
-    print(dates)
+    # print(dates)
     metrices = []
     for date in dates:
-        print(date, str(date["date"]))
+        # print(date, str(date["date"]))
         metrices.append({"date": str(date["date"])})
         metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], yearly=False, metric_type=metric_type)
+        # print(metrices_l)
         for ticker in tickers:
             metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
 
