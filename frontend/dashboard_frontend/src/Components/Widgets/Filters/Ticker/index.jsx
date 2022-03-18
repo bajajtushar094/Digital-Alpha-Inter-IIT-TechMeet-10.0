@@ -11,7 +11,8 @@ const Ticker = ({ state }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		console.log("TickerPage", newTicker, tickers)
-		if(newTicker!==""){
+
+		if(newTicker!=="" && !tickers.includes(newTicker)){
 			dispatch({
 				type: "UPDATE_QUERY_FILINGS",
 				queryFilings: {
@@ -28,7 +29,7 @@ const Ticker = ({ state }) => {
 			<div className="tickersearch">
 				<div className="tickerinput">
 					<input type="text" className="black50" ref={newTickerReference} onKeyDown={(e) => {
-						if(e.keyCode === 13){
+						if(e.key === 'Enter'){
 							e.preventDefault();
 							setNewTicker(null);
 							console.log("ticker: ", newTicker);

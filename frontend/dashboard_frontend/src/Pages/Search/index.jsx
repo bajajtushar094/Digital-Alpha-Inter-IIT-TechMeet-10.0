@@ -26,13 +26,9 @@ const Search = (props) => {
     // })
     useEffect(() => {
         const func = async () => {
-            console.log("query", query);
             console.log("queryFilings", queryFilings);
-            const data_bySimple = await simpleSearch(query, dispatch);
             const data_byFilings = await searchFilings(queryFilings, dispatch);
-            console.log("search :", data_bySimple);
             console.log("Filings:", data_byFilings);
-            setCompanies_bySimple(data_bySimple);
             // setCompanies_byFiling(data_byFilings);
 			dispatch({
 				type: "STORE_SEARCH_FILINGS",
@@ -40,7 +36,19 @@ const Search = (props) => {
 			})
         };
         func();
-    }, [dispatch, query, queryFilings])
+        return function cleanup() {
+          dispatch({
+            type: "CLEAN_QUERY_FILINGS",
+          });
+          console.log("error log search index line 44");
+        };
+    }, [])
+    useEffect(() => {
+        const func = async () => {
+            await simpleSearch(query, dispatch);
+        }
+        func();
+    }, [])
 
     const handleTable = (selectedTemp) => {
         setSelected(selectedTemp);
