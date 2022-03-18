@@ -12,9 +12,11 @@ import { connect } from 'react-redux';
 import { getRecentFilings, loginUser } from "./actions/action";
 import { useEffect } from "react";
 import RecentlyViewed from "./Pages/RecentlyViewed";
+import Filenew from "./Pages/Filenew/Filenew";
 import Aman from "./Pages/Aman/aman";
-
-
+import CompanyTitle from "./Components/Widgets/Filters/CompanyTitle/CompanyTitle";
+import test from "./Pages/test";
+import RecentlyViewedLogIn from "./Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn";
 
 
 function App() {
@@ -44,10 +46,10 @@ function App() {
 						<Route index element={<RecentlyViewed/>}/>
 					</Route>
 					<Route path='/test'>
-						<Route index element={<Chart/>}/>
+						<Route index element={<RecentlyViewedLogIn />}/>
 					</Route>
 					<Route path='/file'>
-						<Route index element={<File/>}/>
+						<Route index element={<Filenew/>}/>
 					</Route>
 				</Routes>
 			</BrowserRouter>

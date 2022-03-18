@@ -11,7 +11,7 @@ const Ticker = ({ state }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		console.log("TickerPage", newTicker, tickers)
-		if(newTicker!=""){
+		if(newTicker!==""){
 			dispatch({
 				type: "UPDATE_QUERY_FILINGS",
 				queryFilings: {
@@ -27,7 +27,20 @@ const Ticker = ({ state }) => {
 			<div className="ui-text black100">Ticker</div>
 			<div className="tickersearch">
 				<div className="tickerinput">
-					<input type="text" className="black50" ref={newTickerReference} />
+					<input type="text" className="black50" ref={newTickerReference} onKeyDown={(e) => {
+						if(e.keyCode === 13){
+							e.preventDefault();
+							setNewTicker(null);
+							console.log("ticker: ", newTicker);
+							if (
+								newTickerReference.current.value &&
+								newTickerReference.current.value.length > 0
+							) {
+								setNewTicker(newTickerReference.current.value);
+							}
+							newTickerReference.current.value = "";
+						}
+					}} />
 				</div>
 				<a href="/#" className="w-inline-block">
 					<button style={{ background: "transparent", padding: "0px", margin: "0px" }}
