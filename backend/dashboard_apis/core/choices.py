@@ -15,7 +15,11 @@ METRIC_TYPES = [
 	('cost_of_revenue', 'Cost Of Revenue'),
 	('gross_profit', 'Gross Profit'),
 	('gross_margin', 'Gross Margin'),
-
+	('operating_income', 'Operating Income'),
+	('operating_expense', 'Operating Expense'),
+	('operating_revenue', 'Operating Revenue'),
+	('selling_and_marketing_expense', 'Selling & Marketing Expense'),
+	('selling_general_and_administration', 'Selling General and Administrative'),
 ]
 
 METRIC_UNITS = [
