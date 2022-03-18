@@ -13,6 +13,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
 import { Checkbox, FormGroup, Grid, List, Typography } from '@mui/material';
+import { getBaskets } from '../../actions/action';
+import { connect, useDispatch } from 'react-redux';
 
 
 function CBLabel(props){
@@ -21,43 +23,39 @@ function CBLabel(props){
     return(
         <React.Fragment>
             <Typography variant="h6">{name}</Typography>
-            <Typography sx={{color:"#9B9B9C"}} variant="subtitle2">No. of baskets is:{number}</Typography>
         </React.Fragment>
     );
 }
 
 
-export default function MaxWidthDialog(props) {
+function MaxWidthDialog(props) {
+  const dispatch = useDispatch();
   const [open, setOpen] = props.open;
   const [fullWidth, setFullWidth] = props.fullWidth;
   const [maxWidth, setMaxWidth] =props.maxWidth;
-  const [state, setState] = React.useState({
-    gilad: true,
-    jason: false,
-    antoine: false,
-  });
+  const [baskets, setBaskets] = React.useState([]);
+  const [state, setState] = React.useState([]);
+  let selectedBasketId =[];
 
   const handleChange = (event) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.checked,
-    });
+    let temp = state;
+    for(let i=0;i<temp.length;i++){
+      if(event.target.name === i.toString())
+        temp[i] = !temp[i];
+    }
+    setState(temp);
+    console.log("state after selection: ", state);
+    selectedBasketId=[];
+    for(let i=0;i<state.length;i++){
+      if(state[i]){
+        selectedBasketId.push(baskets[i].id)
+      }
+    }
   };
-  const { gilad, jason, antoine } = state;
 
-  const listBaskets =[{
-      name:"Basket 1",
-      number:4
-    },
-    {
-    name:"Basket 1",
-    number:4
-        },
-    {
-    name:"Basket 1",
-        number:4
-          }
-    ]
+  const handleAdd = (event) => {
+    console.log(selectedBasketId);
+  }
 
   const handleClickOpen = props.handleClickOpen;
 
@@ -67,6 +65,21 @@ export default function MaxWidthDialog(props) {
 
   const handleFullWidthChange = props.handleFullWidthChange;
 
+  React.useEffect(()=>{
+    const getBasketsAPI = async () => {
+        const response = await getBaskets(dispatch);
+        console.log("In dialog box file:",response);
+        setBaskets(response.data);
+        console.log("This is the basket rn", baskets)
+        let temp=[];
+        for(var i=0;i<baskets.length;i++){
+          temp.push(false);
+        }
+        setState(temp);
+    }
+
+    getBasketsAPI();
+  },[])
   return (
     <React.Fragment>
       <Dialog
@@ -91,34 +104,34 @@ export default function MaxWidthDialog(props) {
               padding:"20px"
             }}
           >
-            <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox checked={gilad} onChange={handleChange} name="gilad" />
-            }
-            label={<CBLabel name="Gilad Gray"/>}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={jason} onChange={handleChange} name="jason" />
-            }
-            label={<CBLabel name="Jason Killian"/>}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={antoine} onChange={handleChange} name="antoine" />
-            }
-            label={<CBLabel name="Antoine Llorca"/>}
-          />
+        <FormGroup>
+          {(baskets.length>0)?baskets.map((basket, i)=>{
+            return(
+                <FormControlLabel
+                control={
+                  <Checkbox checked={state[i]} onChange={handleChange} name={i.toString()} />
+                }
+                label={<CBLabel name={basket.name}/>}
+              />);
+              }):"No baskets available for this user"}
+          
         </FormGroup>
           </Box>
           
         </DialogContent>
         <Box sx={{display:"flex", justifyContent:"center", padding:"15px"}} >
-        <Button  variant="contained" sx={{backgroundColor:"#515051",width:"200px",'&:hover':{backgroundColor:"black"}}} onClick={handleClose}>Close</Button>
+        <Button  variant="contained" sx={{backgroundColor:"#515051",width:"200px",'&:hover':{backgroundColor:"black"}}} onClick={handleAdd}>Add</Button>
         </Box>
         
       </Dialog>
     </React.Fragment>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    state:state
+  }
+};
+
+export default connect(mapStateToProps, null)(MaxWidthDialog);
