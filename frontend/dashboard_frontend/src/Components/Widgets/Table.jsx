@@ -13,8 +13,10 @@ const Table = (props) => {
 	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
 	const [isCompany, setIsCompany] = useState(props.isCompany);
 	const data = props.data || [];
+	console.log("Data from Table for search filings:", data);
 	const dispatch = useDispatch();
-	console.log("Props", props);
+	// console.log("Props", props);
+	const fromSearch = props.fromSearch;
 
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverbg] = useState(false);
@@ -68,17 +70,18 @@ const Table = (props) => {
 
 
 			<div className="separator"></div>
-			{isCompany==false&&data.map((filing, i) => {
+			{isCompany==false&&data!=[]&&data.map((filing, i) => {
 				return (
 					<RecentFilingRow filing={filing} hasCheckbox={false}/>
 				);
 			})}
-			{isCompany==true&&data.map((filing, i) => {
+			{isCompany==true&&fromSearch==false&&data.map((filing, i) => {
 				return (
-					<CompanyRow filing={filing} hasCheckbox={false}/>
+					<CompanyRow filing={filing} hasCheckbox={false} fromSearch={false}/>
 				);
 			})}
-
+			{isCompany==true&&fromSearch==true&&
+			<CompanyRow filing={data} hasCheckbox={false} fromSearch={true}/>}
 		</div>
 	)
 }

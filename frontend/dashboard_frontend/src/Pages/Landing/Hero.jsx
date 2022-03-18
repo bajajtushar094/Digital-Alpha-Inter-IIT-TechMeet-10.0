@@ -23,7 +23,12 @@ const Hero = () => {
      <br />
     </h2>
     <div className='searchbar isbig'>
-    <input className="searchinput isbig" id="landing_search" placeholder='Search companies or tickers' />
+    <input className="searchinput isbig" id="landing_search" placeholder='Search companies or tickers' 
+    onKeyDown={(e) => {
+      if(e.key === 'Enter'){
+        handleSearch();
+      }
+    }} />
     <button className="div-block-7 isbig" onClick = {handleSearch}><img src={search} loading="lazy" alt="" /></button>
     </div>
     </div>

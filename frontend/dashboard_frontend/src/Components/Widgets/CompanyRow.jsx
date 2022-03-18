@@ -11,7 +11,17 @@ const CompanyRow = (props) => {
     const dispatch = useDispatch();
     const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
     const [isCompany, setIsCompany] = useState(props.isCompany);
-    const filings = props.filing.filings;
+    let filings;
+    const fromSearch = props.fromSearch
+    console.log("Props from Row:", props)
+    if(fromSearch==false){
+        filings = props.filing.filings;
+    }
+    else{
+        filings = props.filing
+    }
+
+    console.log("Filings from Company Row:", filings);
 
     const [ARR, setARR] = useState("");
     const [CCR, setCCR] = useState("");
@@ -37,7 +47,7 @@ const CompanyRow = (props) => {
     return (
         <>
             {
-                filings.map((filing, i) => {
+                filings!=undefined&&filings.map((filing, i) => {
                     const key_metrics = filing.key_metrics||[];
                     let ARR, CCR, LTV, CAC, ARPA, RCC;
 
@@ -75,7 +85,7 @@ const CompanyRow = (props) => {
 
                                     <>
                                         <div class="filingcontainer">
-                                            <div class="ui-text issecondarybutton isfiling">{filing['company_id']}</div>
+                                            <div class="ui-text issecondarybutton isfiling">{fromSearch==true?filing['name']:filing['company_id']}</div>
                                         </div>
                                     </>
                                 </div>
