@@ -7,8 +7,10 @@ import LightButton from './LightButton/LightButton';
 import DarkButton from './DarkButton/DarkButton';
 import InfoCard from './InfoCard/InfoCard';
 import { useNavigate } from 'react-router-dom';
-import { Button, Alert } from '@mui/material';
-import {connect, useDispatch} from 'react-redux';
+import { Button } from '@mui/material';
+import TimeFrame from './BasketTimeFrame';
+import { connect, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 const BasketFilter = (props)=>{
     const dispatch = useDispatch();
@@ -18,7 +20,7 @@ const BasketFilter = (props)=>{
         console.log("checkImport")
         console.log(basketDetails);
     }
-
+    
     const handleClick = () => {
         if(basketSelectedCompanies.length <= 1){
             alert("Data comparison can be done for 2 or more companies only");
@@ -26,6 +28,15 @@ const BasketFilter = (props)=>{
             dispatch({type:"ENABLE_VISUALIZE"});
         }
     };
+    // const queryFilings = props.state.queryFilings;
+    //  useEffect(() => {
+    //    const func = async () => {
+    //      console.log("queryFilings", queryFilings);
+    //      const data_byFilings = await axios.post('http://localhost:8000/api/basket/compare', queryFilings);
+    //      console.log("Filings:", data_byFilings);
+    //    };
+    //    func();
+    //  }, [dispatch, queryFilings]);
 
     useEffect(()=>{checkImport();},[])
     return (
@@ -34,7 +45,8 @@ const BasketFilter = (props)=>{
                     <h3 className="heading-2">{basketDetails.data.basket.name}</h3>
                 </div>
                 <CompanyTabs list={basketDetails.data.companies}/>
-                <Ticker/>
+                <Ticker />
+                <TimeFrame />
                 <LightButton text="Cancel Selection" to={"/basketList"}/>
                 {/* <DarkButton text="Visualize"/> */}
                 <Button variant="contained" sx={{backgroundColor:"black" ,"&:hover":{backgroundColor:"black"}}} onClick={handleClick}>Visualize</Button>

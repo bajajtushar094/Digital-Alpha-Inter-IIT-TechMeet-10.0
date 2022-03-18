@@ -7,17 +7,17 @@ import FilingType from './FilingType';
 import TimeFrame from './TimeFrame';
 
 
-const MainFilter = ({handleSearchFillings}) => {
+const MainFilter = () => {
     return (
         
             <div className="cardcontainer">
                 <div className="leftcardtitle">
                     <h3 className="heading-2">Filter</h3>
                 </div>
-                <CompanyTabs handleSearchFillings = {handleSearchFillings} />
-                <Ticker handleSearchFillings = {handleSearchFillings} />
-                <FilingType handleSearchFillings = {handleSearchFillings} />
-                <TimeFrame handleSearchFillings = {handleSearchFillings} />
+                <CompanyTabs />
+                <Ticker  />
+                <FilingType  />
+                <TimeFrame  />
             </div>
         
     );

@@ -9,6 +9,13 @@ const initState = {
     currentCompany: {},
     recentlyViwedCompanies: [],
     baskets: [],
+    queryFilings: {
+        "tickers": [],
+        "metric_type": [],
+        "time_start": "",
+        "time_end": ""
+    },
+    queryFilingsData: null,
     basketDetails: {
         error: "",
         data: {
@@ -69,7 +76,21 @@ const rootReducer = (state=initState,action) => {
             ...state,
             recentlyViewedCompanies: newArr
         }
-    }    
+    }
+    if(action.type==='UPDATE_QUERY_FILINGS') {
+        const newObj = action.queryFilings;
+        return {
+            ...state,
+            queryFilings: newObj
+        }
+    }
+    if(action.type==='UPDATE_QUERY_FILINGS_DATA') {
+        const newObj = action.queryFilingsData;
+        return {
+            ...state,
+            queryFilingsData: newObj
+        }
+    }
     // if(action.type==='ADD_COMPANIES') {
     //     const newArr = [...state.members,action.member];
     //     return {

@@ -115,19 +115,61 @@ export const searchCompanies = async (query, dispatch) => {
     return data;
 }
 
-export const searchFillings = async (query, dispatch) => {
+// export const searchFillings = async (query, dispatch) => {
+//     let data;
+//     const arr = query.split('%20');
+//     await axios.post(
+//         `${config().search}/filings`,
+//         { 'tickers': (arr.length > 0) ? arr[0] : '', 'form_type': (arr.length > 1) ? arr[1] : '', 'time_start': (arr.length > 2) ? arr[2] : '', 'time_end': (arr.length > 3) ? arr[3] : '' }
+//     )
+//         .then((response) => {
+//             data = response.data
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         })
+//     return data;
+// }
+
+// export const searchFilings = async (query) => {
+//     let data;
+//     await axios.post(
+//         `${config().search}/filings`,
+//         {
+//             'tickers': query['tickers'],
+//             'form_type': query['form_type'],
+//             'time_start': query['time_start'],
+//             'time_end': query['time_end']
+//         }
+//     ).then((response) => {
+//         data = response.data;
+//     }).catch((err) => {
+//         console.log(err);
+//     })
+//     return data;
+// }
+ 
+export const searchFilings = async (query, dispatch) => {
     let data;
-    const arr = query.split('%20');
-    await axios.post(
-        `${config().search}/filings`,
-        { 'tickers': (arr.length > 0) ? arr[0] : '', 'form_type': (arr.length > 1) ? arr[1] : '', 'time_start': (arr.length > 2) ? arr[2] : '', 'time_end': (arr.length > 3) ? arr[3] : '' }
-    )
-        .then((response) => {
-            data = response.data
+    try{
+        const res = await axios.post(
+            `${config().search}/filings`,
+            {
+                'tickers': query['tickers'],
+                'form_type': query['form_type'],
+                'time_start': query['time_start'],
+                'time_end': query['time_end']
+            }
+        )
+        data = res.data;
+        dispatch({
+            type: 'UPDATE_QUERY_FILINGS_DATA',
+            queryFilingsData: data
         })
-        .catch((err) => {
-            console.log(err);
-        })
+    }
+    catch(err) {
+        console.log(err);
+    }
     return data;
 }
 
@@ -247,6 +289,20 @@ export const getBaskets = async (dispatch) => {
     }
 }
 
+export const getKeyMetricOfCompany = async (ticker, metric_type) => {
+    try{
+        const response = await axios.get(
+            `http://localhost:8000/api/companies/getKeyMetrics/AAPL/ARR`,
+            configHeaders
+        );
+
+        console.log("response:", response);
+        return response.data;
+    }
+    catch(err) {
+        console.log("Error:", err);
+    }
+}
 
 export const getBasketDetails = async (basket_id, dispatch) => {
     try {
@@ -323,6 +379,3 @@ export const addRecentlyViewedCompany = async (company_ticker) => {
     return data;
 }
 
-export const enableVisualize = (dispatch) => {
-    
-}

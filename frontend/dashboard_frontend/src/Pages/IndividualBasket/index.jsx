@@ -38,7 +38,7 @@ const IndividualBasket = (props)=>{
             const response = selectInBasket(company, dispatch);
         }
     }
-    useEffect(async ()=>{
+    useEffect(()=>{
         const fetchBasketDetails = async () => {
             try {
                 const response = await getBasketDetails(basket_id, dispatch);
@@ -66,6 +66,18 @@ const IndividualBasket = (props)=>{
             <InfoCard/>
             </div>
             {/* <Table /> */}
+            {/* <List>
+                {basketDetails.data.companies.map((company)=> {
+                    return(
+                        <ListItem>
+                            <Checkbox checked={company.selected} onChange={(event) => handleChange(event,company)}/>
+                            {company.name}
+                        </ListItem>
+                    )
+                })}
+            </List> */}
+            
+                {/* <Chart/> */}
             
             
             {visualize?<MetricTabs/>:

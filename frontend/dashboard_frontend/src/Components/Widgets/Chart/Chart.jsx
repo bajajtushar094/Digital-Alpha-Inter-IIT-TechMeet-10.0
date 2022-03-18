@@ -1,97 +1,5 @@
-// import React from 'react'
-// import { LineChart, Line } from 'recharts';
-
-// import React from 'react'
-// import { Line} from 'react-chartjs-2';
-// import { Chart as ChartJS } from "chart.js/auto";
-
-// export const data ={ 
-//     labels:["mar 20","apr 20","may 20","june 20"],
-//    datasets: [
-//     { fill: true,
-//         data:[12,33,40,25],
-//         borderColor: '#5EE6EB',
-//         tension: 0.3,
-//         backgroundColor: "rgba(75,192,192,0.2)",
-//         // backgroundColor:["red","green","black","pink"]
-//     }
-//   ],
-
-// const data = [{ name: 'Page A', uv: 400, pv: 2400, amt: 2400 },{ name: 'Page B', uv: 300, pv: 2400, amt: 2400 },{ name: 'Page C', uv: 300, pv: 2400, amt: 2400 },{ name: 'Page D', uv: 200, pv: 2400, amt: 2400 },{ name: 'Page E', uv: 280, pv: 2400, amt: 2400 },{ name: 'Page F', uv: 180, pv: 2400, amt: 2400 }];
-
-// export const data ={ 
-//     labels:["mar 20","apr 20","may 20","june 20"],
-//    datasets: [
-//     { fill: true,
-//         data:[12,33,40,25],
-//         borderColor: '#5EE6EB',
-//         tension: 0.3,
-//         backgroundColor: "rgba(75,192,192,0.2)",
-//         // backgroundColor:["red","green","black","pink"]
-//     }
-//   ],
-
-
-// }
-
-
-// const Chart = () => {
-//   return (
-//     <div>
-//       <div style={{display:"flex",justifyContent:"center",marginTop:"30px"}}>
-//       <LineChart width={400} height={400} data={data}>
-//         <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-//       </LineChart>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Chart
-// }
-
-
-// const Chart = () => {
-//   return (
-//     <div>
-//     <Line 
-//     options={{maintainAspectRatio:true,
-      
-//         plugins: {
-//             legend: {
-//               display: false
-//             }
-//           },
-      
-//         scales:{
-//             x: {
-//                 grid: {
-//                   display: false
-//                 }
-//               },
-          
-//             y:{
-//    beginAtZero:true,
-//    grid: {
-//     display: false
-//   }
-//             },
-//             // gridLines: {
-//             //     display:false
-//             // } 
-//         }
-//     }}
-//     data={data}
-//     />    
-//   </div>
-//   )
-// }
-
-// export default Chart
-
-// import "./styles.css";
 import { useDispatch, connect } from 'react-redux';
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -102,6 +10,9 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
+import axios from 'axios';
+
+let counter = 0;
 
 const data = [
   {
@@ -149,14 +60,49 @@ const data = [
 ];
 
 function Chart(props) {
-  const companies = props.state.basketSelectedCompanies;
+  const dispatch = useDispatch();
+  
+  const queryFilings = props.state.queryFilings;
+  const [dependency, setDependency] = useState(false);
+  const metric = props.metric;
+  const [data, setData] = useState();
   console.log(companies);
+  console.log(queryFilings);
   let company_ticker = [];
-  for(let i=0;i<companies.length;i++){
-    console.log(companies[i]);
-    company_ticker.push(companies[i].ticker);
+  
+  const fetchChartData = async () => {
+    const configHeaders = localStorage.getItem('authTokens')?{
+      headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+      }
+    }:"";
+    await axios.post(
+      "http://localhost:8000/api/basket/compare", queryFilings,
+      {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+        },
+      }
+    )
+      .then((response) => {
+          console.log(response.data)
+      })
+      .catch((err) => {
+          console.log(err);
+      })
+  // fetch("http://localhost:8000/api/basket/compare", {method:"POST", headers:configHeaders, body:queryFilings})
+  // .then(response => response.text())
+  // .then(result => console.log(result))
+  // .catch(error => console.log('error', error));
   }
-  console.log(company_ticker);
+
+  
+  useEffect(()=>{
+    const func = async () => {
+      await fetchChartData();
+    }
+    func();
+  },[]);
 
   return (
     <ResponsiveContainer height={600} width="90%">
