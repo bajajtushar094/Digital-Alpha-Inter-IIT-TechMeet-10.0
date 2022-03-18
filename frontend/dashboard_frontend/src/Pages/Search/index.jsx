@@ -40,7 +40,6 @@ const Search = (props) => {
           dispatch({
             type: "CLEAN_QUERY_FILINGS",
           });
-          console.log("error log search index line 44");
         };
     }, [])
     useEffect(() => {

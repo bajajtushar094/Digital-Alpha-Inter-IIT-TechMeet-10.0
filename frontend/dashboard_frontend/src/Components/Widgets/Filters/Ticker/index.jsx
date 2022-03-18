@@ -11,8 +11,7 @@ const Ticker = ({ state }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		console.log("TickerPage", newTicker, tickers)
-
-		if(newTicker!=="" && !tickers.includes(newTicker)){
+		if(newTicker && newTicker!=="" && !tickers.includes(newTicker)){
 			dispatch({
 				type: "UPDATE_QUERY_FILINGS",
 				queryFilings: {
@@ -37,7 +36,7 @@ const Ticker = ({ state }) => {
 								newTickerReference.current.value &&
 								newTickerReference.current.value.length > 0
 							) {
-								setNewTicker(newTickerReference.current.value);
+								setNewTicker(newTickerReference.current.value.trim());
 							}
 							newTickerReference.current.value = "";
 						}

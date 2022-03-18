@@ -17,6 +17,7 @@ import Aman from "./Pages/Aman/aman";
 import CompanyTitle from "./Components/Widgets/Filters/CompanyTitle/CompanyTitle";
 import test from "./Pages/test";
 import RecentlyViewedLogIn from "./Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn";
+import Error404 from "./Pages/Error404";
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
 					<Route path='/file'>
 						<Route index element={<Filenew/>}/>
 					</Route>
+					<Route path="/*" element={<Error404 />} />
 				</Routes>
 			</BrowserRouter>
 		</div>
