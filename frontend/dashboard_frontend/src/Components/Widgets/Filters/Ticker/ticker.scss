@@ -32,6 +32,12 @@
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  width: 80px;
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+  }
 }
 
 #w-node-_81d8dbc1-a99d-2a58-a2e6-ec975f1b0dc3-5d4911ed {

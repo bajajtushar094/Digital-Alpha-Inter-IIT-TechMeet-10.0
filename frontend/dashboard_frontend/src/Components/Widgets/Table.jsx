@@ -1,128 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import IconButton from '@mui/material/IconButton';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import './table.scss';
-import { getMetricsFromFiling } from '../../actions/action';
-
-
-const Row_custom = (props) => {
-	console.log("Filings:", props.filing);
-	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
-	const [isCompany, setIsCompany] = useState(props.isCompany);
-	const filing = props.filing;
-	const [hover, setHover] = useState(false);
-	const [hoverbg, setHoverBg] = useState(false);
-	const handleMouseIn = () => {
-		setHover(true);
-	}
-	const handleMouseOut = () => {
-		setHover(false);
-	}
-	const handleMouseInBg = () => {
-		setHoverBg(true);
-	};
-	const handleMouseOutBg = () => {
-		setHoverBg(false);
-	};
-
-	return (
-		<div className={hoverbg ? "listing ishover" : "listing"} onMouseOver={handleMouseInBg} onMouseLeave={handleMouseOutBg}>
-			<div className="listingheader-wrapper">
-
-				<div class={hasCheckbox ? "listingheadergrid hascheckbox" : "listingheadergrid"}>
-
-					{hasCheckbox && <div className="actiondiv">
-						<input className='checkbox' type="checkbox" />
-					</div>}
-					{isCompany ? <>
-						<div id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194db-5d4911ed" class="compcontainer">
-							<div class="logo-wrapper">
-								<img src="https://uploads-ssl.webflow.com/6223552248fd5d64304911ec/622788b6ed5b1301d589b856_ASAN.svg" loading="lazy" alt="" />
-							</div>
-						</div>
-						<div id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194de-5d4911ed">
-							<div class="ui-text black100">{filing['name']}</div>
-							<h4 class="black15">{filing['ticker']}</h4>
-						</div>
-					</> :
-						<>
-							<div class="filingcontainer">
-								<div class="ui-text issecondarybutton isfiling">{filing['form_type']}</div>
-							</div>
-							<div id="w-node-b6ad1064-49e9-79f3-df7a-f41125cb80fe-5d4911ed">
-								<div class="ui-text black100">{filing['company_id']}</div>
-								<h4 class="black15">{filing['company_id']}</h4>
-							</div>
-						</>
-					}
-				</div>
-
-			</div>
-			{isCompany ?
-				<div className="div-block-4">
-					<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e4-5d4911ed" className="iscolumn black50">10</h4>
-					<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e6-5d4911ed" className="iscolumn black50">40</h4>
-					<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">50</h4>
-					<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">30</h4>
-					<div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
-						<div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-							<IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-								<BookmarkBorderIcon />
-							</IconButton>
-						</div>
-						<div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-							<IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-								<BookmarkBorderIcon />
-							</IconButton>
-						</div>
-						<div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-							<IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-								<BookmarkBorderIcon />
-							</IconButton>
-						</div>
-						<div className={!hover ? "actioncontainer " : "actioncontainer hide"}>
-							<MoreVertIcon />
-						</div>
-					</div>
-				</div>
-				:
-				<div className="div-block-4">
-					<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{filing['company_id']}</h4>
-					<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{filing['date']}</h4>
-					<div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
-						<div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-							<IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-								<BookmarkBorderIcon />
-							</IconButton>
-						</div>
-						<div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-							<IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-								<BookmarkBorderIcon />
-							</IconButton>
-						</div>
-						<div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-							<IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-								<BookmarkBorderIcon />
-							</IconButton>
-						</div>
-						<div className={!hover ? "actioncontainer " : "actioncontainer hide"}>
-							<MoreVertIcon />
-						</div>
-					</div>
-				</div>}
-
-		</div>)
-}
+import { getMetricsFromFiling, getKeyMetricOfCompany} from '../../actions/action';
+import RecentFilingRow from "./RecentFilingRow.jsx";
+import CompanyRow from "./CompanyRow.jsx"
 
 const Table = (props) => {
 	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
 	const [isCompany, setIsCompany] = useState(props.isCompany);
-	const data = props.data;
+	const data = props.data || [];
+	console.log("Data from Table for search filings:", data);
 	const dispatch = useDispatch();
-	// console.log("Data", data);
+	// console.log("Props", props);
+	const fromSearch = props.fromSearch;
 
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverbg] = useState(false);
@@ -176,12 +70,18 @@ const Table = (props) => {
 
 
 			<div className="separator"></div>
-			{data.map((filing, i) => {
+			{isCompany==false&&data!=[]&&data.map((filing, i) => {
 				return (
-					<Row_custom filing={filing} />
+					<RecentFilingRow filing={filing} hasCheckbox={false}/>
 				);
 			})}
-
+			{isCompany==true&&fromSearch==false&&data.map((filing, i) => {
+				return (
+					<CompanyRow filing={filing} hasCheckbox={false} fromSearch={false}/>
+				);
+			})}
+			{isCompany==true&&fromSearch==true&&
+			<CompanyRow filing={data} hasCheckbox={false} fromSearch={true}/>}
 		</div>
 	)
 }

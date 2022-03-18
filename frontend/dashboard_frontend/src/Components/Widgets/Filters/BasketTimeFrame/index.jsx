@@ -59,6 +59,8 @@ const TimeFrame = ({state}) => {
               onChange={(date) => setSelectedStartDate(date)}
               value={selectedStartDate}
               className='black-50'
+              showMonthYearPicker
+              dateFormat={`yyyy-MM`}
             />
           </div>
           <a href='#' className='w-inline-block'>
@@ -91,6 +93,8 @@ const TimeFrame = ({state}) => {
               value={selectedEndDate}
               wrapperClassName='datePicker'
               className='black-50'
+              showMonthYearPicker
+              dateFormat={`yyyy-MM`}
             />
           </div>
           <div href='#' className='w-inline-block'>

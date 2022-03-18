@@ -59,7 +59,7 @@ class getAllCompanies(APIView):  #returns company data along with filings and th
 			for company in companies:
 				filings = Filing.objects.filter(company_id = company['ticker']).values()
 				for filing in filings:
-					filing["key metrics"] = KeyMetric.objects.filter(company_id=company['ticker'], filing_id=filing['id']).values()
+					filing["key_metrics"] = KeyMetric.objects.filter(company_id=company['ticker'], filing_id=filing['id']).values()
 				company["filings"] = filings
 		except:
 			Response(
@@ -120,7 +120,7 @@ class bookmarkedCompanies(APIView):
 		return Response(
 			data=user.bookmarked_companies.all().values(),
 			status=status.HTTP_200_OK
-		)      
+		)
 
 class recentlyViewedCompanies(APIView):
 	permission_classes = [permissions.IsAuthenticated]

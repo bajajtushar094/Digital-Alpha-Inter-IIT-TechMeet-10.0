@@ -13,6 +13,7 @@ const CompanyFilter = (props) => {
        
             <div className="cardcontainer" >
                 <CompanyTitle company={props.company} arrMetric={props.arrMetric} ccrMetric={props.ccrMetric} ltvMetric={props.ltvMetric} cacMetric={props.cacMetric} arpaMetric={props.arpaMetric} rcrMetric={props.rcrMetric} isMetricLoading={props.isMetricLoading} />
+               
                 <TimeFrame/>
             </div>
         

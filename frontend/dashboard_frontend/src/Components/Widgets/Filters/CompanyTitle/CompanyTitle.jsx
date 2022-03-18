@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "../../../../global.scss";
 import "./CompanyTitle.scss";
 import More from "../../../../images/widgets/More.svg";
 
 const CompanyTitle = (props) => {
+
+    const [bool,setbool]=useState(false)
 
     return (
         <>
@@ -14,8 +16,8 @@ const CompanyTitle = (props) => {
                             <div class="logo-wrapper isbig"><img src="https://uploads-ssl.webflow.com/6223552248fd5d64304911ec/622788b6ed5b1301d589b856_ASAN.svg" loading="lazy" alt=""/></div>
                         </div>
                         <div id="w-node-a76e39fc-47ab-e63f-05cc-34673b655eb5-5d4911ed">
-                            <h3>{props.company.name}</h3>
-                            <h4 class="black15">{props.company.ticker}</h4>
+                            <h3>{props.company?.name}</h3>
+                            <h4 class="black15">{props.company?.ticker}</h4>
                         </div>
                     </div>
                 </div>
@@ -24,12 +26,13 @@ const CompanyTitle = (props) => {
                     <div class="actioncontainer"><img src={More} loading="lazy" alt=""/></div>
                 </div>
             </div>
+            
             <div id="w-node-_38f3be73-8770-01e7-500a-24cc065575f2-5d4911ed" class="metrics">
                 {props.isMetricLoading?
                     <div></div>
                         :
                     <div>
-                        {props.arrMetric.map((item)=>{
+                        {props.arrMetric?.map((item)=>{
                             return(
                                 <div class="metric-entry">
                                     <h4 class="black50">{item.metric_type}</h4>
@@ -38,7 +41,7 @@ const CompanyTitle = (props) => {
                             )
                             
                         })}
-                            {props.ccrMetric.map((item)=>{
+                            {props.ccrMetric?.map((item)=>{
                             return(
                                 <div class="metric-entry">
                                     <h4 class="black50">{item.metric_type}</h4>
@@ -47,7 +50,7 @@ const CompanyTitle = (props) => {
                             )
                             
                         })}
-                            {props.ltvMetric.map((item)=>{
+                            {props.ltvMetric?.map((item)=>{
                             return(
                                 <div class="metric-entry">
                                     <h4 class="black50">{item.metric_type}</h4>
@@ -56,7 +59,7 @@ const CompanyTitle = (props) => {
                             )
                             
                         })}
-                            {props.cacMetric.map((item)=>{
+                            {props.cacMetric?.map((item)=>{
                             return(
                                 <div class="metric-entry">
                                     <h4 class="black50">{item.metric_type}</h4>
@@ -65,7 +68,7 @@ const CompanyTitle = (props) => {
                             )
                             
                         })}
-                            {props.rcrMetric.map((item)=>{
+                            {props.rcrMetric?.map((item)=>{
                             return(
                                 <div class="metric-entry">
                                     <h4 class="black50">{item.metric_type}</h4>
