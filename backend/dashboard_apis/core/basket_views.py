@@ -2,7 +2,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
-from datetime import date
+from datetime import datetime
+from .choices import *
+
 
 @api_view(["GET"])
 def getBookmarks(request):
@@ -97,7 +99,7 @@ def getComparisonData(request):
 
     dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], yearly=False, metric_type=metric_type).values("date").distinct()
 
-    print(dates)
+    # print(dates)
     metrices = []
     for date in dates:
         # print(date, str(date["date"]))
@@ -108,8 +110,12 @@ def getComparisonData(request):
             metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
             
 
-    print(metrices)
-
+    print("Metrics",metrices)
+    for i in metrices:
+        # i['date'] = i['date'].strftime("%d-%B-%Y")
+        date_parts = i['date'].split('-')
+        print("DateTime",MONTH_MAPPING[date_parts[1]])
+        i['date'] = MONTH_MAPPING[date_parts[1]]+' '+date_parts[0]
     
     # # metrices = []
     # for ticker in tickers:

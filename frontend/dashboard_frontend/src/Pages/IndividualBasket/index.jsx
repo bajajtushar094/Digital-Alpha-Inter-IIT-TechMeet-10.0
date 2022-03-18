@@ -18,21 +18,21 @@ import MetricTabs from './MetricTabs';
 const IndividualBasket = (props)=>{
     const dispatch = useDispatch();
     const basket_id = useParams().basket_id;
+    const state = props.state;
     // const [visualize, setVisualize] = useState(false);
     let basketDetails = props.state.basketDetails;
     const addSelector = () => {
-        for(let company in basketDetails.data.companies){
-            company["selected"] = false;
+        for(let i=0;i<basketDetails.data.companies.length;i++){
+            basketDetails.data.companies[i].selected = true;
         }
     }
     let visualize = props.state.visualize;
-    
+    let tickers = props.state.queryFilings.tickers;
 
     const handleChange = (event, company) => {
         if(company.selected === true) {
             company.selected = false;
             const response = deselectInBasket(company, dispatch);
-            console.log(basketDetails.data);
         } else {
             company.selected = true;
             const response = selectInBasket(company, dispatch);
@@ -42,8 +42,6 @@ const IndividualBasket = (props)=>{
         const fetchBasketDetails = async () => {
             try {
                 const response = await getBasketDetails(basket_id, dispatch);
-                console.log(response.data);
-                console.log(basketDetails);
             } catch(err) {
                 console.log("Error: ", err);
             }
