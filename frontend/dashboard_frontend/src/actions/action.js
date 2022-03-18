@@ -173,6 +173,8 @@ export const searchFilings = async (query, dispatch) => {
     return data;
 }
 
+// export const 
+
 
 export const simpleSearch = async (query, dispatch) => {
     let data;
@@ -385,4 +387,15 @@ export const addRecentlyViewedCompany = async (company_ticker) => {
     )
     
     return data;
+}
+
+export const searchCompanyAPI = async(queryFilings, dispatch) => {
+
+    const response = await axios.post(
+        `${config().getAllMetricsOfCompany}`,
+        queryFilings,
+        configHeaders
+    )
+
+    return response.data;
 }
