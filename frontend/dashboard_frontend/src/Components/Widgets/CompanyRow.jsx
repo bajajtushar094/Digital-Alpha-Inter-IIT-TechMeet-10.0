@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import IconButton from '@mui/material/IconButton';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import './table.scss';
 import { getMetricsFromFiling, getKeyMetricOfCompany, searchFillings } from '../../actions/action';
 
@@ -89,17 +90,14 @@ const CompanyRow = (props) => {
                                     <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{CAC?CAC:'-'}</h4>
                                     <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
                                         <div className="actions-1">
+                                        <Link to={`/company/${filing['company_id']}`}>
                                         <div className="actioncontainer ">
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-                                                <BookmarkBorderIcon />
+                                                <OpenInNewIcon />
                                             </IconButton>
                                         </div>
+                                        </Link>
                                         <div className="actioncontainer ">
-                                            <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-                                                <BookmarkBorderIcon />
-                                            </IconButton>
-                                        </div>
-                                        <div className="actioncontainer" >
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
