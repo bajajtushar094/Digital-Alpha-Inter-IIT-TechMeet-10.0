@@ -33,8 +33,8 @@ const Search = (props) => {
     const [filingsData, setFilingsData] = useState([]);
     useEffect(() => {
         const func = async () => {
-            console.log("query", query);
             console.log("queryFilings", queryFilings);
+
             let data_byFilings;
             const data_bySimple = await simpleSearch(query, dispatch);
             if(selected==2){
@@ -55,6 +55,7 @@ const Search = (props) => {
 			})
         };
         func();
+
 
 
 
