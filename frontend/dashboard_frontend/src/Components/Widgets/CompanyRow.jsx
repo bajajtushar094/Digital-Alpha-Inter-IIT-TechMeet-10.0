@@ -2,10 +2,12 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import IconButton from '@mui/material/IconButton';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import './table.scss';
 import { getMetricsFromFiling, getKeyMetricOfCompany } from '../../actions/action';
+import MaxWidthDialog from './DialogBox';
 
 const CompanyRow = (props) => {
     const dispatch = useDispatch();
@@ -34,6 +36,32 @@ const CompanyRow = (props) => {
     const handleMouseOutBg = () => {
         setHoverBg(false);
     };
+
+    const [open, setOpen] = React.useState(false);
+    const [fullWidth, setFullWidth] = React.useState(true);
+    const [maxWidth, setMaxWidth] = React.useState('xs');
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleDialogButton =() =>{
+        setOpen(!open);
+    }
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleMaxWidthChange = (event) => {
+        setMaxWidth(
+        // @ts-expect-error autofill of arbitrary value is not handled.
+        event.target.value,
+        );
+    };
+
+    const handleFullWidthChange = (event) => {
+        setFullWidth(event.target.checked);
+    };
+
+    
     return (
         <>
             {
@@ -88,16 +116,11 @@ const CompanyRow = (props) => {
                                     <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
                                         <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-                                                <BookmarkBorderIcon />
+                                                <OpenInNewIcon />
                                             </IconButton>
                                         </div>
                                         <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-                                            <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-                                                <BookmarkBorderIcon />
-                                            </IconButton>
-                                        </div>
-                                        <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-                                            <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
+                                            <IconButton style={{ backgroundColor: 'transparent' }}  aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
@@ -106,7 +129,7 @@ const CompanyRow = (props) => {
                                         </div>
                                     </div>
                                 </div>
-
+                                <MaxWidthDialog open={[open,setOpen]} fullWidth={[fullWidth,setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen ={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange}/>
                         </div>
                     );
                 })}

@@ -146,6 +146,7 @@ def getBaskets(request):
         baskets list[object]: details of all the baskets provided
     """
     user = request.user
+    print(user)
     if not user.is_authenticated:
         return Response(
             {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
@@ -164,7 +165,7 @@ def getBaskets(request):
             "companies": basket.companies.values(),
             "companies_count": basket.companies.count()
         })
-
+    print(basketData)
     return Response(
         {
         "error":None,

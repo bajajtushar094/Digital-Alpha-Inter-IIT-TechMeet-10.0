@@ -62,8 +62,8 @@ const data = [
 
 function Chart(props) {
   const dispatch = useDispatch();
-  
   const queryFilings = props.state.queryFilings;
+  const companies = props.state.basketSelectedCompanies;
   const [dependency, setDependency] = useState(false);
   const metric = props.metric;
   const [chartData, setChartData] = useState([]);
