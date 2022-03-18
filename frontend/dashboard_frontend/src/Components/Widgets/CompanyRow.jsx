@@ -65,7 +65,7 @@ const CompanyRow = (props) => {
                         
                     }
                     return (
-                        <div className={hoverbg ? "listing ishover" : "listing"} onMouseOver={handleMouseInBg} onMouseLeave={handleMouseOutBg}>
+                        <div className="listing" onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut}>
                             <div className="listingheader-wrapper">
 
                                 <div className={hasCheckbox ? "listingheadergrid hascheckbox" : "listingheadergrid"}>
@@ -88,22 +88,24 @@ const CompanyRow = (props) => {
                                     <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{LTV?LTV:'-'}</h4>
                                     <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{CAC?CAC:'-'}</h4>
                                     <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
-                                        <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
+                                        <div className="actions-1">
+                                        <div className="actioncontainer ">
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
-                                        <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
+                                        <div className="actioncontainer ">
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
-                                        <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
+                                        <div className="actioncontainer" >
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
-                                        <div className={!hover ? "actioncontainer " : "actioncontainer hide"}>
+                                        </div>
+                                        <div className="actioncontainer-1 ">
                                             <MoreVertIcon />
                                         </div>
                                     </div>
