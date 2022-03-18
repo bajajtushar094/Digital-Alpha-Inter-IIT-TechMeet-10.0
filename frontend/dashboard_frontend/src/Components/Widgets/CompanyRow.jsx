@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import './table.scss';
 import { getMetricsFromFiling, getKeyMetricOfCompany, searchFilings } from '../../actions/action';
 import MaxWidthDialog from './DialogBox';
