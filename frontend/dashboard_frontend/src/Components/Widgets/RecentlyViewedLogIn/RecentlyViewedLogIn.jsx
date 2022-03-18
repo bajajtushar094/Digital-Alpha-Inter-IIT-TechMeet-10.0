@@ -16,29 +16,34 @@ const RecentlyViewedLogIn = (props) => {
     getRecentViewFunc();
   }, [dispatch]);
 
-  return (
-    <div class='cardcontainer'>
-      <div class='leftcardtitle'>
-        <h3 class='heading-2'>Recently Viewed</h3>
-        <a href='/#' class='button issecondary issmall w-button'>
-          view all
-        </a>
-      </div>
-      <div
-        id='w-node-_633401c4-a210-5c3e-5b31-05fd06f3863e-5d4911ed'
-        class='metrics'
-      >
-        {data.map((el, index) => (
-          <Component
-            key={index}
-            logo={el.logo || ASAN}
-            name={el.name}
-            ticker={el.ticker}
-          />
-        ))}
-      </div>
-    </div>
-  );
+
+    return (
+        <div class='cardcontainer'>
+            <div class='leftcardtitle'>
+                <h3 class='heading-2'>Recently Viewed</h3>
+                <Link to={`/recentlyviewed`} className='button issecondary issmall w-button'>
+                    view all
+                </Link>
+            </div>
+            <div
+                id='w-node-_633401c4-a210-5c3e-5b31-05fd06f3863e-5d4911ed'
+                class='metrics'
+            >
+                {data.map((el, index) => {
+                    return (
+                        <Link to={`/company/${el.company__ticker}`} style={{textDecoration:'None'}}>
+                        <Component
+                            key={index}
+                            logo={el.company__logo || ASAN}
+                            name={el.company__name}
+                            ticker={el.company__ticker}
+                        />
+                        </ Link>
+                    );}
+    )}
+            </div>
+        </div>
+    );
 };
 
 const Component = ({logo, name, ticker}) => (

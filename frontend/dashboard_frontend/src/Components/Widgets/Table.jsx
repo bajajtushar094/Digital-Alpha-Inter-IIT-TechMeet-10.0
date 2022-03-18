@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
+
 import IconButton from '@mui/material/IconButton';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -20,7 +21,7 @@ const Table = (props) => {
 
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverbg] = useState(false);
-
+	console.log("Le tera Data",data)
 	const handleMouseIn = () => {
 		setHover(true);
 		console.log("enter")
