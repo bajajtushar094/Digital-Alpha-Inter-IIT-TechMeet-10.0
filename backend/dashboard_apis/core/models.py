@@ -12,7 +12,7 @@ class Company(models.Model):
 	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)
-	logo = models.ImageField(upload_to='images')
+	logo = models.URLField(null=True)
 
 	def __str__(self):
 		return f'{self.ticker} ({self.name})'
@@ -110,13 +110,13 @@ class Filing(models.Model):
 class KeyMetric(models.Model):
 	company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='key_metrics')
 	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='key_metrics', null=True)	# Filing for drilldown
-	source = models.CharField(max_length=8, choices=SOURCE_TYPES, null=True)
+	source = models.CharField(max_length=2000, null=True)
 	# 
 	date = models.DateField()
 	yearly = models.BooleanField(_('isYearly'), default=False)
 	drilldown_offset = models.IntegerField(null=True)								# Drilldown Highlight offset
 	drilldown_length = models.IntegerField(null=True)								# Drilldown Highlight length
-	metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
+	metric_type = models.CharField(max_length=50, choices=METRIC_TYPES)
 	metric_value = models.DecimalField(max_digits=8, decimal_places=2)		# 53.53, 10.00
 	metric_unit = models.CharField(max_length=5, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
 	# year = models.IntegerField()
