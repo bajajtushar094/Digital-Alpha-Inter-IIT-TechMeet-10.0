@@ -101,6 +101,7 @@ const rootReducer = (state=initState,action) => {
             queryFilings: { 
                 tickers: [],
                 form_type: [],
+                metric_type:[],
                 time_start: "",
                 time_end: ""
             }

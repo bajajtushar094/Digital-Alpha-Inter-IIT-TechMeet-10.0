@@ -77,7 +77,7 @@ const CompanyRow = (props) => {
         <>
             {
                 filings.map((filing, i) => {
-                    const key_metrics = filing.key_metrics ? searchFilings.key_metrics : [];
+                    const key_metrics = filing.key_metrics ? filing.key_metrics : [];
                     let ARR, CCR, LTV, CAC, ARPA, RCC;
 
                     for (let i = 0; i < key_metrics.length; i++) {
