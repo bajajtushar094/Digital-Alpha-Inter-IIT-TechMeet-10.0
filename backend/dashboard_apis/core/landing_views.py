@@ -120,7 +120,7 @@ class bookmarkedCompanies(APIView):
 		return Response(
 			data=user.bookmarked_companies.all().values(),
 			status=status.HTTP_200_OK
-		)      
+		)
 
 class recentlyViewedCompanies(APIView):
 	permission_classes = [permissions.IsAuthenticated]

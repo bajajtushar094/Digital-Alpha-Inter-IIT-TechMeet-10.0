@@ -22,6 +22,7 @@ urlpatterns = [
     path('search', simpleSearch,),
 
     #Company APIs
+    path('company/metric/all', companyMetric),
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
     path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),
@@ -32,11 +33,12 @@ urlpatterns = [
     path("landingPage/companies/all", getAllCompanies.as_view()),
     path("landingPage/baskets/<int:user_id>", getAllBaskets.as_view()),
     path("landingPage/bookmarkedCompanies/<int:user_id>",bookmarkedCompanies.as_view()),
-    path("landingPage/recentlyViewedCompanies/<str:user_id>",recentlyViewedCompanies.as_view()),
+    path("landingPage/recentlyViewedCompanies",recentlyViewedCompanies.as_view()),
     path("landingPage/recentlyFiled",recentlyFiled.as_view()),
 
 
     path('companies/getKeyMetrics/<str:ticker>/<str:metric_type>', getKeyMetrics.as_view()),
+    path('companies/getKeyMetricsCSV/<str:ticker>/<str:metric_type>', getKeyMetricsCSV.as_view()),
     path('companies/getFilingMetric/<int:id>', getFilingFromMetric.as_view()),
 
     #Filing APIs
@@ -55,6 +57,7 @@ urlpatterns = [
     path("basket/create", createBasket),
     path("basket/update", updateBasketName),
     path("basket/delete", deleteBasket),
+    path("basket/insertIntoBasket", insertIntoBasket),
 
     # add to db
     path("add", addToDb)

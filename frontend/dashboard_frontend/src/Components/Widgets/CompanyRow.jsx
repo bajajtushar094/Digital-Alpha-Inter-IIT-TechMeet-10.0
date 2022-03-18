@@ -1,17 +1,29 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
+import {Link} from 'react-router-dom'
 import IconButton from '@mui/material/IconButton';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import './table.scss';
-import { getMetricsFromFiling, getKeyMetricOfCompany } from '../../actions/action';
+import { getMetricsFromFiling, getKeyMetricOfCompany, searchFilings } from '../../actions/action';
 
 const CompanyRow = (props) => {
     const dispatch = useDispatch();
     const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
     const [isCompany, setIsCompany] = useState(props.isCompany);
-    const filings = props.filing.filings;
+    let filings=[];
+    const fromSearch = props.fromSearch
+    console.log("Props from Row:", props)
+    if(fromSearch==false){
+        filings = props.filing.filings
+    }
+    else{
+        filings = props.filing
+    }
+
+    console.log("Filings from Company Row:", filings);
 
     const [ARR, setARR] = useState("");
     const [CCR, setCCR] = useState("");
@@ -38,7 +50,7 @@ const CompanyRow = (props) => {
         <>
             {
                 filings.map((filing, i) => {
-                    const key_metrics = filing.key_metrics||[];
+                    const key_metrics = filing.key_metrics?searchFilings.key_metrics:[];
                     let ARR, CCR, LTV, CAC, ARPA, RCC;
 
                     for(let i=0;i<key_metrics.length;i++){
@@ -64,20 +76,21 @@ const CompanyRow = (props) => {
                         
                     }
                     return (
-                        <div className={hoverbg ? "listing ishover" : "listing"} onMouseOver={handleMouseInBg} onMouseLeave={handleMouseOutBg}>
+                        <div className="listing" onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut}>
                             <div className="listingheader-wrapper">
 
-                                <div class={hasCheckbox ? "listingheadergrid hascheckbox" : "listingheadergrid"}>
+                                <div className={hasCheckbox ? "listingheadergrid hascheckbox" : "listingheadergrid"}>
 
                                     {hasCheckbox && <div className="actiondiv">
                                         <input className='checkbox' type="checkbox" />
                                     </div>}
 
                                     <>
-                                        <div class="filingcontainer">
-                                            <div class="ui-text issecondarybutton isfiling">{filing['company_id']}</div>
+                                        <div className="filingcontainer">
+                                        <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{filing['company_id']}</div></Link>
                                         </div>
                                     </>
+                                    
                                 </div>
                             </div>
                                 <div className="div-block-4">
@@ -86,22 +99,21 @@ const CompanyRow = (props) => {
                                     <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{LTV?LTV:'-'}</h4>
                                     <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{CAC?CAC:'-'}</h4>
                                     <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
-                                        <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
+                                        <div className="actions-1">
+                                        <Link to={`/company/${filing['company_id']}`}>
+                                        <div className="actioncontainer ">
+                                            <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
+                                                <OpenInNewIcon />
+                                            </IconButton>
+                                        </div>
+                                        </Link>
+                                        <div className="actioncontainer ">
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
-                                        <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-                                            <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-                                                <BookmarkBorderIcon />
-                                            </IconButton>
                                         </div>
-                                        <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-                                            <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
-                                                <BookmarkBorderIcon />
-                                            </IconButton>
-                                        </div>
-                                        <div className={!hover ? "actioncontainer " : "actioncontainer hide"}>
+                                        <div className="actioncontainer-1 ">
                                             <MoreVertIcon />
                                         </div>
                                     </div>

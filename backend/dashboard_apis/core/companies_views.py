@@ -8,7 +8,8 @@ from rest_framework import permissions
 from .utils import *
 from .models import *
 from .serializers import *
-
+import csv
+from django.http import HttpResponse
 
 class bookmarkCompanyView(APIView):
 
@@ -122,9 +123,51 @@ class getRecentFilings(APIView):
             status=status.HTTP_200_OK
         )
 
+def csvResponse(queryset, headerfieldnames, dictfieldnames):
+    response = HttpResponse (content_type='text/csv')
+    writer = csv.writer(response)
+    writer.writerow(headerfieldnames)
+    qs = queryset.values()
+    arr = []
+    for q in qs:
+        arr.append([q[fieldname] for fieldname in dictfieldnames])
+    writer.writerows(arr)
+    
+    return response
+    
+
+class getKeyMetricsCSV(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):        
+        company = get_company(kwargs['ticker'])
+        metric_type = kwargs['metric_type']
+
+        if isinstance(company, Response):
+            return company
+
+        try:
+            metrics = KeyMetric.objects.filter(company=company, metric_type=metric_type)
+        except:
+            return Response(
+                {"res":"Error while fetching filings of the company"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+
+        # metrics = metrics.values()
+
+        return csvResponse(metrics, 
+            ['company_ticker', 'date', 'metric_type', 'metric_value', 'metric_unit'],
+            ['company_id', 'date', 'metric_type', 'metric_value', 'metric_unit'])
+        # return Response(
+        #     data=metrics,
+        #     status= status.HTTP_200_OK
+        # ) 
 
 class getKeyMetrics(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):        
         company = get_company(kwargs['ticker'])
@@ -176,11 +219,6 @@ class getFilingFromMetric(APIView):
             data=filing.values(),
             status = status.HTTP_200_OK
         )
-
-
-        
-        
-
 
 
 
