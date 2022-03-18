@@ -10,14 +10,20 @@ METRIC_TYPES = [
 	('LTV', 'Lifetime Value'),
 	('CAC', 'Customer Acquisition Cost'),
 	('ARPA', 'Average Run Per Account'),
-	('RCC', 'Revenue Churn Rate')
+	('RCC', 'Revenue Churn Rate'),
+	('total_revenue', 'Total Revenue'),
+	('cost_of_revenue', 'Cost Of Revenue'),
+	('gross_profit', 'Gross Profit'),
+	('gross_margin', 'Gross Margin'),
+
 ]
 
 METRIC_UNITS = [
 	('B', 'Billion'),
 	('M', 'Million'),
 	('K', 'Thousand'),
-	('%', 'Percent')
+	('%', 'Percent'),
+	('USD', 'USD')
 ]
 
 SOURCE_TYPES = [

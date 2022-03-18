@@ -8,7 +8,7 @@ from datetime import date
 
 
 class Company(models.Model):
-	# cik = models.CharField(max_length=20, primary_key=True)
+	cik = models.CharField(max_length=20, unique=True)
 	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)
@@ -109,13 +109,13 @@ class Filing(models.Model):
 
 class KeyMetric(models.Model):
 	company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='key_metrics')
-	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='key_metrics')	# Filing for drilldown
-	# source = models.CharField(max_length=8, choices=SOURCE_TYPES)
+	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='key_metrics', null=True)	# Filing for drilldown
+	source = models.CharField(max_length=8, choices=SOURCE_TYPES, null=True)
 	# 
 	date = models.DateField()
-	yearly = models.BooleanField(_('Yearly or quaterly'), default=False)
-	drilldown_offset = models.IntegerField()								# Drilldown Highlight offset
-	drilldown_length = models.IntegerField()								# Drilldown Highlight length
+	yearly = models.BooleanField(_('isYearly'), default=False)
+	drilldown_offset = models.IntegerField(null=True)								# Drilldown Highlight offset
+	drilldown_length = models.IntegerField(null=True)								# Drilldown Highlight length
 	metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
 	metric_value = models.DecimalField(max_digits=8, decimal_places=2)		# 53.53, 10.00
 	metric_unit = models.CharField(max_length=5, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
@@ -123,9 +123,7 @@ class KeyMetric(models.Model):
 	# quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
 
 	def __str__(self):
-		if self.filing.quarter:
-			return f'{self.company.name}-{self.metric_type}-Y{self.filing.year}Q{self.filing.quarter}' 
-		return f'{self.company.name}-{self.metric_type}-Y{self.filing.year}' 
+		return f'{self.company.name}-{self.metric_type}-Y{self.date}' 
 
 
 

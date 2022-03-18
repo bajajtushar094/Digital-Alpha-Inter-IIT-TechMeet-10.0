@@ -1,6 +1,7 @@
 import imp
 from os import stat
 from warnings import catch_warnings
+from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,7 +9,8 @@ from rest_framework import permissions
 from .utils import *
 from .models import *
 from .serializers import *
-
+import csv
+from decimal import *
 
 class bookmarkCompanyView(APIView):
 
@@ -178,4 +180,22 @@ class getFilingFromMetric(APIView):
         )
 
 
-
+def addToDb(request):
+    file = open('/home/ankit/Projects/Inter IIT/SaaS 2022/Digital-Alpha-Inter-IIT-TechMeet-10.0/backend/dashboard_apis/core/files/total_revenue_costofrevenue_grossprofit_grossmargin.csv')
+    print('ok')
+    csvreader = csv.reader(file)
+    headers = next(csvreader)
+    rows = []
+    for row in csvreader:
+        rows.append(row)
+    print(rows)
+    for row in rows:
+        company = Company.objects.filter(cik=row[1]).first()
+        if(row[2]!='ttm'):
+            arr = row[2].split("/")
+            metric_date = arr[2]+"-"+arr[0]+"-"+arr[1]
+            KeyMetric(company=company, date=metric_date, metric_type='total_revenue',metric_value=Decimal(row[3]), metric_unit='USD').save()
+    
+    
+    file.close()
+    return HttpResponse('<h4>Added to database</h4>')

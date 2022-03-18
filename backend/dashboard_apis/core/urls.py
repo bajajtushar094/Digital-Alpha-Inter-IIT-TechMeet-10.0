@@ -57,6 +57,6 @@ urlpatterns = [
     path("basket/delete", deleteBasket),
 
     # add to db
-    path("add", addToDb)
+    path("addtodb", addToDb)
 
 ]
