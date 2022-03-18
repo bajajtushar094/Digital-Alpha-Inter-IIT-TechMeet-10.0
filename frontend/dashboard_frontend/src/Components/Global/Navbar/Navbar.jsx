@@ -33,7 +33,7 @@ const Navbar = () => {
 
   return (
     <div className='nav'>
-     
+
       <div>
         <Link to='/'>
         <img src={logo1} alt="" />
@@ -50,11 +50,11 @@ const Navbar = () => {
           <img src={item2} alt="" />
          </div>
        </Link>
-       <Link to="/">
+       {/* <Link to="/">
         <div className='navicon'>
           <button className='btn-primary' onClick={handleDialogButton}>Log In</button>
          </div>
-       </Link>
+       </Link> */}
       </div>
       <MaxWidthDialog open={[open,setOpen]} fullWidth={[fullWidth,setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen ={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange}/>
     </div>
