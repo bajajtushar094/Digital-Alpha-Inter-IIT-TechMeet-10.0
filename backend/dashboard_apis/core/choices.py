@@ -10,7 +10,8 @@ METRIC_TYPES = [
 	('LTV', 'Lifetime Value'),
 	('CAC', 'Customer Acquisition Cost'),
 	('ARPA', 'Average Run Per Account'),
-	('RCC', 'Revenue Churn Rate')
+	('RCC', 'Revenue Churn Rate'),
+	("Customers", "No Of Customers")
 ]
 
 METRIC_UNITS = [

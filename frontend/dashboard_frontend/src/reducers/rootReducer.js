@@ -157,6 +157,25 @@ const rootReducer = (state=initState,action) => {
         }
     }
 
+    if(action.type === 'RESET_QUERY_FILINGS'){
+        return{
+            ...state,
+            queryFilings: {
+                "tickers": [],
+                "form_type": [],
+                "time_start": "",
+                "time_end": ""
+            }
+        }
+    }
+
+    if(action.type === 'RESET_SEARCH_FILINGS'){
+        return{
+            ...state,
+            searchFilings: []
+        }
+    }
+
     return state;
 }
 
