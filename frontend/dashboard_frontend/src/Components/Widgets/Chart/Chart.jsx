@@ -95,6 +95,7 @@ function Chart(props) {
       console.log("Error", err);
     }
 
+// }
 
     
       // .then((response) => {

@@ -5,6 +5,7 @@ import More from "../../../images/widgets/More.svg";
 import { useDispatch } from "react-redux";
 import { getRecentlyViewedCompanies } from "../../../actions/action";
 import { connect } from "react-redux";
+import {Link} from 'react-router-dom'
 const RecentlyViewedLogIn = (props) => {
   const dispatch = useDispatch();
   const data = props.state.recentlyViwedCompanies || [];

@@ -1,0 +1,39 @@
+.force1{
+    justify-content: flex-start !important;
+}
+.btncolor{
+    color: #9B9B9C !important;
+    padding: 4px 20px !important;
+}
+.textdiv {
+    padding: 12px 0px;
+    font-family: Hkgrotesk, Arial, sans-serif;
+}
+.textdiv p{
+    color: #515051;
+  line-height: 20px;
+    font-family: Hkgrotesk, Arial, sans-serif;
+}
+.table_top{
+    .btn-link{
+        border: none;
+        outline: none;
+        background: none;
+        font-family: Hkgrotesk, Arial, sans-serif;
+        color: #9B9B9C;
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 500;
+    }
+    .active{
+        color: black;
+    }
+}
+.summary{
+    font-family: Hkgrotesk, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+}
+.mt{
+    margin-top: 0.5rem;
+}

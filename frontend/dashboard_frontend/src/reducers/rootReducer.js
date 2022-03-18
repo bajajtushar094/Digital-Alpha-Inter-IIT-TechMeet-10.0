@@ -12,6 +12,7 @@ const initState = {
     queryFilings: {
         "tickers": [],
         "metric_type": [],
+        "form_type":[],
         "time_start": "",
         "time_end": ""
     },
@@ -84,6 +85,28 @@ const rootReducer = (state=initState,action) => {
             queryFilings: newObj
         }
     }
+    if(action.type === 'ADD_SIMPLE_SEARCH_TO_QUERY_FILINGS') {
+        const newObj = action.ticker;
+        return {
+            ...state,
+            queryFilings: {
+                ...state.queryFilings,
+                tickers: [...state.queryFilings.tickers, newObj]
+            }
+        }
+    }
+    if(action.type === 'CLEAN_QUERY_FILINGS') {
+        return {
+            ...state,
+            queryFilings: { 
+                tickers: [],
+                form_type: [],
+                time_start: "",
+                time_end: ""
+            }
+        }
+    }
+    
     if(action.type==='UPDATE_QUERY_FILINGS_DATA') {
         const newObj = action.queryFilingsData;
         return {
@@ -112,6 +135,13 @@ const rootReducer = (state=initState,action) => {
         return {
             ...state,
             baskets: newArr
+        }
+    }
+    if(action.type === "STORE_SEARCH_FILINGS"){
+        const newArr = action.searchFilings;
+        return {
+            ...state,
+            searchFilings: newArr
         }
     }
 
@@ -161,6 +191,25 @@ const rootReducer = (state=initState,action) => {
         return {
             ...state,
             visualize: false
+        }
+    }
+    
+    if(action.type === 'RESET_QUERY_FILINGS'){
+        return{
+            ...state,
+            queryFilings: {
+                "tickers": [],
+                "form_type": [],
+                "time_start": "",
+                "time_end": ""
+            }
+        }
+    }
+
+    if(action.type === 'RESET_SEARCH_FILINGS'){
+        return{
+            ...state,
+            searchFilings: []
         }
     }
 

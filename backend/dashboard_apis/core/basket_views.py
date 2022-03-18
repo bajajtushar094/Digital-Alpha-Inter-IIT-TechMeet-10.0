@@ -21,12 +21,6 @@ def getBookmarks(request):
         return Response(
             {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
         )
-    res = User.objects.get(email= user)
-    if(len(res) == 0):
-        return Response(
-            {"error": {"message": "User not found"}}, status=status.HTTP_404_NOT_FOUND
-        )
-    user = res[0]
     return Response(
         {
         "error":None, 
@@ -34,6 +28,7 @@ def getBookmarks(request):
         },  
         status=status.HTTP_200_OK
     )
+
 
 @api_view(["GET"])
 def getBookmarksWithFilings(request):
@@ -298,3 +293,30 @@ def deleteBasket(request):
     basket.delete()
 
     return Response({"message": "Basket deleted"}, status=status.HTTP_200_OK)
+
+
+
+@api_view(["POST"])
+def insertIntoBasket(request):
+    user = request.user
+    if not user.is_authenticated:
+        return Response(
+            {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
+        )
+
+    try:
+        ticker = request.data['ticker']
+        company = Company.object.get(ticker=ticker)
+
+        basketID = request.date['basketID']
+        basket = Basket.objects.get(id=basketID)
+
+        basket.companies.add(company)
+        basket.save()
+
+        return Response({"message": "Basket updated"}, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        return Response(
+            {"error": {"message": "Wrong basket or ticker"}}, status=status.HTTP_404_NOT_FOUND
+        )
