@@ -120,7 +120,7 @@ const CompanyRow = (props) => {
                                             </IconButton>
                                         </div>
                                         <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-                                            <IconButton style={{ backgroundColor: 'transparent' }}  aria-label="delete">
+                                            <IconButton style={{ backgroundColor: 'transparent' }} onClick={handleClickOpen}  aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
