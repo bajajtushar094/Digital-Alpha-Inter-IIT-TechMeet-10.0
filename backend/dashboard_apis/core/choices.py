@@ -18,5 +18,10 @@ METRIC_UNITS = [
 	('B', 'Billion'),
 	('M', 'Million'),
 	('K', 'Thousand'),
-	('%', 'Percent')
+	('%', 'Percent'),
+]
+
+SOURCE_TYPES = [
+    ('url', 'URL'), 
+    ('filing', 'Filing')
 ]

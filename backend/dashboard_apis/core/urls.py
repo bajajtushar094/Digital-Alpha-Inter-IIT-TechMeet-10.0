@@ -38,6 +38,7 @@ urlpatterns = [
 
 
     path('companies/getKeyMetrics/<str:ticker>/<str:metric_type>', getKeyMetrics.as_view()),
+    path('companies/getKeyMetricsCSV/<str:ticker>/<str:metric_type>', getKeyMetricsCSV.as_view()),
     path('companies/getFilingMetric/<int:id>', getFilingFromMetric.as_view()),
 
     #Filing APIs
@@ -56,6 +57,7 @@ urlpatterns = [
     path("basket/create", createBasket),
     path("basket/update", updateBasketName),
     path("basket/delete", deleteBasket),
+    path("basket/insertIntoBasket", insertIntoBasket)
 
     # add to db
     path("add", addToDb)

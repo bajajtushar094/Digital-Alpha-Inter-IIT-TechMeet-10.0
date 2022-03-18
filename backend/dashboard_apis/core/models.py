@@ -2,11 +2,13 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
-from .choices import FILING_TYPES, METRIC_TYPES, METRIC_UNITS
+from .choices import FILING_TYPES, METRIC_TYPES, METRIC_UNITS, SOURCE_TYPES
 from django.utils.translation import gettext_lazy as _
-
+from datetime import date
 
 class Company(models.Model):
+	# cik = models.CharField(max_length=20, primary_key=True)
+	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)
 	logo = models.ImageField(upload_to='images')
@@ -91,8 +93,12 @@ class Filing(models.Model):
 	form_type = models.CharField(_('filing form type'), max_length=10, choices=FILING_TYPES)
 	year = models.IntegerField()
 	quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
+	# dummy_date = models.DateField(_('dummy date'))
 	date = models.DateField(_('filing date'))
 	verbose_text = models.TextField()				# Verbose text for drilldown
+
+	# def save():
+		
 
 	def __str__(self):
 		if self.quarter:
@@ -103,6 +109,10 @@ class Filing(models.Model):
 class KeyMetric(models.Model):
 	company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='key_metrics')
 	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='key_metrics')	# Filing for drilldown
+	# source = models.CharField(max_length=8, choices=SOURCE_TYPES)
+	# 
+	date = models.DateField()
+	yearly = models.BooleanField(_('Yearly or quaterly'), default=False)
 	drilldown_offset = models.IntegerField()								# Drilldown Highlight offset
 	drilldown_length = models.IntegerField()								# Drilldown Highlight length
 	metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
