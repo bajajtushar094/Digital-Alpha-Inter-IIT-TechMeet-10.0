@@ -8,7 +8,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  LineChart
 } from "recharts";
 import axios from 'axios';
 
@@ -16,19 +17,19 @@ let counter = 0;
 
 const data = [
   {
-    date:"Mar 2020",
+    date:"Mar 2017",
     uv: 4000,
     pv: 2400,
     amt: 2400
   },
   {
-    date:"Mar 2020",
+    date:"Mar 2018",
     uv: 3000,
     pv: 1398,
     amt: 2210
   },
   {
-    date:"Mar 2020",
+    date:"Mar 2019",
     uv: 2000,
     pv: 9800,
     amt: 2290
@@ -46,13 +47,13 @@ const data = [
     amt: 2181
   },
   {
-    date:"Mar 2020",
+    date:"Mar 2021",
     uv: 2390,
     pv: 3800,
     amt: 2500
   },
   {
-    date:"Mar 2020",
+    date:"Mar 2022",
     uv: 3490,
     pv: 4300,
     amt: 2100
@@ -65,31 +66,46 @@ function Chart(props) {
   const companies = props.state.basketSelectedCompanies;
   const [dependency, setDependency] = useState(false);
   const metric = props.metric;
-  const [data, setData] = useState();
-  console.log(companies);
+  const [chartData, setChartData] = useState([]);
+  // console.log(companies);
   console.log(queryFilings);
   let company_ticker = [];
-  
   const fetchChartData = async () => {
+    console.log("Query Filings:", queryFilings)
     const configHeaders = localStorage.getItem('authTokens')?{
       headers: {
           'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
       }
     }:"";
-    await axios.post(
-      "http://localhost:8000/api/basket/compare", queryFilings,
-      {
-        headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
-        },
-      }
-    )
-      .then((response) => {
-          console.log(response.data)
-      })
-      .catch((err) => {
-          console.log(err);
-      })
+
+    try{
+      const response = await axios.post(
+        "http://localhost:8000/api/basket/compare", props.state.queryFilings,
+        {
+          headers: {
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+          },
+        }
+      )
+      let dummyArray = response.data.data;
+      setChartData(dummyArray);
+      console.log("Chart Data", chartData);
+    }
+    catch(err){
+      console.log("Error", err);
+    }
+
+// }
+
+    
+      // .then((response) => {
+        // dummyArray = response.data.data;
+        // setChartData(dummyArray);
+      //   console.log("Data of charts",dummyArray);
+      // })
+      // .catch((err) => {
+      //     console.log(err);
+      // })
   // fetch("http://localhost:8000/api/basket/compare", {method:"POST", headers:configHeaders, body:queryFilings})
   // .then(response => response.text())
   // .then(result => console.log(result))
@@ -102,12 +118,20 @@ function Chart(props) {
       await fetchChartData();
     }
     func();
-  },[]);
+  },[queryFilings]);
+
+  const listOfBars = [];
+  for (const [i, ticker] of props.state.queryFilings.tickers.entries()) {
+    listOfBars.push(<Bar dataKey={ticker}/>)
+  }
 
   return (
+    <>
+    {chartData.length!=0&&
+    <>
     <ResponsiveContainer height={600} width="90%">
     <BarChart
-      data={data}
+      data={chartData}
       margin={{
         top: 5,
         right: 30,
@@ -116,14 +140,16 @@ function Chart(props) {
       }}
     >
       <CartesianGrid strokeDasharray="1 1" />
-      <XAxis dataKey="date" />
-      <YAxis />
+      <XAxis dataKey="date"/>
+      <YAxis domain={[0, 1]}/>
       <Tooltip />
       <Legend />
-      <Bar dataKey="pv" fill="#8884d8" />
-      <Bar dataKey="uv" fill="#82ca9d" />
+      {listOfBars}
     </BarChart>
     </ResponsiveContainer>
+    </>}
+    
+    </>
   );
 }
 

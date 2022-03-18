@@ -2,7 +2,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
-from datetime import date
+from datetime import datetime
+from .choices import *
+
 
 @api_view(["GET"])
 def getBookmarks(request):
@@ -19,12 +21,6 @@ def getBookmarks(request):
         return Response(
             {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
         )
-    res = User.objects.get(email= user)
-    if(len(res) == 0):
-        return Response(
-            {"error": {"message": "User not found"}}, status=status.HTTP_404_NOT_FOUND
-        )
-    user = res[0]
     return Response(
         {
         "error":None, 
@@ -32,6 +28,7 @@ def getBookmarks(request):
         },  
         status=status.HTTP_200_OK
     )
+
 
 @api_view(["GET"])
 def getBookmarksWithFilings(request):
@@ -97,7 +94,7 @@ def getComparisonData(request):
 
     dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], yearly=False, metric_type=metric_type).values("date").distinct()
 
-    print(dates)
+    # print(dates)
     metrices = []
     for date in dates:
         # print(date, str(date["date"]))
@@ -108,8 +105,12 @@ def getComparisonData(request):
             metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
             
 
-    print(metrices)
-
+    print("Metrics",metrices)
+    for i in metrices:
+        # i['date'] = i['date'].strftime("%d-%B-%Y")
+        date_parts = i['date'].split('-')
+        print("DateTime",MONTH_MAPPING[date_parts[1]])
+        i['date'] = MONTH_MAPPING[date_parts[1]]+' '+date_parts[0]
     
     # # metrices = []
     # for ticker in tickers:
@@ -292,3 +293,30 @@ def deleteBasket(request):
     basket.delete()
 
     return Response({"message": "Basket deleted"}, status=status.HTTP_200_OK)
+
+
+
+@api_view(["POST"])
+def insertIntoBasket(request):
+    user = request.user
+    if not user.is_authenticated:
+        return Response(
+            {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
+        )
+
+    try:
+        ticker = request.data['ticker']
+        company = Company.object.get(ticker=ticker)
+
+        basketID = request.date['basketID']
+        basket = Basket.objects.get(id=basketID)
+
+        basket.companies.add(company)
+        basket.save()
+
+        return Response({"message": "Basket updated"}, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        return Response(
+            {"error": {"message": "Wrong basket or ticker"}}, status=status.HTTP_404_NOT_FOUND
+        )

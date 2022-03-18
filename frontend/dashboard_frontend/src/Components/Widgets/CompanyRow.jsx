@@ -1,19 +1,30 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
+import { Link } from 'react-router-dom'
 import IconButton from '@mui/material/IconButton';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import './table.scss';
-import { getMetricsFromFiling, getKeyMetricOfCompany } from '../../actions/action';
+import { getMetricsFromFiling, getKeyMetricOfCompany, searchFilings } from '../../actions/action';
 import MaxWidthDialog from './DialogBox';
 
 const CompanyRow = (props) => {
     const dispatch = useDispatch();
     const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
     const [isCompany, setIsCompany] = useState(props.isCompany);
-    const filings = props.filing.filings;
+    let filings = [];
+    const fromSearch = props.fromSearch
+    console.log("Props from Row:", props)
+    if (fromSearch == false) {
+        filings = props.filing.filings
+    }
+    else {
+        filings = props.filing
+    }
+
+    console.log("Filings from Company Row:", filings);
 
     const [ARR, setARR] = useState("");
     const [CCR, setCCR] = useState("");
@@ -44,7 +55,7 @@ const CompanyRow = (props) => {
     const handleClickOpen = () => {
         setOpen(true);
     };
-    const handleDialogButton =() =>{
+    const handleDialogButton = () => {
         setOpen(!open);
     }
     const handleClose = () => {
@@ -52,8 +63,8 @@ const CompanyRow = (props) => {
     };
     const handleMaxWidthChange = (event) => {
         setMaxWidth(
-        // @ts-expect-error autofill of arbitrary value is not handled.
-        event.target.value,
+            // @ts-expect-error autofill of arbitrary value is not handled.
+            event.target.value,
         );
     };
 
@@ -61,60 +72,63 @@ const CompanyRow = (props) => {
         setFullWidth(event.target.checked);
     };
 
-    
+
     return (
         <>
             {
                 filings.map((filing, i) => {
-                    const key_metrics = filing.key_metrics||[];
+                    const key_metrics = filing.key_metrics ? searchFilings.key_metrics : [];
                     let ARR, CCR, LTV, CAC, ARPA, RCC;
 
-                    for(let i=0;i<key_metrics.length;i++){
+                    for (let i = 0; i < key_metrics.length; i++) {
                         // console.log("I", key_metrics[i])
-                        if(key_metrics[i]['metric_type']=="ARR"){
-                            ARR=key_metrics[i]['metric_value']
+                        if (key_metrics[i]['metric_type'] == "ARR") {
+                            ARR = key_metrics[i]['metric_value']
                         }
-                        else if(key_metrics[i]['metric_type']=="CCR"){
-                            CCR=key_metrics[i]['metric_value']
+                        else if (key_metrics[i]['metric_type'] == "CCR") {
+                            CCR = key_metrics[i]['metric_value']
                         }
-                        else if(key_metrics[i]['metric_type']=="LTV"){
-                            LTV=key_metrics[i]['metric_value']
+                        else if (key_metrics[i]['metric_type'] == "LTV") {
+                            LTV = key_metrics[i]['metric_value']
                         }
-                        else if(key_metrics[i]['metric_type']=="CAC"){
-                            CAC=key_metrics[i]['metric_value']
+                        else if (key_metrics[i]['metric_type'] == "CAC") {
+                            CAC = key_metrics[i]['metric_value']
                         }
-                        else if(key_metrics[i]['metric_type']=="ARPA"){
-                            ARPA=key_metrics[i]['metric_value']
+                        else if (key_metrics[i]['metric_type'] == "ARPA") {
+                            ARPA = key_metrics[i]['metric_value']
                         }
-                        else if(key_metrics[i]['metric_type']=="RCC"){
-                            RCC=key_metrics[i]['metric_value']
+                        else if (key_metrics[i]['metric_type'] == "RCC") {
+                            RCC = key_metrics[i]['metric_value']
                         }
-                        
+
                     }
                     return (
-                        <div className={hoverbg ? "listing ishover" : "listing"} onMouseOver={handleMouseInBg} onMouseLeave={handleMouseOutBg}>
+                        <div className="listing" onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut}>
                             <div className="listingheader-wrapper">
 
-                                <div class={hasCheckbox ? "listingheadergrid hascheckbox" : "listingheadergrid"}>
+                                <div className={hasCheckbox ? "listingheadergrid hascheckbox" : "listingheadergrid"}>
 
                                     {hasCheckbox && <div className="actiondiv">
                                         <input className='checkbox' type="checkbox" />
                                     </div>}
 
                                     <>
-                                        <div class="filingcontainer">
-                                            <div class="ui-text issecondarybutton isfiling">{filing['company_id']}</div>
+                                        <div className="filingcontainer">
+                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{filing['company_id']}</div></Link>
                                         </div>
                                     </>
+
                                 </div>
                             </div>
-                                <div className="div-block-4">
-                                    <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e4-5d4911ed" className="iscolumn black50">{ARR?ARR:'-'}</h4>
-                                    <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e6-5d4911ed" className="iscolumn black50">{CCR?CCR:'-'}</h4>
-                                    <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{LTV?LTV:'-'}</h4>
-                                    <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{CAC?CAC:'-'}</h4>
-                                    <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
-                                        <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
+                            <div className="div-block-4">
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e4-5d4911ed" className="iscolumn black50">{ARR ? ARR : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e6-5d4911ed" className="iscolumn black50">{CCR ? CCR : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{LTV ? LTV : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{CAC ? CAC : '-'}</h4>
+                                <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
+                                    <div className="actions-1">
+                                        <Link to={`/company/${filing['company_id']}`} />
+                                        <div className="actioncontainer ">
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
                                                 <OpenInNewIcon />
                                             </IconButton>
@@ -124,17 +138,17 @@ const CompanyRow = (props) => {
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
-                                        <div className={!hover ? "actioncontainer " : "actioncontainer hide"}>
+                                        <div className="actioncontainer-1 ">
                                             <MoreVertIcon />
                                         </div>
                                     </div>
                                 </div>
-                                <MaxWidthDialog open={[open,setOpen]} fullWidth={[fullWidth,setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen ={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange}/>
-                        </div>
-                    );
+                                <MaxWidthDialog open={[open, setOpen]} fullWidth={[fullWidth, setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange} />
+                            </div>
+                            </div>);
                 })}
-        </>
-    )
-}
+                        </>
+                    )
+                }
 
 export default CompanyRow;

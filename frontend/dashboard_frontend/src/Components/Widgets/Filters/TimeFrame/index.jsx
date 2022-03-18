@@ -9,7 +9,9 @@ import { connect, useDispatch } from "react-redux";
 
 const TimeFrame = ({state}) => {
 
-  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
+  const [selectedStartDate, setSelectedStartDate] = useState(
+    new Date(new Date().setFullYear(new Date().getFullYear() - 2))
+  );
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const dispatch = useDispatch()
   const queryFilings = state.queryFilings;

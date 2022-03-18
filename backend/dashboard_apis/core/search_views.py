@@ -1,3 +1,5 @@
+from sqlite3 import complete_statement
+from django.http import response
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -44,20 +46,19 @@ def searchCompanies(request):
         error = {"message": errorMsg, "data": notFound}
 
     return Response(
-        {"error": error, "data": companies.values()}, status=status.HTTP_200_OK
+        data=companies.values(), 
+        status=status.HTTP_200_OK
     )
 
 
 @api_view(["POST"])
 def searchFillings(request):
     """API endpoint for searching fillings of given companies
-
     Args: \n
         tickers (list[string]): Unique ids to identify the company \n
         form_type (list[string]): types of filling to include; options- 10K, 10Q, 8K \n
         time_start (string): start date of the filling; format- YYYY-MM-DD \n
         time_end (string): end date of the filling; format- YYYY-MM-DD \n
-
     Returns: \n
         fillings list[object]: details of all the fillings provided
     """
@@ -101,9 +102,44 @@ def searchFillings(request):
     if len(notFound):
         errorMsg = "No Company Found for Tickers: " + ", ".join(notFound)
         error = {"message": errorMsg, "data": notFound}
+    
+    responseArray = []
+    for companies in res.keys():
+        for index , filing in enumerate(res[companies]):
+            metrics = KeyMetric.objects.filter(company=filing['company_id'])
+            res[companies][index]['key_metrics'] = metrics.values()
+            # print("Response:", res[companies][index])
+            responseArray.append(res[companies][index])        
 
-    return Response({"error": error, "data": res}, status=status.HTTP_200_OK)
 
+    return Response({"error": error, "data": responseArray}, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def companyMetric(request):
+    tickers = request.data.get("tickers")
+
+    responseArray = []
+    for ticker in tickers:
+        metrics = KeyMetric.objects.filter(company=ticker)
+        companies = Company.objects.filter(ticker=ticker)
+        metrics_list=[]
+        print("Metrics:", companies.values()[0])
+        company = companies.values()[0]
+        for i in metrics.values():
+            metrics_list.append(i)
+
+        company['key_metrics'] = metrics_list
+        responseArray.append(company)
+
+        # responseArray = []
+        # for company in companies.values():
+        #     res = company
+        #     print("Company:", company)
+        #     res['key_metrics'] = metrics.values()
+        #     responseArray.append(res)
+
+    print("Metric List:", responseArray)
+    return Response( {"error":None,"data": responseArray}, status=status.HTTP_200_OK)
 
 @api_view(["POST"])
 def advancedSearch(request):

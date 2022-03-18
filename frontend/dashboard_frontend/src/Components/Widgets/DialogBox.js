@@ -53,8 +53,8 @@ function MaxWidthDialog(props) {
     }
   };
 
-  const handleAdd = (event) => {
-    console.log(selectedBasketId);
+  const handleAdd = async (event) => {
+    const response = await axios.post()
   }
 
   const handleClickOpen = props.handleClickOpen;

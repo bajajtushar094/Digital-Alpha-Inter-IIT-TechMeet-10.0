@@ -82,11 +82,9 @@ function MetricTabs(props) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Item One
         <Chart metric="ARR" query={queryFilings}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
       </TabPanel>
     </Box>
   );

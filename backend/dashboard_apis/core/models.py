@@ -6,7 +6,6 @@ from .choices import FILING_TYPES, METRIC_TYPES, METRIC_UNITS, SOURCE_TYPES
 from django.utils.translation import gettext_lazy as _
 from datetime import date, datetime
 
-
 class Company(models.Model):
 	# cik = models.CharField(max_length=20, primary_key=True)
 	# ticker = models.CharField(max_length=10, unique=True)
@@ -119,6 +118,7 @@ class KeyMetric(models.Model):
 	metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
 	metric_value = models.DecimalField(max_digits=8, decimal_places=2)		# 53.53, 10.00
 	metric_unit = models.CharField(max_length=5, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
+	date = models.DateField()
 	# year = models.IntegerField()
 	# quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
 
