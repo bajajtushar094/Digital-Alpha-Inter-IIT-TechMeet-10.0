@@ -9,7 +9,7 @@ import { useState } from 'react';
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 import { Button, IconButton } from '@mui/material';
 
-// const ref=require('./sample.html')
+const ref=require('./te.htm')
 
 
 const Filenew = () => {
@@ -104,9 +104,12 @@ const Filenew = () => {
 }
 {
     selected==2&&<>
-    <div className='cardcontainer widthfull' style={{overflowY:"scroll",marginTop:"16px",borderRadius:"6px"}}>
-   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto ex unde earum dolores neque nesciunt incidunt saepe, quasi vitae quaerat dolore ratione at quam nemo sunt corporis rerum iure pariatur.
+    <div className='cardcontainer widthfull' style={{marginTop:"16px",borderRadius:"6px",height:"350px"}}>
+   {/* Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto ex unde earum dolores neque nesciunt incidunt saepe, quasi vitae quaerat dolore ratione at quam nemo sunt corporis rerum iure pariatur.
    Nisi, rem maxime rerum sunt quos veritatis nam sint accusantium dignissimos minima quam, ea itaque aliquid cupiditate voluptatum molestiae sed in sapiente unde, qui corporis iure. Animi dolores veritatis quae!
+    */}
+     {/* <div className="content" dangerouslySetInnerHTML={{__html: ref}}></div> */}
+    <iframe  src={ref} frameborder="0" style={{overflowY:"scroll",height:"350px",overflowX:"hidden",overflowX:'hidden', width:"100%"}}></iframe>
     </div>
     </>
 }
