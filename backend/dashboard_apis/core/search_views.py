@@ -67,6 +67,15 @@ def searchFillings(request):
     form_type = request.data.get("form_type")
     time_start = request.data.get("time_start")
     time_end = request.data.get("time_end")
+    isAll = request.data.get("isAll") or False
+
+    if(isAll):
+        companies = Company.objects.all()
+        tickers = [company.ticker for company in companies]
+        form_type = []
+        time_start = None
+        time_end = None
+
     if time_start:
         time_start = time_start.split("-")
         time_start = date(int(time_start[0]), int(time_start[1]), int(time_start[2]))
@@ -82,6 +91,10 @@ def searchFillings(request):
     companies = Company.objects.filter(ticker__in=tickers)
 
     filings = {company.ticker: company.filings.values() for company in companies}
+    # filingsForTicker = Filing.objects.filter(company__in=companies).order_by('-date')
+    # filingToTicker = {filing['id']: filing.company.ticker for filing in filingsForTicker}
+    # filings = Filing.objects.filter(company__in=companies).order_by('-date').all().values()
+    # filings = {filingToTicker[filing]: filing for filing in filings}
 
     res = {}
     for company in filings.keys():
@@ -117,6 +130,11 @@ def searchFillings(request):
 @api_view(["POST"])
 def companyMetric(request):
     tickers = request.data.get("tickers")
+    isAll = request.data.get("isAll") or False
+
+    if(isAll):
+        companies = Company.objects.all()
+        tickers = [company.ticker for company in companies]
 
     responseArray = []
     for ticker in tickers:
