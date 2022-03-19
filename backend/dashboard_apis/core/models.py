@@ -97,7 +97,7 @@ class Filing(models.Model):
 	# dummy_date = models.DateField(_('dummy date'))
 	date = models.DateField(_('filing date'))
 	# verbose_text = models.TextField(_('HTML text'))				# Verbose text for drilldown
-	filelink = models.FileField(upload_to='filings/')
+	filelink = models.URLField(max_length=20000)
 
 	# def save():
 		

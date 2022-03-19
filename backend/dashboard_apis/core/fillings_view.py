@@ -101,7 +101,7 @@ class getAllFilingData(APIView):
             )
         # print(filing.values())
         serializer = FilingSerializer(instance=filing)
-        print(serializer.data)
+        print("Filing Data:",serializer.data)
         return JsonResponse(serializer.data, safe=False)
         # return Response(
         #     data=filing,
