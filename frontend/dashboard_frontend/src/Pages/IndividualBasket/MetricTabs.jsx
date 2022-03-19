@@ -119,7 +119,7 @@ function MetricTabs(props) {
         <Chart metric="ARR" query={queryFilings} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Chart metric="CCR" query={queryFilings} />
+      <Chart metric="CCR" query={queryFilings}/>
       </TabPanel>
     </Box>
   );

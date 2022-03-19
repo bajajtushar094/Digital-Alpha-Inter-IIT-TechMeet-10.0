@@ -99,58 +99,58 @@ const Company = (props) => {
     // console.log(metric_types[value])
   }
 
+    
+
+    useEffect(async () => {
+        setIsMetricLoading(true);
+        const response = await searchCompanies(url_ticker, dispatch);
+        // console.log("Response EEEEEEEEEe:", response);
+        // console.log("Response EEEEEEEEEe:", response.data);
+        setCompany(response[0]);
+
+        addRecentlyViewedCompany(url_ticker);
+
+        const response1 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARR' }, dispatch);
+        setArrMetric(response1.data);
+        const response2 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'CCR' }, dispatch);
+        setCcrMetric(response2.data);
+        const response3 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'LTV' }, dispatch);
+        setLtvMetric(response3.data);
+        const response4 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'CAC' }, dispatch);
+        setCacMetric(response4.data);
+        const response5 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARPA' }, dispatch);
+        setArpaMetric(response5.data);
+        const response6 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'RCR' }, dispatch);
+        setRcrMetric(response6.data);
 
 
-  useEffect(async () => {
-    setIsMetricLoading(true);
-    const response = await searchCompanies(url_ticker, dispatch);
-    // console.log("Response EEEEEEEEEe:", response);
-    // console.log("Response EEEEEEEEEe:", response.data);
-    setCompany(response[0]);
+        setIsMetricLoading(false);
+    }, []);
+    React.useEffect(()=>{
+      console.log(metric_types[value]);
+      addTickerToRequest();
+    },[value])
 
-    addRecentlyViewedCompany(url_ticker);
+    return (
+        <>
+            <Navbar />
+            <div className='companycontainer'>
+                <div className="companyheading" style={{ display: "flex", color: "#9B9B9C" }}>
+                    <ApartmentOutlinedIcon />
+                    <h2 style={{ lineHeight: "20px", fontWeight: "400" }}>Company</h2>
+                </div>
 
-    const response1 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARR' }, dispatch);
-    setArrMetric(response1.data);
-    const response2 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'CCR' }, dispatch);
-    setCcrMetric(response2.data);
-    const response3 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'LTV' }, dispatch);
-    setLtvMetric(response3.data);
-    const response4 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'CAC' }, dispatch);
-    setCacMetric(response4.data);
-    const response5 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARPA' }, dispatch);
-    setArpaMetric(response5.data);
-    const response6 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'RCR' }, dispatch);
-    setRcrMetric(response6.data);
+                <div className="companycontent">
+                    <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
+                        <CompanyFilter  company={company} arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} />
+                        <RecentlyViewedLogIn />
+                    </div>
 
+                    {/* <div > */}
+                    <div style={{ width: "70%" }}>
+                        <div className="padchart" style={{ padding: "0px 25px" }}>
 
-    setIsMetricLoading(false);
-  }, []);
-  React.useEffect(() => {
-    console.log(metric_types[value]);
-    addTickerToRequest();
-  }, [value])
-
-  return (
-    <>
-      <Navbar />
-      <div className='companycontainer'>
-        <div className="companyheading" style={{ display: "flex", color: "#9B9B9C" }}>
-          <ApartmentOutlinedIcon />
-          <h2 style={{ lineHeight: "20px", fontWeight: "400" }}>Company</h2>
-        </div>
-
-        <div className="companycontent">
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <CompanyFilter company={company} arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} />
-            <RecentlyViewedLogIn />
-          </div>
-
-          {/* <div > */}
-          <div style={{ width: "70%" }}>
-            <div className="padchart" style={{ padding: "0px 25px" }}>
-
-              {/* <div className='tablesec' style={{display:"flex"}}>
+                            <div className='tablesec' style={{display:"flex"}}>
                                 <div className="table_top">
                                     <button className='btn-link active' >Key Metrics</button>
                                 </div>
