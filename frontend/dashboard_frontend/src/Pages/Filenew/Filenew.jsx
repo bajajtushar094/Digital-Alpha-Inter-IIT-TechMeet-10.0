@@ -12,6 +12,8 @@ import { Button, IconButton } from '@mui/material';
 import { LOCAL_SERVER_URL } from "../../config";
 import { useParams } from 'react-router-dom';
 
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+
 const ref = require('./te.htm')
 
 const init_filing_data = {
@@ -79,8 +81,8 @@ const Filenew = () => {
 				...response
 			}));
 			setFilingData(response);
-			setSummaryText(filingData.summaries.length!=0?filingData.summaries[0].text:'')
-			console.log("Filing Data:", response);
+			setSummaryText(filingData.summaries[0].text);
+			console.log("Filing Data:", filingData.summaries[0].text);
 		}
 		func()
 	}, [filing_id])
@@ -125,18 +127,35 @@ const Filenew = () => {
 						<RecentlyViewedLogIn />
 
 					</div>
-					<div className='textsec  widthfull' style={{height:"170vh"}}>
-						<div className="table_top">
+					<div className='textsec  widthfull'>
+						<div className="table_top" style={{display:"flex",justifyContent:"space-between",width:"100%",paddingBottom:"10px"}}>
+                            <div>
 							<button className={selected === 1 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(1); }}>Summaries</button>
 							<button className={selected === 2 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(2); }}>Snippet</button>
 							<button className={selected === 3 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(3); }}>Filling Documents</button>
+                            </div>
+                            <div>
+                                {
+                                    selected==3&& <Button style={{color:'#9B9B9C'}}>Download stats CSV  <FileDownloadIcon /></Button>
+                                }
+                           
+                            </div>
+							{/* <Button  className='btncolor'>Summary</Button>
+        <Button className='btncolor'>Snippet</Button>
+        <Button className='btncolor'>Filling Document</Button> */}
 
 						</div>
 						{/* {selected==1&&<Table data={allCompanies} hasCheckbox={false} isCompany={true} />}
 					{selected==2&&<Table data={recentFilings} hasCheckbox={false} isCompany={false} />} */}
-						{selected !== 2 && <><div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>
+						{selected == 1 && <><div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>
 							<div className='summary' style={{ padding: "14px 4px " }}>
 								Sectionwise Summary
+							</div>
+						</>
+						}
+                        {selected == 2 && <><div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>
+							<div className='summary' style={{ padding: "14px 4px " }}>
+								Description
 							</div>
 						</>
 						}
@@ -171,7 +190,7 @@ const Filenew = () => {
 						}
 						{
 							selected === 2 && (<>
-								{filingData.snippets.map((item, index) => {
+								{filingData.snippets!=undefined&&filingData.snippets.map((item, index) => {
 									console.log("Item:", item);
 									return (
 										<div
