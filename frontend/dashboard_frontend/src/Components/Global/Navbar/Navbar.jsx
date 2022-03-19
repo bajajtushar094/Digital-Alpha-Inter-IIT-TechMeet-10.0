@@ -40,11 +40,11 @@ const Navbar = () => {
         </Link>
       </div>
       <div className='navtabcontainer'>
-       <Link to="/">
+       {/* <Link to="/">
         <div className='navicon'>
           <img src={item1} alt="" />
          </div>
-       </Link>
+       </Link> */}
        <Link to="/basketList">
         <div className='navicon'>
           <img src={item2} alt="" />
