@@ -7,7 +7,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import './table.scss';
-import { getMetricsFromFiling, getKeyMetricOfCompany, searchFilings } from '../../actions/action';
+import { getMetricsFromFiling, getKeyMetricOfCompany, searchFillings } from '../../actions/action';
 import MaxWidthDialog from './DialogBox';
 
 const CompanyRow = (props) => {
@@ -76,7 +76,7 @@ const CompanyRow = (props) => {
     return (
         <>
             {
-                filings.map((filing, i) => {
+                filings!=undefined&&filings.map((filing, i) => {
                     const key_metrics = filing.key_metrics ? filing.key_metrics : [];
                     let ARR, CCR, LTV, CAC, ARPA, RCC;
 
@@ -114,7 +114,7 @@ const CompanyRow = (props) => {
 
                                     <>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{filing['company_id']}</div></Link>
+                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch==true?filing['name']:filing['company_id']}</div></Link>
                                         </div>
                                     </>
 

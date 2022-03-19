@@ -10,7 +10,7 @@ import "./search.scss";
 import { useParams } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import {
-    searchFilings,
+    searchFillings,
     simpleSearch,
     searchCompanyAPI,
 } from "../../actions/action";
@@ -30,7 +30,7 @@ const Search = (props) => {
     // })
 
     const [selected, setSelected] = useState(1);
-    console.log("Search Filings:", props.state.searchFilings);
+    console.log("Search Filings:", props.state.searchFillings);
 
     // const [displayData, setDisplayData] = useState(false);
     // let dummyData=[];
@@ -42,13 +42,13 @@ const Search = (props) => {
             let data_byFilings;
 
             if (selected == 2) {
-                data_byFilings = await searchFilings(queryFilings, dispatch);
+                data_byFilings = await searchFillings(queryFilings, dispatch);
             } else if (selected == 1) {
                 data_byFilings = await searchCompanyAPI(queryFilings, dispatch);
             }
             dispatch({
                 type: "STORE_SEARCH_FILINGS",
-                searchFilings: data_byFilings.data,
+                searchFillings: data_byFilings.data,
             });
 
             console.log("Data BY Filings:", data_byFilings);
@@ -84,13 +84,13 @@ const Search = (props) => {
         });
         dispatch({
             type: "RESET_SEARCH_FILINGS",
-            searchFilings: [],
+            searchFillings: [],
         });
     };
 
-    console.log("Search Filings:", props.state.searchFilings);
-    // if(props.state.searchFilings!=null){
-    //     Object.entries(props.state.searchFilings).forEach(item => {
+    console.log("Search Filings:", props.state.searchFillings);
+    // if(props.state.searchFillings!=null){
+    //     Object.entries(props.state.searchFillings).forEach(item => {
     //         let oldArray = filingsData;
     //         console.log("Item:", item);
     //         // oldArray = oldArray.concat(item[1]);
@@ -136,8 +136,8 @@ const Search = (props) => {
                         {selected == 1 && (
                             <Table
                                 data={
-                                    props.state.searchFilings != undefined
-                                        ? props.state.searchFilings
+                                    props.state.searchFillings != undefined
+                                        ? props.state.searchFillings
                                         : []
                                 }
                                 hasCheckbox={false}
@@ -148,8 +148,8 @@ const Search = (props) => {
                         {selected == 2 && (
                             <Table
                                 data={
-                                    props.state.searchFilings != undefined
-                                        ? props.state.searchFilings
+                                    props.state.searchFillings != undefined
+                                        ? props.state.searchFillings
                                         : []
                                 }
                                 hasCheckbox={false}

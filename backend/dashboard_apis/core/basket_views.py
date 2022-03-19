@@ -74,18 +74,7 @@ def simpleDate(date):
     print(date, f'{str(date.year)}-{str(date.month)}-01')
     return f'{str(date.year)}-{str(date.month)}-01'
 
-@api_view(["POST"])
-def getComparisonData(request):
-    """API endpoint for getting comparison data
-    
-    Args: \n
-        tickers list[string]: list of tickers to compare
-    
-    Returns: \n
-        # companies list[object]: details of all the companies provided
-        # filings list[object]: all the filings of companies provided
-        metrices[]
-    """
+def getComparisonDataUtil(request):
     print("Request data: ",request.data)
     tickers = request.data["tickers"]
     start_date = request.data["time_start"]
@@ -111,6 +100,30 @@ def getComparisonData(request):
         date_parts = i['date'].split('-')
         print("DateTime",MONTH_MAPPING[date_parts[1]])
         i['date'] = MONTH_MAPPING[date_parts[1]]+' '+date_parts[0]
+
+    return metrices
+
+
+@api_view(["POST"])
+def getComparisonDataCSV(request):
+    metrices = getComparisonDataUtil(request)
+    cols = metrices[0].keys()
+    return csvResponse(metrices, cols, cols, dic=True)
+
+@api_view(["POST"])
+def getComparisonData(request):
+    """API endpoint for getting comparison data
+    
+    Args: \n
+        tickers list[string]: list of tickers to compare
+    
+    Returns: \n
+        # companies list[object]: details of all the companies provided
+        # filings list[object]: all the filings of companies provided
+        metrices[]
+    """
+    
+    metrices = getComparisonDataUtil(request)
     
     # # metrices = []
     # for ticker in tickers:
@@ -128,6 +141,8 @@ def getComparisonData(request):
         }, 
         status=status.HTTP_200_OK
     )
+
+
 
 
 @api_view(["GET"])

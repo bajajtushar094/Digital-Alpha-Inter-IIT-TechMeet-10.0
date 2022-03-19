@@ -41,10 +41,10 @@ import '../../../../global.scss';
 import './companyTabs.scss';
 import cross from "../../../../images/widgets/Cross.svg";
 
-const CompanyTabs = ({ handleSearchFilings }) => {
+const CompanyTabs = ({ handlesearchFillings }) => {
   return (
     <div className='tagsflex'>
-      {handleSearchFilings.tickers.map((el) => (
+      {handlesearchFillings.tickers.map((el) => (
         <Component ticker={el.ticker} />
       ))}
     </div>

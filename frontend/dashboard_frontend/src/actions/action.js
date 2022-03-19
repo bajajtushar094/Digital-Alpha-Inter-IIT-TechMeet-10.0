@@ -131,7 +131,7 @@ export const searchCompanies = async (query, dispatch) => {
 //     return data;
 // }
 
-// export const searchFilings = async (query) => {
+// export const searchFillings = async (query) => {
 //     let data;
 //     await axios.post(
 //         `${config().search}/filings`,
@@ -149,7 +149,7 @@ export const searchCompanies = async (query, dispatch) => {
 //     return data;
 // }
  
-export const searchFilings = async (query, dispatch) => {
+export const searchFillings = async (query, dispatch) => {
     let data;
     try{
         const res = await axios.post(
@@ -217,7 +217,7 @@ export const getCurrentCompany = async (dispatch) => {
     return data;
 }
 
-export const getRecentlyViewedCompanies = async (user_id,dispatch) => {
+export const getRecentlyViewedCompanies = async (dispatch) => {
     let data;
     // const config = {
     //     headers: {
