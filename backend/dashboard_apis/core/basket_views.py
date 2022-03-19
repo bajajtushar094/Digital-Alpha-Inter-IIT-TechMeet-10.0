@@ -323,10 +323,9 @@ def insertIntoBasket(request):
 
     try:
         ticker = request.data['ticker']
-        company = Company.object.get(ticker=ticker)
-
-        basketIDs = request.date['basketID']
-
+        company = Company.objects.get(ticker=ticker)
+        basketIDs = request.data['basketID']
+        print("--", ticker)
         for basketID in basketIDs:
             basket = Basket.objects.get(id=basketID)
 
@@ -336,6 +335,7 @@ def insertIntoBasket(request):
         return Response({"message": "Basket updated"}, status=status.HTTP_200_OK)
 
     except Exception as e:
+        print(e)
         return Response(
             {"error": {"message": "Wrong basket or ticker"}}, status=status.HTTP_404_NOT_FOUND
         )
