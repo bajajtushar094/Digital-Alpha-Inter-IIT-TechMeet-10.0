@@ -31,7 +31,7 @@ This repo contains:</h4>
 1.  [Git](https://git-scm.com/downloads).
 2.  [Node & npm](https://nodejs.org/en/download/) _(version 12 or greater)_.
 3.  A fork of the repo.
-4. Python3 environment to install flask
+4. Python3 environment to install Django and its dependencies
 
 ### Directory Structure
 
@@ -39,29 +39,50 @@ The following is a high-level overview of relevant files and folders.
 
 ```
 backend/
-├── backend/
-│   ├── template/
-│   └── app.py
-
+├── dashboard_apis/
+│   ├── core/
+│   ├── dashboard_apis/
+|   ├── dataentry.py
+|   ├── dbsqlite3
+|   ├── manage.py
+|   └── requirements.txt
 └── frontend/
     ├── public/
     │   ├── index.html
     │   └── ...
-    ├── images/
-    │   └── logo.png
     ├── src/
-    │   ├── assets/
-    │   │   ├── css
-    │   │   └── fonts...
-    │   ├── components/
-    │   │   ├── Sidebar 
-    │   │   └── Navbars
-    │   └── views/
- 
-         ├── routes.js
-         ├── package.json
-       ├── local_vm.sh
-       └── .gitignore
+    │   ├── actions/
+    │   │   ├── actions.js
+    │   ├── Components/
+    │   │   ├── Global 
+    │   │   └── Widgets
+    │   ├── constants/
+    │   ├── fonts/
+    │   ├── constants/
+    │   ├── images/
+    │   ├── Pages/
+    |       ├── BasketList/
+    |       ├── Company/
+    |       ├── Error404/
+    |       ├── Filenew/
+    |       ├── Files/
+    |       ├── IndividualBasket/
+    |       ├── Landing/
+    |       ├── RecentlyViewed/
+    |       └── Search/
+    |   ├── reducers/
+    |   ├── utils/
+    |   ├── App.js
+    |   ├── config.js
+    |   ├── global.scss
+    |   ├── index.js
+    |   ├── registerServiceWorker.js
+    |   └── store.js
+    ├── package-lock.json
+    ├── package.json
+    ├── README.md
+    ├── yarn.lock
+    └── .gitignore
        
 ```
 
@@ -75,20 +96,20 @@ backend/
 
 In order to install all packages follow the steps below:
 
-1. Download the static folder from this drive: https://drive.google.com/file/d/149fh2lq7fT35RQVP5rmTgUfcYPorE9kX/view
-2. Put it in the `backend/`
- 3. Move to backend folder
- 4. For installing virtual environment - `python3 -m pip install --user virtualenv`
- 5. Create A Virtual env - `python3 -m venv env`
- 6. Activate virtual env - `source env/bin/activate`
- 7. `pip3 install -r requirements.txt`
- 8. `flask run`
+ 1. Move to backend folder
+ 2. Then move into the dashboard_apis folder
+ 3. For installing virtual environment - `python3 -m pip install --user virtualenv`
+ 4. Create A Virtual env - `python3 -m venv env`
+ 5. Activate virtual env - `source env/bin/activate`
+ 6. `pip3 install -r requirements.txt`
+ 7. `python manage.py runserver localhost:8000`
 
 ### Steps To Set Up Frontend
  1. Move to frontend folder
- 2. `npm install`
- 3. `npm start`
+ 2. Move into dashboard_frontend
+ 3. `npm install`
+ 4. `npm start`
 
 
 
-> The model will be served on **http://127.0.0.1:5000/**
+> The model will be served on **http://localhost:8000/**
