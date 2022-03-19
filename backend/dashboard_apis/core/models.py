@@ -120,10 +120,13 @@ class KeyMetric(models.Model):
 	drilldown_offset = models.IntegerField(null=True)								# Drilldown Highlight offset
 	drilldown_length = models.IntegerField(null=True)								# Drilldown Highlight length
 	metric_type = models.CharField(max_length=64, choices=METRIC_TYPES)
-	metric_value = models.DecimalField(max_digits=16, decimal_places=2)		# 53.53, 10.00
+	metric_value = models.DecimalField(max_digits=16, decimal_places=2, null=True)		# 53.53, 10.00
 	metric_unit = models.CharField(max_length=64, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
 	year = models.IntegerField()
 	quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
+
+	def __str__(self):
+		return self.company.ticker + self.metric_type + str(self.metric_value)
 
 
 class Snippet(models.Model):

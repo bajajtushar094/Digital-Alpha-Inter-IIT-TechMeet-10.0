@@ -22,7 +22,10 @@ df = pd.read_csv(filespath + fileName)
 
 metrics_type = ['Total Revenue', 'Number of customers', 'MRR', 'ARR', 'ARPU', 'MRR Expansion', 'Number of qualified leads', 'Penetration Rate', 'Sales and Marketing', 'CAC', 'CAC payback', 'Gross Margin', 'CAC payback period', 'ASP', 'Total Assets', 'Total Liabilities Net Minority Interest', 'debt ratio', 'Total Equity Gross Minority Interest', 'Total Debt','Common Stock Equity',	'Total Capitalization',	'Shareholder Equity','Private Shareholding','Public Shareholding']
 
-metrics_unit = ['Thousand USD', 'Number','Thousand USD','Thousand USD','Thousand USD','Ratio','Ratio','Ratio','Thousand USD','Thousand USD','Ratio']
+metrics_unit = ['Thousand USD', 'Number','Thousand USD','Thousand USD','Thousand USD','Ratio','Ratio','Ratio','Thousand USD','Thousand USD','Ratio','Percent','Number','Number','Thousand USD','Thousand USD','Ratio','Thousand USD','Thousand USD','Thousand USD','Thousand USD','Thousand USD','Ratio','Ratio']
+
+print(len(metrics_type))
+assert(len(metrics_type)==len(metrics_type))
 
 meta = ['cik', 'date', 'quater_year', 'url', 'year_month', 'quater_year_string']
 
@@ -40,14 +43,39 @@ def getyearquarter(x):
     if(y[0][0]=='Q'):
         return int(y[1]), int(y[0][1])
     return None, None
-
+c = 0
 def func(row, metric_type, metric_unit):
+    global c, arr
     company = Company.objects.get(cik=row['cik'])
     dd = getDate(row['year_month'])
     # print(row['year_month'], dd)
     if dd and row[metric_type]!=np.nan:
+        
         year, quarter = getyearquarter(row['quater_year_string'])
+        # try:
+        #     # KeyMetric.objects.create(company=company, date=getDate(row['year_month']), source=row['url'], metric_type=metric_type, metric_unit=metric_unit, metric_value=row[metric_type], year=year, quarter=quarter)
+        #     c += 1
+        #     # if row[metric_type] == "nan":
+        #     #     print("FFFFFFFFFFFFFFFFFFFFFFf")
+        #     #     print(metric_type, row['cik'])
+        #     #     sys.exit()
+        #     if c%100==0:
+        #         print(c)
+        # except:
+        #     pass
+
         arr.append(KeyMetric(company=company, date=getDate(row['year_month']), source=row['url'], metric_type=metric_type, metric_unit=metric_unit, metric_value=row[metric_type], year=year, quarter=quarter))
+        try:
+            if len(arr) >= 100:
+                KeyMetric.objects.bulk_create(arr)
+                arr = []
+                c += 1
+                print(c)
+                print("done")
+        except Exception as e:
+            print(e)
+            pass
+            
     else:
         # TTM
         pass
