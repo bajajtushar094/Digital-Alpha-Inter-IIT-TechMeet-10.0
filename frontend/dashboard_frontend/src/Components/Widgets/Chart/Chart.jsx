@@ -80,6 +80,7 @@ function Chart(props) {
 
     try{
         console.log("Basket compare: ", props.state.queryFilings)
+        // if(props.state.queryFiling)
       const response = await axios.post(
         "http://localhost:8000/api/basket/compare", props.state.queryFilings,
         {
