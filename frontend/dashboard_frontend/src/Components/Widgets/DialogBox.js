@@ -15,6 +15,7 @@ import Switch from '@mui/material/Switch';
 import { Checkbox, FormGroup, Grid, List, Typography } from '@mui/material';
 import { getBaskets } from '../../actions/action';
 import { connect, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 
 function CBLabel(props){
@@ -30,6 +31,7 @@ function CBLabel(props){
 
 function MaxWidthDialog(props) {
   const dispatch = useDispatch();
+  const ticker_to_add = props.ticker;
   const [open, setOpen] = props.open;
   const [fullWidth, setFullWidth] = props.fullWidth;
   const [maxWidth, setMaxWidth] =props.maxWidth;
@@ -53,8 +55,15 @@ function MaxWidthDialog(props) {
     }
   };
 
-  const handleAdd = (event) => {
-    console.log(selectedBasketId);
+  const handleAdd = async (event) => {
+    const configHeaders = localStorage.getItem('authTokens')?{
+      headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+      }
+    }:""
+    // await axios.post("http://localhosst:8000/api/basket/insertIntoBasket",,configHeaders)
+    // .then((response)=>{console.log(response)})
+    // .catch((err)=>{console.err(err)});
   }
 
   const handleClickOpen = props.handleClickOpen;

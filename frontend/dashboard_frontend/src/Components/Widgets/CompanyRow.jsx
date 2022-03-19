@@ -11,6 +11,7 @@ import { getMetricsFromFiling, getKeyMetricOfCompany, searchFillings } from '../
 import MaxWidthDialog from './DialogBox';
 
 const CompanyRow = (props) => {
+    console.log("props", props);
     const dispatch = useDispatch();
     const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
     const [isCompany, setIsCompany] = useState(props.isCompany);
@@ -76,7 +77,7 @@ const CompanyRow = (props) => {
     return (
         <>
             {
-                filings!=undefined&&filings.map((filing, i) => {
+                filings != undefined && filings.map((filing, i) => {
                     const key_metrics = filing.key_metrics ? filing.key_metrics : [];
                     let ARR, CCR, LTV, CAC, ARPA, RCC;
 
@@ -114,7 +115,10 @@ const CompanyRow = (props) => {
 
                                     <>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch==true?filing['name']:filing['company_id']}</div></Link>
+                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling"><img src={props.filing.logo} width="20px" /></div></Link>
+                                        </div>
+                                        <div className="filingcontainer">
+                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['name'] : filing['company_id']}</div></Link>
                                         </div>
                                     </>
 
@@ -134,7 +138,7 @@ const CompanyRow = (props) => {
                                             </IconButton>
                                         </div>
                                         <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-                                            <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
+                                            <IconButton style={{ backgroundColor: 'transparent' }} onClick={handleClickOpen}  aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
@@ -143,12 +147,12 @@ const CompanyRow = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <MaxWidthDialog open={[open, setOpen]} fullWidth={[fullWidth, setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange} />
+                                <MaxWidthDialog open={[open, setOpen]} fullWidth={[fullWidth, setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange}/>
                             </div>
-                            </div>);
+                        </div>);
                 })}
-                        </>
-                    )
-                }
+        </>
+    )
+}
 
 export default CompanyRow;

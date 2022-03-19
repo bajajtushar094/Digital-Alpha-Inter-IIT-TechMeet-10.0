@@ -333,6 +333,18 @@ export const getBasketDetails = async (basket_id, dispatch) => {
     }
 }
 
+export const createBasket = async (name,company_ticker, dispatch) => {
+    let data;
+    console.log(configHeaders)
+    data = await axios.post(
+        `${config().createBasket}`,
+        {name:name, tickers:company_ticker},
+        configHeaders
+    )
+    
+    return data;
+}
+
 export const selectInBasket = (company, dispatch) => {
     dispatch({
         type: 'SELECT_IN_BASKET',
