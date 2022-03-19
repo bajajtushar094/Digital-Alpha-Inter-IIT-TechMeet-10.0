@@ -5,7 +5,9 @@
 <h2 align="center">DIGITAL ALPHA'S SEC FILING ANALYZER FOR SAAS COMPANIES</h2>
 <h4 align="left">SEC Filings have always been a huge source of information for investors. We are trying to automate and analyze filings and generate insights in context of SAAS companies</h4>
 **A React-Django Based ML Web App**  
+
 -------
+
 ### Prerequisites
 
 1.  [Git](https://git-scm.com/downloads).
