@@ -7,6 +7,10 @@
 .companycontent{
     display: flex;
     gap: 1rem;
+    .cardcontainer{
+        width: 350px!important;
+    }
+    
 }
 .stat-tab {
     display: flex;

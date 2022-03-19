@@ -1,5 +1,6 @@
 import { useDispatch, connect } from 'react-redux';
 import React, { useEffect, useState } from "react";
+import no from '../../../images/no.png'
 import {
   BarChart,
   Bar,
@@ -13,7 +14,18 @@ import {
 } from "recharts";
 import axios from 'axios';
 
-let counter = 0;
+ const colors = [
+  "#07D825",
+  "#F75539",
+  "#AC07D8",
+  "#F7D439",
+  "#7A07D8",
+  "#07D88B",
+  "#0794D8",
+  "#D807D7",
+  "#D8078F",
+  "#D80753"
+]
 
 const data = [
   {
@@ -80,6 +92,7 @@ function Chart(props) {
 
     try{
         console.log("Basket compare: ", props.state.queryFilings)
+        // if(props.state.queryFiling)
       const response = await axios.post(
         "http://localhost:8000/api/basket/compare", props.state.queryFilings,
         {
@@ -125,12 +138,23 @@ function Chart(props) {
 
   const listOfBars = [];
   for (const [i, ticker] of props.state.queryFilings.tickers.entries()) {
-    listOfBars.push(<Bar dataKey={ticker}/>)
+    listOfBars.push(<Bar fill={colors[i]} dataKey={ticker}/>)
   }
 
+  const  bool=true
   return (
     <>
-    {chartData.length!=0&&
+    {chartData.length==0?<>
+      {/* {bool?<> */}
+      <div style={{width:"100%",display:"flex",flexDirection:"column",textAlign:"center"}}>
+        <div>
+        <img src={no} alt="" />
+        </div>
+        <h2>Your Watchlist is empty</h2>
+        <br />
+        <p className='color'>Start browsing and add companies to watchlist</p>
+      </div>
+    </>:
     <>
     <ResponsiveContainer height={600} width="90%">
     <BarChart

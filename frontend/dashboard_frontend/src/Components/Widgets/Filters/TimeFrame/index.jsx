@@ -57,6 +57,7 @@ const TimeFrame = ({state}) => {
             <DatePicker
               selected={selectedStartDate}
               onChange={(date) => setSelectedStartDate(date)}
+              showMonthYearPicker
               value={selectedStartDate}
               className='black-50'
             />
@@ -89,6 +90,7 @@ const TimeFrame = ({state}) => {
               selected={selectedEndDate}
               onChange={(date) => setSelectedEndDate(date)}
               value={selectedEndDate}
+              showMonthYearPicker
               wrapperClassName='datePicker'
               className='black-50'
             />

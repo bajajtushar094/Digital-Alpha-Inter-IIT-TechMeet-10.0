@@ -36,7 +36,7 @@ const Data = (props) => {
 			</div>
 			<div className='body'>
 				<div className='cardsec'>
-					<PerformerCard />
+					{/* <PerformerCard /> */}
 					<RecentlyViewedLogIn />
 				</div>
 				<div className='tablesec'>

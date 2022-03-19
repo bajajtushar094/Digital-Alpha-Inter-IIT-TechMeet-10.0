@@ -15,7 +15,7 @@ class getAllRecentFilings(APIView):
 	def get(self, request, *args, **kwargs):
 		
 		try:
-			filings = Filing.objects.all().order_by('-date')
+			filings = Filing.objects.filter(isDummy=False).order_by('-date')
 		except:
 			return Response(
 				{"res":"Error while fetching filings of the company"},

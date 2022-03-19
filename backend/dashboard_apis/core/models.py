@@ -2,16 +2,17 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
-from .choices import FILING_TYPES, METRIC_TYPES, METRIC_UNITS, SOURCE_TYPES
+from .choices import *
 from django.utils.translation import gettext_lazy as _
 from datetime import date, datetime
+from django.http import JsonResponse
 
 class Company(models.Model):
-	# cik = models.CharField(max_length=20, unique=True)
+	cik = models.CharField(max_length=20, unique=True)
 	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)
-	logo = models.URLField(max_length=2000)
+	logo = models.URLField(null=True)
 
 	def __str__(self):
 		return f'{self.ticker} ({self.name})'
@@ -93,9 +94,11 @@ class Filing(models.Model):
 	form_type = models.CharField(_('filing form type'), max_length=10, choices=FILING_TYPES)
 	year = models.IntegerField()
 	quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
+	isDummy = models.BooleanField(default=False)
 	# dummy_date = models.DateField(_('dummy date'))
 	date = models.DateField(_('filing date'))
-	verbose_text = models.TextField()				# Verbose text for drilldown
+	# verbose_text = models.TextField(_('HTML text'))				# Verbose text for drilldown
+	filelink = models.URLField(max_length=20000)
 
 	# def save():
 		
@@ -106,28 +109,36 @@ class Filing(models.Model):
 		return f'{self.company.name}-{self.form_type}-Y{self.year}' 
 
 
+
 class KeyMetric(models.Model):
 	company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='key_metrics')
 	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='key_metrics')	# Filing for drilldown
-	# source = models.CharField(max_length=8, choices=SOURCE_TYPES)
+	source = models.CharField(max_length=2000, null=True)
 	# 
-	date = models.DateField(default=datetime.now())
-	yearly = models.BooleanField(_('Yearly or quaterly'), default=False)
-	drilldown_offset = models.IntegerField()								# Drilldown Highlight offset
-	drilldown_length = models.IntegerField()								# Drilldown Highlight length
-	metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
-	metric_value = models.DecimalField(max_digits=8, decimal_places=2)		# 53.53, 10.00
-	metric_unit = models.CharField(max_length=5, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
 	date = models.DateField()
-	# year = models.IntegerField()
-	# quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
+	isYearly = models.BooleanField(default=False)
+	drilldown_offset = models.IntegerField(null=True)								# Drilldown Highlight offset
+	drilldown_length = models.IntegerField(null=True)								# Drilldown Highlight length
+	metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
+	metric_value = models.DecimalField(max_digits=16, decimal_places=2)		# 53.53, 10.00
+	metric_unit = models.CharField(max_length=32, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
+	year = models.IntegerField()
+	quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
 
-	def __str__(self):
-		if self.filing.quarter:
-			return f'{self.company.name}-{self.metric_type}-Y{self.filing.year}Q{self.filing.quarter}' 
-		return f'{self.company.name}-{self.metric_type}-Y{self.filing.year}' 
+
+class Snippet(models.Model):
+	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='snippets')
+	text = models.TextField()
+	link = models.CharField(max_length=128, null=True)
 
 
+
+class Summary(models.Model):
+	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='summaries')
+	text = models.TextField()
+	section_heading = models.CharField(max_length=128, null=True)
+	polarity_score = models.DecimalField(max_digits=8, decimal_places=5)
+	sentiment_label = models.CharField(max_length=8, choices=SENTIMENT_LABELS)
 
 class RecentlyViewed(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recently_viewed_companies')

@@ -10,6 +10,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { Button, IconButton, TextField, Typography } from "@mui/material";
 
 const moduleModalStyle = {
   position: 'absolute',
@@ -60,25 +63,45 @@ const Watchlist = (props) => {
           aria-describedby="modal-modal-description"
         >
           <Box style={moduleModalStyle}>
-            Create WatchList
-            <br/><br/>
-            <input type="text" id="newWatchlist" /><br/><br/>
-            <button type="button" onClick={handleAddWatchlist}>Create</button>
+            <div style={{display:"flex",gap:"10px",flexDirection:"column"}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+             <h4 className="watchtext"> Create WatchList</h4>
+            <IconButton style={{background:"transparent"}} onClick={()=>{setWatchlistModalOpen(false)}}>
+             <CloseOutlinedIcon style={{background:"transparent"}}/>
+            </IconButton>
+            </div>
+            <div className="flex">
+              <TextField size="small"/>
+            </div>
+            <Button onClick={()=>{handleAddWatchlist()}} style={{background:"black",marginTop:"6px"}} variant="contained" fullWidth>Create</Button>
+            </div>
+            {/* <br/><br/>
+            <input type="text" id="newWatchlist" /><br/><br/> */}
+            {/* <button type="button" onClick={handleAddWatchlist}>Create</button> */}
           </Box>
         </Modal>
       </div>
       {data.map((el) => (
-        <Component name={el.name} companies_count={el.companies_count} basket_id={el.id} />
+        <Component name={el.name} companies_count={el.companies_count} basket_id={el.id} basket={el} />
       ))}
     </div>
   );
 };
 
-const Component = ({ name, companies_count, basket_id }) => (
-  <Link to={`/individualBasket/${basket_id}`} style={{ textDecoration: "none" }}>
+const Component = ({ name, companies_count, basket_id, basket }) => {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch({
+      type:'SET_CURRENT_BASKET',
+      basket:basket,
+    })
+  }
+  return(
+  
     <div
       id='w-node-_303deb7f-543b-7e3b-b9af-eb356f928477-5d4911ed'
       class='listing issmall'
+      onClick={handleClick}
     >
       <div class='listingheader-wrapper'>
         <div id='w-node-_303deb7f-543b-7e3b-b9af-eb356f92847d-5d4911ed'>
@@ -89,12 +112,14 @@ const Component = ({ name, companies_count, basket_id }) => (
       <div class='actions issmall'>
         <div class='actioncontainer'></div>
         <div class='actioncontainer'>
+          <Link to={`/individualBasket/${basket_id}`} style={{ textDecoration: "none" }}>
           <img src={Pen} loading='lazy' alt='' />
+          </Link>
         </div>
       </div>
     </div>
-  </Link>
-);
+  
+)};
 
 // export default Watchlist;
 

@@ -54,6 +54,24 @@ body {
   line-height: 20px;
   color: #333;
 }
+.actions-recenr{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 200px;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+.actioncontainer-recent {
+  display: flex;
+  width: 100%;
+  height: 24px;
+  color: #f6776f;
+
+}
 img {
   max-width: 100%;
   vertical-align: middle;
@@ -260,6 +278,14 @@ ol {
   margin-bottom: 10px;
   padding-left: 40px;
 }
+
+
+.toptxt{
+  font-size: 22px;
+  font-family: Hkgrotesk, Arial, sans-serif;
+  font-weight: 400;
+}
+
 .w-list-unstyled {
   padding-left: 0;
   list-style: none;

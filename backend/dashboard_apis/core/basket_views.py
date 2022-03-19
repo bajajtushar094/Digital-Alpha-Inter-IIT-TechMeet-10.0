@@ -107,9 +107,36 @@ def getComparisonDataUtil(request):
 
 @api_view(["POST"])
 def getComparisonDataCSV(request):
-    metrices = getComparisonDataUtil(request)
-    cols = metrices[0].keys()
-    return csvResponse(metrices, cols, cols, dic=True)
+    print("Request data: ",request.data)
+    tickers = request.data["tickers"]
+    start_date = request.data["time_start"]
+    end_date = request.data["time_end"]
+    metric_type = request.data["metric_type"]
+
+    dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], isYearly=False).values("date").distinct()
+
+    # print(dates)
+    metrices = []
+    for date in dates:
+        # print(date, str(date["date"]))
+        metrices.append({"date": str(date["date"])})
+        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], isYearly=False, metric_type=metric_type)
+        # print(metrices_l)
+        for ticker in tickers:
+            metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
+            
+
+    print("Metrics",metrices)
+    if len(metrices) > 0 :
+        for i in metrices:
+            # i['date'] = i['date'].strftime("%d-%B-%Y")
+            date_parts = i['date'].split('-')
+            print("DateTime",MONTH_MAPPING[date_parts[1]])
+            i['date'] = MONTH_MAPPING[date_parts[1]]+' '+date_parts[0]
+        cols = metrices[0].keys()
+        return csvResponse(metrices, cols, cols, dic=True)
+    else:
+        return HttpResponse('The metric list is empty', status=404)
 
 @api_view(["POST"])
 def getComparisonData(request):
@@ -124,7 +151,31 @@ def getComparisonData(request):
         metrices[]
     """
     
-    metrices = getComparisonDataUtil(request)
+    print("Request data: ",request.data)
+    tickers = request.data["tickers"]
+    start_date = request.data["time_start"]
+    end_date = request.data["time_end"]
+    metric_type = request.data["metric_type"]
+
+    dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], yearly=False, metric_type=metric_type).values("date").distinct()
+
+    print("Possible Dates are: ",dates)
+    metrices = []
+    for date in dates:
+        print(date, str(date["date"]))
+        metrices.append({"date": str(date["date"])})
+        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], yearly=False, metric_type=metric_type)
+        print(metrices_l)
+        for ticker in tickers:
+            metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
+            
+
+    print("Metrics",metrices)
+    for i in metrices:
+        # i['date'] = i['date'].strftime("%d-%B-%Y")
+        date_parts = i['date'].split('-')
+        print("DateTime",MONTH_MAPPING[date_parts[1]])
+        i['date'] = MONTH_MAPPING[date_parts[1]]+' '+date_parts[0]
     
     # # metrices = []
     # for ticker in tickers:
@@ -323,10 +374,9 @@ def insertIntoBasket(request):
 
     try:
         ticker = request.data['ticker']
-        company = Company.object.get(ticker=ticker)
-
-        basketIDs = request.date['basketID']
-
+        company = Company.objects.get(ticker=ticker)
+        basketIDs = request.data['basketID']
+        print("--", ticker)
         for basketID in basketIDs:
             basket = Basket.objects.get(id=basketID)
 
@@ -336,6 +386,7 @@ def insertIntoBasket(request):
         return Response({"message": "Basket updated"}, status=status.HTTP_200_OK)
 
     except Exception as e:
+        print(e)
         return Response(
             {"error": {"message": "Wrong basket or ticker"}}, status=status.HTTP_404_NOT_FOUND
         )
