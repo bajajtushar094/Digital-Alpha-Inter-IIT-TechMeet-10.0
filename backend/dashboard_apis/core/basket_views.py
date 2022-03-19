@@ -82,14 +82,14 @@ def getComparisonDataUtil(request):
     end_date = request.data["time_end"]
     metric_type = request.data["metric_type"]
 
-    dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], yearly=False, metric_type=metric_type).values("date").distinct()
+    dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], isYearly=False, metric_type=metric_type).values("date").distinct()
 
     # print(dates)
     metrices = []
     for date in dates:
         # print(date, str(date["date"]))
         metrices.append({"date": str(date["date"])})
-        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], yearly=False, metric_type=metric_type)
+        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], isYearly=False, metric_type=metric_type)
         # print(metrices_l)
         for ticker in tickers:
             metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
@@ -157,14 +157,14 @@ def getComparisonData(request):
     end_date = request.data["time_end"]
     metric_type = request.data["metric_type"]
 
-    dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], yearly=False, metric_type=metric_type).values("date").distinct()
+    dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], isYearly=False, metric_type=metric_type).values("date").distinct()
 
     print("Possible Dates are: ",dates)
     metrices = []
     for date in dates:
         print(date, str(date["date"]))
         metrices.append({"date": str(date["date"])})
-        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], yearly=False, metric_type=metric_type)
+        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], isYearly=False, metric_type=metric_type)
         print(metrices_l)
         for ticker in tickers:
             metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
