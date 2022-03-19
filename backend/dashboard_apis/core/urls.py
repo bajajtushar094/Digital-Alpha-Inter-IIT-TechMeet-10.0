@@ -50,6 +50,7 @@ urlpatterns = [
     path("basket/bookmarked", getBookmarks,),
     path('basket/filings', getBookmarksWithFilings),
     path('basket/compare', getComparisonData),
+    path('basket/compareCSV', getComparisonDataCSV),
 
     # these are the correct ones :)
     path("basket/get", getBaskets), 
