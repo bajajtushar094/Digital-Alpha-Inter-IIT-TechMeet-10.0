@@ -23,15 +23,7 @@ const TableHead = (props) => {
         <Button style={{color:'#9B9B9C'}}>{props.childtwo}</Button>
         </div>
         <div>
-            <Button style={{color:'#9B9B9C'}} onClick={() => {handleDownloadPost(
-              "http://localhost:8000/api/companies/getKeyMetricsCSV",
-              {
-                ticker: props.state.queryFilings.tickers[0],
-                time_start: props.state.queryFilings.time_start,
-                time_end: props.state.queryFilings.time_end,
-                metric_type: props.state.queryFilings.metric_type,
-              }
-            );}}>Download stats CSV  <FileDownloadIcon /></Button>
+            <Button style={{color:'#9B9B9C'}} onClick={() => {handleDownloadPost(props.childthree,props.data)}}>Download stats CSV  <FileDownloadIcon /></Button>
         </div>
         
     </div>

@@ -79,29 +79,28 @@ const CompanyRow = (props) => {
             {
                 filings != undefined && filings.map((filing, i) => {
                     const key_metrics = filing.key_metrics ? filing.key_metrics : [];
-                    let ARR, CCR, LTV, CAC, ARPA, RCC;
+                    let CAC, GROSS_MARGIN, MRR, ARPU, AU, ARR;
 
                     for (let i = 0; i < key_metrics.length; i++) {
                         // console.log("I", key_metrics[i])
-                        if (key_metrics[i]['metric_type'] == "ARR") {
-                            ARR = key_metrics[i]['metric_value']
-                        }
-                        else if (key_metrics[i]['metric_type'] == "CCR") {
-                            CCR = key_metrics[i]['metric_value']
-                        }
-                        else if (key_metrics[i]['metric_type'] == "LTV") {
-                            LTV = key_metrics[i]['metric_value']
-                        }
-                        else if (key_metrics[i]['metric_type'] == "CAC") {
+                        if (key_metrics[i]['metric_type'] == "CAC") {
                             CAC = key_metrics[i]['metric_value']
                         }
-                        else if (key_metrics[i]['metric_type'] == "ARPA") {
-                            ARPA = key_metrics[i]['metric_value']
+                        else if (key_metrics[i]['metric_type'] == "GROSS_MARGIN") {
+                            GROSS_MARGIN = key_metrics[i]['metric_value']
                         }
-                        else if (key_metrics[i]['metric_type'] == "RCC") {
-                            RCC = key_metrics[i]['metric_value']
+                        else if (key_metrics[i]['metric_type'] == "MRR") {
+                            MRR = key_metrics[i]['metric_value']
                         }
-
+                        else if (key_metrics[i]['metric_type'] == "ARPU") {
+                            ARPU = key_metrics[i]['metric_value']
+                        }
+                        else if (key_metrics[i]['metric_type'] == "AU") {
+                            AU = key_metrics[i]['metric_value']
+                        }
+                        else if (key_metrics[i]['metric_type'] == "ARR") {
+                            ARR = key_metrics[i]['metric_value']
+                        }
                     }
                     return (
                         <div className="listing" onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut}>
@@ -115,23 +114,23 @@ const CompanyRow = (props) => {
                                     
                                     <>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling"><img src={props.filing.logo} width="20px" /></div></Link>
+                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling"><img src={props.filing.logo} width="20px" /></div></Link>
                                         </div>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['name'] : filing['company_id']}</div></Link>
+                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['name'] : filing['company_id']}</div></Link>
                                         </div>
                                     </>
 
                                 </div>
                             </div>
                             <div className="div-block-4">
-                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e4-5d4911ed" className="iscolumn black50">{ARR ? ARR : '-'}</h4>
-                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e6-5d4911ed" className="iscolumn black50">{CCR ? CCR : '-'}</h4>
-                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{LTV ? LTV : '-'}</h4>
-                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{CAC ? CAC : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e4-5d4911ed" className="iscolumn black50">{CAC ? CAC : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e6-5d4911ed" className="iscolumn black50">{GROSS_MARGIN ? GROSS_MARGIN : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{MRR ? MRR : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{ARPU ? ARPU : '-'}</h4>
                                 <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
                                     <div className="actions-1">
-                                        <Link to={`/company/${filing['company_id']}`} />
+                                        <Link to={`/company/${filing['ticker']}`} />
                                         <div className="actioncontainer ">
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
                                                 <OpenInNewIcon />
