@@ -59,7 +59,7 @@ const Data = (props) => {
 			</div>
 			<div className='body'>
 				<div className='cardsec'>
-					<PerformerCard />
+					{/* <PerformerCard /> */}
 					<RecentlyViewedLogIn />
 				</div>
 				<div className='tablesec'>
@@ -67,6 +67,7 @@ const Data = (props) => {
 						<button className={selected === 1 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(1); }}>All Companies</button>
 						<button className={selected === 2 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(2); }}>Recent Filings</button>
 					</div>
+
 					{selected === 1 && <Table data={paginatedCompanies} hasCheckbox={false} isCompany={true} fromSearch={false} />}
 					{selected === 2 && <Table data={recentFilings} hasCheckbox={false} isCompany={false} fromSearch={false} />}
 					{selected === 1 ?

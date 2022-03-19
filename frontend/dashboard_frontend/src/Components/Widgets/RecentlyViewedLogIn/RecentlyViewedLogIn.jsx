@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { getRecentlyViewedCompanies } from "../../../actions/action";
 import { connect } from "react-redux";
 import {Link} from 'react-router-dom'
+import { Typography } from "@mui/material";
 import noview from '../../../images/no2.png'
 const RecentlyViewedLogIn = (props) => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const bool=true;
             logo={el.company__logo || ASAN}
             name={el.company__name}
             ticker={el.company__ticker}
+            timestamp={el.timestamp}
             />
           </ Link>
         ))}
@@ -62,7 +64,7 @@ const bool=true;
   );
 };
 
-const Component = ({logo, name, ticker}) => (
+const Component = ({logo, name, ticker,timestamp}) => (
   <div
     id='w-node-_1e8339b4-def5-75cf-a51f-129473e44da4-5d4911ed'
     class='listing issmall'
@@ -83,10 +85,9 @@ const Component = ({logo, name, ticker}) => (
         </div>
       </div>
     </div>
-    <div class='actions issmall'>
-      <div class='actioncontainer'></div>
-      <div class='actioncontainer'>
-        <img src={More} loading='lazy' alt='' />
+    <div class='actions-recent issmall'>
+      <div class='actioncontainer-recent'>
+        <Typography variant="subtitle2">{timestamp.slice(0,10)}</Typography>
       </div>
     </div>
   </div>

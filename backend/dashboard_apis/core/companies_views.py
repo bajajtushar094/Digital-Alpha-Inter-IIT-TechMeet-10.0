@@ -126,23 +126,33 @@ class getRecentFilings(APIView):
 class getKeyMetricsCSV(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):        
-        company = get_company(kwargs['ticker'])
-        metric_type = kwargs['metric_type']
+    def post(self, request, *args, **kwargs):        
+        company = get_company(request.data['ticker'])
+        metric_type = request.data['metric_type']
+        time_start = request.data['time_start']
+        time_end = request.data['time_end']
 
         if isinstance(company, Response):
             return company
 
         try:
-            metrics = KeyMetric.objects.filter(company=company, metric_type=metric_type)
-        except:
+            metrics = KeyMetric.objects.filter(company=company, metric_type=metric_type, date__range=[time_start, time_end])
+        except Exception as e:
+            print(e, "################################")
             return Response(
                 {"res":"Error while fetching filings of the company"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+        # res = {}
+        # for company in metrics.all():
+        #     res[company] = []
+        #     for filing in filings[company]:
+        #         if (((not time_start) or (time_start and filing["date"] >= time_start))
+        #             and ((not time_end) or (time_end and filing["date"] <= time_end))
+        #         ):
+        #             res[company].append(filing)
 
-
-
+        # metricsValues
         # metrics = metrics.values()
 
         return csvResponse(metrics, 

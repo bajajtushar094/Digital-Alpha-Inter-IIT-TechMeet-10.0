@@ -45,7 +45,7 @@ function App() {
 					<Route path='/test'>
 						<Route index element={<RecentlyViewedLogIn />}/>
 					</Route>
-					<Route path='/file'>
+					<Route path='/file/:filing_id'>
 						<Route index element={<Filenew/>}/>
 					</Route>
 					<Route path="/*" element={<Error404 />} />

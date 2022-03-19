@@ -25,29 +25,29 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 // ]
 
 const metric_types = [
-    'ARR',
-    'CCR',
-    'LTV',
-    'CAC',
-    'ARPA',
-    'RCR'
+  'ARR',
+  'CCR',
+  'LTV',
+  'CAC',
+  'ARPA',
+  'RCR'
 ]
 
 const Company = (props) => {
-    const dispatch = useDispatch();
-    const [company, setCompany] = useState([]);
-    const [arrMetric, setArrMetric] = useState([]);
-    const [ccrMetric, setCcrMetric] = useState([]);
-    const [ltvMetric, setLtvMetric] = useState([]);
-    const [cacMetric, setCacMetric] = useState([]);
-    const [arpaMetric, setArpaMetric] = useState([]);
-    const [rcrMetric, setRcrMetric] = useState([]);
-    const [isMetricLoading, setIsMetricLoading] = useState([]);
-    // const [metric,setMetric] = useState([]);
-    // const [copyMetric,setCopyMetric] = useState([]);
-    const url_ticker = useParams().ticker;
+  const dispatch = useDispatch();
+  const [company, setCompany] = useState([]);
+  const [arrMetric, setArrMetric] = useState([]);
+  const [ccrMetric, setCcrMetric] = useState([]);
+  const [ltvMetric, setLtvMetric] = useState([]);
+  const [cacMetric, setCacMetric] = useState([]);
+  const [arpaMetric, setArpaMetric] = useState([]);
+  const [rcrMetric, setRcrMetric] = useState([]);
+  const [isMetricLoading, setIsMetricLoading] = useState([]);
+  // const [metric,setMetric] = useState([]);
+  // const [copyMetric,setCopyMetric] = useState([]);
+  const url_ticker = useParams().ticker;
 
-    const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -63,9 +63,9 @@ const Company = (props) => {
   //   console.log(company_ticker);
   // }
 
-  function addTickerToRequest(){
+  function addTickerToRequest() {
     dispatch({
-      type:'UPDATE_QUERY_FILINGS',
+      type: 'UPDATE_QUERY_FILINGS',
       queryFilings: {
         ...queryFilings,
         tickers: [url_ticker],
@@ -157,30 +157,37 @@ const Company = (props) => {
                                 <div style={{marginLeft:"auto", paddingBottom:"10px"}}>
                                     <Button style={{ color: '#9B9B9C' }}>Download stats CSV  <FileDownloadIcon /></Button>
                                 </div>
-                            </div>
-                            <div className="stat-tab">
-                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>ARR (in mil $)</Button></div>
-                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>LTV/CAC</Button></div>
-                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1} >Product-Market Fit</Button></div>
-                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>Churn Rate</Button></div>
-                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>ARR (in mil $)</Button></div>
-                                <div><Button  style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>LTV/CAC</Button></div>
-                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>Product-Market Fit</Button></div>
-                                <div><Button  style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>Churn Rate</Button></div>
-                            </div>
-                            <Chart />
-                        </div>
-                    </div>
-                </div>
+                            </div> */}
+              <TableHead childone="Key Metrics" childthree="http://localhost:8000/api/companies/getKeyMetricsCSV" data=
+                {{
+                  "ticker": props.state.queryFilings.tickers[0],
+                  'time_start': props.state.queryFilings.time_start,
+                  'time_end': props.state.queryFilings.time_end,
+                  "metric_type": props.state.queryFilings.metric_type,
+                }} />
+              <div className="stat-tab">
+                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>ARR (in mil $)</Button></div>
+                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>LTV/CAC</Button></div>
+                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1} >Product-Market Fit</Button></div>
+                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>Churn Rate</Button></div>
+                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>ARR (in mil $)</Button></div>
+                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>LTV/CAC</Button></div>
+                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>Product-Market Fit</Button></div>
+                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>Churn Rate</Button></div>
+              </div>
+              <Chart />
             </div>
-        </>
+          </div>
+        </div>
+      </div>
+    </>
 
-    );
+  );
 }
 
 const mapStateToProps = (state) => {
   return {
-    state:state
+    state: state
   }
 }
 

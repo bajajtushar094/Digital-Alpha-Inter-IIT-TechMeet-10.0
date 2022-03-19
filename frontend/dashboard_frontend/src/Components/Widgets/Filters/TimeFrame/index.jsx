@@ -10,7 +10,7 @@ import { connect, useDispatch } from "react-redux";
 const TimeFrame = ({state}) => {
 
   const [selectedStartDate, setSelectedStartDate] = useState(
-    new Date(new Date().setFullYear(new Date().getFullYear() - 2))
+    new Date(new Date().setFullYear(new Date().getFullYear() - 3))
   );
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const dispatch = useDispatch()
@@ -57,6 +57,7 @@ const TimeFrame = ({state}) => {
             <DatePicker
               selected={selectedStartDate}
               onChange={(date) => setSelectedStartDate(date)}
+              showMonthYearPicker
               value={selectedStartDate}
               className='black-50'
             />
@@ -89,6 +90,7 @@ const TimeFrame = ({state}) => {
               selected={selectedEndDate}
               onChange={(date) => setSelectedEndDate(date)}
               value={selectedEndDate}
+              showMonthYearPicker
               wrapperClassName='datePicker'
               className='black-50'
             />

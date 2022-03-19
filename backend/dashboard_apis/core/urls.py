@@ -38,12 +38,13 @@ urlpatterns = [
 
 
     path('companies/getKeyMetrics/<str:ticker>/<str:metric_type>', getKeyMetrics.as_view()),
-    path('companies/getKeyMetricsCSV/<str:ticker>/<str:metric_type>', getKeyMetricsCSV.as_view()),
+    path('companies/getKeyMetricsCSV', getKeyMetricsCSV.as_view()),
     path('companies/getFilingMetric/<int:id>', getFilingFromMetric.as_view()),
 
     #Filing APIs
     path("filings/getKeyMetric/<int:id>/<str:metric_type>", getKeyMetricsOfFiling.as_view()),
     path("filings/getMetricsFromFilings/<int:id>", getMetricsFromFiling.as_view()),
+    path("filings/getAllFilingData/<int:id>", getAllFilingData.as_view()),
 
     #Basket APIs
     # I think these are wrong APIs, makes no sense to me :(

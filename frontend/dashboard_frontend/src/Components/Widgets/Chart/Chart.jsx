@@ -14,7 +14,18 @@ import {
 } from "recharts";
 import axios from 'axios';
 
-let counter = 0;
+ const colors = [
+  "#07D825",
+  "#F75539",
+  "#AC07D8",
+  "#F7D439",
+  "#7A07D8",
+  "#07D88B",
+  "#0794D8",
+  "#D807D7",
+  "#D8078F",
+  "#D80753"
+]
 
 const data = [
   {
@@ -127,7 +138,7 @@ function Chart(props) {
 
   const listOfBars = [];
   for (const [i, ticker] of props.state.queryFilings.tickers.entries()) {
-    listOfBars.push(<Bar dataKey={ticker}/>)
+    listOfBars.push(<Bar fill={colors[i]} dataKey={ticker}/>)
   }
 
   const  bool=true

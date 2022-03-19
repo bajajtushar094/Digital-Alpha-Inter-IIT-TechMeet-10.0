@@ -12,6 +12,7 @@ const RecentFilingRow = (props) => {
 	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
 	const [isCompany, setIsCompany] = useState(props.isCompany);
 	const filing = props.filing;
+	console.log("filing:", filing);
 
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverBg] = useState(false);
@@ -47,7 +48,7 @@ const RecentFilingRow = (props) => {
 
 			</div>
 			<div className="div-block-4">
-				<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{filing['company_name']}</h4>
+				<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{filing['company_id']}</h4>
 				<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{filing['date']}</h4>
 				<div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
 					<div className={hover ? "actioncontainer " : "actioncontainer hide"}>
