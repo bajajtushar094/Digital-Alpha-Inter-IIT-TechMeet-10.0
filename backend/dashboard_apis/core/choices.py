@@ -11,7 +11,11 @@ METRIC_TYPES = [
 	('CAC', 'Customer Acquisition Cost'),
 	('ARPA', 'Average Run Per Account'),
 	('RCC', 'Revenue Churn Rate'),
-	("Customers", "No Of Customers")
+	('total_revenue', 'Total Revenue'),
+	('cost_of_revenue', 'Cost Of Revenue'),
+	('gross_profit', 'Gross Profit'),
+	('gross_margin', 'Gross Margin'),
+
 ]
 
 METRIC_UNITS = [
@@ -19,6 +23,7 @@ METRIC_UNITS = [
 	('M', 'Million'),
 	('K', 'Thousand'),
 	('%', 'Percent'),
+	('USD', 'USD')
 ]
 
 SOURCE_TYPES = [
@@ -26,17 +31,9 @@ SOURCE_TYPES = [
     ('filing', 'Filing')
 ]
 
-MONTH_MAPPING = {
-	'01':"Jan",
-	'02':"Feb",
-	'03':"Mar",
-	'04':"Apr",
-	'05':"May",
-	'06':"Jun",
-	'07':"Jul",
-	'08':"Aug",
-	'09':"Sep",
-	'10':"Oct",
-	'11':"Nov",
-	'12':"Dec",
-}
+
+SENTIMENT_LABELS = [
+    ('good', 'good'), 
+    ('bad', 'bad'), 
+    ('medium', 'medium')
+]
