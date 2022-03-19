@@ -1,10 +1,9 @@
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/MLH-Fellowship/Auto-Tagger.svg)](https://github.com/anjalisoni3655/Bosch/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/MLH-Fellowship/Auto-Tagger.svg)](https://github.com/anjalisoni3655/Bosch/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/MLH-Fellowship/Auto-Tagger.svg)](https://github.com/bajajtushar094/Digital-Alpha-Inter-IIT-TechMeet-10.0/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/MLH-Fellowship/Auto-Tagger.svg)](https://github.com/bajajtushar094/Digital-Alpha-Inter-IIT-TechMeet-10.0/pulls)
 
-<h4 align="left">An Artificial Intelligence tool that predicts Traffic signs based on various pre-trained models and allows user to manipulate datasets.  <br><br>
-This repo contains:</h4>
-
+<h2 align="center">DIGITAL ALPHA'S SEC FILING ANALYZER FOR SAAS COMPANIES</h2>
+<h4 align="left">SEC Filings have always been a huge source of information for investors. We are trying to automate and analyze filings and generate insights in context of SAAS companies</h4>
 * **A React-Django Based ML Web App**
 -------
 
