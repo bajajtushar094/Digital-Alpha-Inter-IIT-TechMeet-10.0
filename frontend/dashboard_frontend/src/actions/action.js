@@ -288,7 +288,7 @@ export const getBaskets = async (dispatch) => {
             config().getBasket,
             configHeaders
         );
-        console.log("Response: ", response.data)
+        console.log("Response of Baskets: ", response.data)
         dispatch({
             type: 'GET_BASKETS',
             baskets: response.data

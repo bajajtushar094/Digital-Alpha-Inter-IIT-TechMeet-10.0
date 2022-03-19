@@ -154,6 +154,7 @@ def getBaskets(request):
     user = res[0]
     basketData = []
     for basket in user.baskets.all():
+        print("Basket", basket)
         basketData.append({
             "id": basket.id,
             "name": basket.name,

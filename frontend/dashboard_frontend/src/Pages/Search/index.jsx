@@ -50,6 +50,8 @@ const Search = (props) => {
                 type: "STORE_SEARCH_FILINGS",
                 searchFilings: data_byFilings.data,
             });
+
+            console.log("Data BY Filings:", data_byFilings);
         };
         func();
 
