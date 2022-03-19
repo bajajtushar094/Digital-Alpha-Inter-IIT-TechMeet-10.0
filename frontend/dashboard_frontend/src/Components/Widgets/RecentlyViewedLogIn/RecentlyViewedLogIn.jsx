@@ -15,7 +15,7 @@ const RecentlyViewedLogIn = (props) => {
       await getRecentlyViewedCompanies(dispatch);
     }
     getRecentViewFunc();
-  }, [props.state.user.user_id]);
+  }, [props.state.user]);
   console.log("RecentlyViewedLogIn: ", data);
   return (
     <div class='cardcontainer'>
