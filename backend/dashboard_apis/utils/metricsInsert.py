@@ -12,19 +12,17 @@ import sys
 rootPath = os.getcwd()
 filespath = os.path.join(rootPath, 'files/')
 
-fileName = 'saare_metrics_v2.csv'
+fileName = 'saare_metrics_v4.csv'
 
-typeToUnit = {
-    'Revenue': 'K',
-}
 
 print(filespath + fileName)
 df = pd.read_csv(filespath + fileName)
 
 
 
-metrics_type = ['Total Revenue', 'Number of customers', 'MRR', 'ARR', 'ARPU', 'Churn', 'CRR', 'MRR Expansion', 'Number of qualified leads', 'Penetration Rate', 'LTV', 'Sales and Marketing', 'CAC', 'CAC payback', 'Gross Margin']
-metrics_unit = ['Thousand USD', 'Number','Thousand USD',]
+metrics_type = ['Total Revenue', 'Number of customers', 'MRR', 'ARR', 'ARPU', 'MRR Expansion', 'Number of qualified leads', 'Penetration Rate', 'Sales and Marketing', 'CAC', 'CAC payback', 'Gross Margin', 'CAC payback period', 'ASP', 'Total Assets', 'Total Liabilities Net Minority Interest', 'debt ratio', 'Total Equity Gross Minority Interest', 'Total Debt','Common Stock Equity',	'Total Capitalization',	'Shareholder Equity','Private Shareholding','Public Shareholding']
+
+metrics_unit = ['Thousand USD', 'Number','Thousand USD','Thousand USD','Thousand USD','Ratio','Ratio','Ratio','Thousand USD','Thousand USD','Ratio']
 
 meta = ['cik', 'date', 'quater_year', 'url', 'year_month', 'quater_year_string']
 
