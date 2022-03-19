@@ -90,7 +90,7 @@ backend/
 
 ### Clone
 
-- Clone this repo to your local machine using `https://github.com/anjalisoni3655/Bosch`
+- Clone this repo to your local machine using `https://github.com/bajajtushar094/Digital-Alpha-Inter-IIT-TechMeet-10.0/`
 
 ### Steps to run backend
 
