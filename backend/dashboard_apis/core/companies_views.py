@@ -126,9 +126,9 @@ class getRecentFilings(APIView):
 class getKeyMetricsCSV(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):        
-        company = get_company(kwargs['ticker'])
-        metric_type = kwargs['metric_type']
+    def post(self, request, *args, **kwargs):        
+        company = get_company(request.data['ticker'])
+        metric_type = request.data['metric_type']
 
         if isinstance(company, Response):
             return company
