@@ -26,14 +26,14 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const metric_types = [
     'ARR',
-    'Customer Churn Rate',
+    'CCR',
     'LTV',
     'CAC',
     'ARPA',
-    'Revenue Churn Rate'
+    'RCR'
 ]
 
-const Company = () => {
+const Company = (props) => {
     const dispatch = useDispatch();
     const [company, setCompany] = useState([]);
     const [arrMetric, setArrMetric] = useState([]);
@@ -47,6 +47,60 @@ const Company = () => {
     // const [copyMetric,setCopyMetric] = useState([]);
     const url_ticker = useParams().ticker;
 
+    const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  // const companies = props.state.basketSelectedCompanies;
+  const queryFilings = props.state.queryFilings;
+  let company_ticker = [];
+  // function getTickers() {
+  //   for(let i=0;i<companies.length;i++){
+  //     console.log(companies[i]);
+  //     company_ticker.push(companies[i].ticker);
+  //   }
+  //   console.log(company_ticker);
+  // }
+
+  function addTickerToRequest(){
+    dispatch({
+      type:'UPDATE_QUERY_FILINGS',
+      queryFilings: {
+        ...queryFilings,
+        tickers: [url_ticker],
+        metric_type: metric_types[value],
+      }
+    })
+  }
+
+  const handleClickM1 = async () => {
+    setValue(0);
+  }
+
+  const handleClickM2 = async () => {
+    setValue(1);
+  }
+
+  const handleClickM3 = () => {
+    setValue(2);
+    // console.log(metric_types[value])
+  }
+  const handleClickM4 = () => {
+    setValue(3);
+    // console.log(metric_types[value])
+  }
+  const handleClickM5 = () => {
+    setValue(4);
+    // console.log(metric_types[value])
+  }
+  const handleClickM6 = () => {
+    setValue(5);
+    // console.log(metric_types[value])
+  }
+
+    
+
     useEffect(async () => {
         setIsMetricLoading(true);
         const response = await searchCompanies(url_ticker, dispatch);
@@ -58,7 +112,7 @@ const Company = () => {
 
         const response1 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARR' }, dispatch);
         setArrMetric(response1.data);
-        const response2 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'Customer Churn Rate' }, dispatch);
+        const response2 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'CCR' }, dispatch);
         setCcrMetric(response2.data);
         const response3 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'LTV' }, dispatch);
         setLtvMetric(response3.data);
@@ -66,12 +120,16 @@ const Company = () => {
         setCacMetric(response4.data);
         const response5 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARPA' }, dispatch);
         setArpaMetric(response5.data);
-        const response6 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'Revenue Churn Rate' }, dispatch);
+        const response6 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'RCR' }, dispatch);
         setRcrMetric(response6.data);
 
 
         setIsMetricLoading(false);
-    }, [])
+    }, []);
+    React.useEffect(()=>{
+      console.log(metric_types[value]);
+      addTickerToRequest();
+    },[value])
 
     return (
         <>
@@ -101,14 +159,14 @@ const Company = () => {
                                 </div>
                             </div>
                             <div className="stat-tab">
-                                <div><Button style={{ color: "#9b9b9c" }}>ARR (in mil $)</Button></div>
-                                <div><Button style={{ color: "#9b9b9c" }}>LTV/CAC</Button></div>
-                                <div><Button style={{ color: "#9b9b9c" }} >Product-Market Fit</Button></div>
-                                <div><Button style={{ color: "#9b9b9c" }}>Churn Rate</Button></div>
-                                <div><Button style={{ color: "#9b9b9c" }}>ARR (in mil $)</Button></div>
-                                <div><Button style={{ color: "#9b9b9c" }}>LTV/CAC</Button></div>
-                                <div><Button style={{ color: "#9b9b9c" }} >Product-Market Fit</Button></div>
-                                <div><Button style={{ color: "#9b9b9c" }}>Churn Rate</Button></div>
+                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>ARR (in mil $)</Button></div>
+                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>LTV/CAC</Button></div>
+                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1} >Product-Market Fit</Button></div>
+                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>Churn Rate</Button></div>
+                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>ARR (in mil $)</Button></div>
+                                <div><Button  style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>LTV/CAC</Button></div>
+                                <div><Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>Product-Market Fit</Button></div>
+                                <div><Button  style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>Churn Rate</Button></div>
                             </div>
                             <Chart />
                         </div>
@@ -120,4 +178,10 @@ const Company = () => {
     );
 }
 
-export default Company;
+const mapStateToProps = (state) => {
+  return {
+    state:state
+  }
+}
+
+export default connect(mapStateToProps, null)(Company);
