@@ -71,9 +71,9 @@ const Watchlist = (props) => {
             </IconButton>
             </div>
             <div className="flex">
-              <TextField size="small"/>
+              <TextField size="small" id="newWatchlist" />
             </div>
-            <Button onClick={()=>{handleAddWatchlist()}} style={{background:"black",marginTop:"6px"}} variant="contained" fullWidth>Create</Button>
+            <Button onClick={handleAddWatchlist} style={{background:"black",marginTop:"6px"}} variant="contained" fullWidth>Create</Button>
             </div>
             {/* <br/><br/>
             <input type="text" id="newWatchlist" /><br/><br/> */}
