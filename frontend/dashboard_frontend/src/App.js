@@ -33,7 +33,7 @@ function App() {
 					<Route path="/individualBasket/:basket_id">
 						<Route index element={<IndividualBasket />} />
 					</Route>
-					<Route path='/basketList'>
+					<Route path='/basketlist'>
 						<Route index element={<BasketList/>}/>
 					</Route>
 					<Route path='/company/:ticker'>
@@ -45,7 +45,7 @@ function App() {
 					<Route path='/test'>
 						<Route index element={<RecentlyViewedLogIn />}/>
 					</Route>
-					<Route path='/file'>
+					<Route path='/file/:filing_id'>
 						<Route index element={<Filenew/>}/>
 					</Route>
 					<Route path="/*" element={<Error404 />} />
