@@ -137,7 +137,8 @@ class getKeyMetricsCSV(APIView):
 
         try:
             metrics = KeyMetric.objects.filter(company=company, metric_type=metric_type, date__range=[time_start, time_end])
-        except:
+        except Exception as e:
+            print(e, "################################")
             return Response(
                 {"res":"Error while fetching filings of the company"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
