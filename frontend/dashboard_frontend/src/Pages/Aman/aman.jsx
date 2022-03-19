@@ -7,7 +7,7 @@ import "../../global.scss";
 import "./aman.scss";
 import { useParams } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import { searchFilings, simpleSearch } from "../../actions/action";
+import { searchFillings, simpleSearch } from "../../actions/action";
 
 const Search = (props) => {
   const query = useParams().query;

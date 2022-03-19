@@ -8,21 +8,23 @@ import { connect } from "react-redux";
 import {Link} from 'react-router-dom'
 const RecentlyViewedLogIn = (props) => {
   const dispatch = useDispatch();
-  const data = props.state.recentlyViwedCompanies || [];
+  const data = props.state.recentlyViewedCompanies || [];
   console.log("Props from RecentlyViewedLogIn;", props);
   useEffect(() => {
     async function getRecentViewFunc() {
       await getRecentlyViewedCompanies(dispatch);
     }
     getRecentViewFunc();
-  }, [dispatch]);
-
+  }, [props.state.user.user_id]);
+  console.log("RecentlyViewedLogIn: ", data);
   return (
     <div class='cardcontainer'>
       <div class='leftcardtitle'>
         <h3 class='heading-2'>Recently Viewed</h3>
         <a href='/#' class='button issecondary issmall w-button'>
+        <Link to={`/recentlyviewed`} className='button issecondary issmall w-button'>
           view all
+          </Link>
         </a>
       </div>
       <div
@@ -30,12 +32,14 @@ const RecentlyViewedLogIn = (props) => {
         class='metrics'
       >
         {data.map((el, index) => (
-          <Component
+        <Link to={`/company/${el.company__ticker}`} style={{textDecoration:'None'}}>
+            <Component
             key={index}
-            logo={el.logo || ASAN}
-            name={el.name}
-            ticker={el.ticker}
-          />
+            logo={el.company__logo || ASAN}
+            name={el.company__name}
+            ticker={el.company__ticker}
+            />
+          </ Link>
         ))}
       </div>
     </div>
