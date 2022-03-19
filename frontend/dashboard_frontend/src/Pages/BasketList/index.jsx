@@ -1,11 +1,34 @@
 import React from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { getBasketDetails } from '../../actions/action';
 import Navbar from '../../Components/Global/Navbar/Navbar';
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 import Table from '../../Components/Widgets/Table';
 import Watchlist from '../../Components/Widgets/Watchlist';
 import BasketImage from "../../images/widgets/Basket.svg";
 import './basket.scss'
-const BasketList = () => {
+const BasketList = (props) => {
+    // const dispatch = useDispatch();
+    // const basket = props.state.currentBasket || [];
+    // // const basketDetails = props.state.basketDetails.companies || [];
+
+    // React.useEffect(()=>{
+        
+    //     const fetchBasketDetails = async () => {
+    //         try {
+    //             const response = await getBasketDetails(basket.id, dispatch);
+    //         } catch(err) {
+    //             console.log("Error: ", err);
+    //         }
+    //     };
+    //     if(basket.id)
+    //         fetchBasketDetails();
+    // },[basket])
+
+    // React.useEffect(()=>{
+    //     // console.log("Bl",basketDetails)
+    //     console.log(basket)
+    // },[]);
     return (
         <>
             <Navbar />
@@ -19,13 +42,17 @@ const BasketList = () => {
             <Watchlist/>
             <RecentlyViewedLogIn/>
             </div>
-            
-                <Table />
-            
+                <Table/>
             </div>
             </div>
         </>
     );
 }
 
-export default BasketList;
+const mapStateToProps = (state) => {
+    return {
+        state: state
+    }
+}
+
+export default connect(mapStateToProps, null)(BasketList);

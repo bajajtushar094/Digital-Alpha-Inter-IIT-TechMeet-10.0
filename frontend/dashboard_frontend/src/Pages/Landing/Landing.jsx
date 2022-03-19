@@ -20,7 +20,7 @@ import DataSec from "./DataSec";
 const Landing = (props) => {
   const dispatch = useDispatch();
   const user = props.state.user;
-  // console.log("User:", user);
+  console.log("State:", props.state);
 
   useEffect(async () => {
     const fetchRecentFilings = async () => {
