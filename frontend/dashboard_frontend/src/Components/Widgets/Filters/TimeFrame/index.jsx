@@ -16,6 +16,11 @@ const TimeFrame = ({state}) => {
   const dispatch = useDispatch()
   const queryFilings = state.queryFilings;
 
+  // const calenderref = useRef()
+//  function openDatepicker () {
+//    calenderref.setOpen(true)
+//   };
+
 	useEffect(() => {
     const NewqueryFilings = {
       ...queryFilings,
@@ -59,13 +64,15 @@ const TimeFrame = ({state}) => {
               onChange={(date) => setSelectedStartDate(date)}
               value={selectedStartDate}
               className='black-50'
+             
+             
             />
           </div>
-          <a href='#' className='w-inline-block'>
+       
             <div className='div-block-12'>
-              <img src={Calendar} loading='lazy' alt='' />
+              <img   src={Calendar} loading='lazy' alt='' />
             </div>
-          </a>
+       
         </div>
       </div>
       <div

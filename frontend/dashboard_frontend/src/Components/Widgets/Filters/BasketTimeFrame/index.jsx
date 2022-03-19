@@ -6,6 +6,7 @@ import Calendar from "../../../../images/widgets/Calendar.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect, useDispatch } from "react-redux";
+import $ from 'jquery';
 
 const TimeFrame = ({state}) => {
 

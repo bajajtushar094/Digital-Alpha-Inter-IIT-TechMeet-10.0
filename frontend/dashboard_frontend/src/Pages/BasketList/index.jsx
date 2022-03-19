@@ -5,6 +5,7 @@ import Table from '../../Components/Widgets/Table';
 import Watchlist from '../../Components/Widgets/Watchlist';
 import BasketImage from "../../images/widgets/Basket.svg";
 import './basket.scss'
+import img from '../../images/he.png'
 const BasketList = () => {
     return (
         <>
@@ -19,9 +20,9 @@ const BasketList = () => {
             <Watchlist/>
             <RecentlyViewedLogIn/>
             </div>
-            
-                <Table />
-            
+            <div style={{width:"100%",height:"430px",display:"flex",justifyContent:"center"}}>
+                <img style={{marginTop:"6rem"}}  src={img} alt="" />
+                </div>
             </div>
             </div>
         </>
