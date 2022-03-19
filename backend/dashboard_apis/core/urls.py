@@ -44,6 +44,7 @@ urlpatterns = [
     #Filing APIs
     path("filings/getKeyMetric/<int:id>/<str:metric_type>", getKeyMetricsOfFiling.as_view()),
     path("filings/getMetricsFromFilings/<int:id>", getMetricsFromFiling.as_view()),
+    path("filings/getAllFilingData/<int:id>", getAllFilingData.as_view()),
 
     #Basket APIs
     # I think these are wrong APIs, makes no sense to me :(
