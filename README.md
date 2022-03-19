@@ -6,24 +6,6 @@
 This repo contains:</h4>
 
 * **A React-Django Based ML Web App**
-
-<br><br>
-## Our Web Application
-<p align="center">
-<img src="/images/Demo.gif" >
-</p>
-
-
-## Key Features 
-
-- [x]  Create a complex Dataset    
-- [x]  Train additional images on the fly    
-- [x]  View model performances across different metrics    
-- [x]  Visualize model performance   
-- [x] Get suggestions to various shortcomings in model training    
-- [x]  An explainable AI-based solution to comprehend network failures
-
-
 -------
 
 ### Prerequisites
