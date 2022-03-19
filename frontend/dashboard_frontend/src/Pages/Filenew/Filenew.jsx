@@ -63,16 +63,26 @@ const Filenew = () => {
 	const handleTable = (selectedTemp) => {
 		setSelected(selectedTemp);
 	}
-	const [companyName, setCompanyName] = useState('Loading');
-	const [filingData, setFilingData] = useState(init_filing_data);
-	const [summaryTab, setSummaryTab] = useState(0);
+	const [companyName, setCompanyName] = useState('');
+	const [filingData, setFilingData] = useState({});
+	const [summaryText, setSummaryText] = useState("");
+	const summaryTextChange = (item)=>{
+		setSummaryText(item.text);
+	}
 	useEffect(() => {
 		const func = async () => {
 			let res = await axios.get(
 				LOCAL_SERVER_URL + "filings/getAllFilingData/" + filing_id
 			);
+			
 			setCompanyName(res.data.company.name);
-			setFilingData(res.data);
+			let response = res.data;
+			setFilingData(filingData=>({
+				...response
+			}));
+			setFilingData(response);
+			setSummaryText(filingData.summaries[0].text);
+			console.log("Filing Data:", filingData.summaries[0].text);
 		}
 		func()
 	}, [filing_id])
@@ -92,12 +102,12 @@ const Filenew = () => {
 									<div class="listingheadergrid">
 										<div class="compcontainer isbig">
 											<div class="logo-wrapper isbig color">
-												{filingData['form_type']}
+												{filingData.form_type}
 											</div>
 										</div>
 										<div id="w-node-a76e39fc-47ab-e63f-05cc-34673b655eb5-5d4911ed">
 											<h3>{companyName}</h3>
-											<h4 class="black15">{filingData['company'] || ''}</h4>
+											{/* <h4 class="black15">{filingData.company || ''}</h4> */}
 										</div>
 									</div>
 								</div>
@@ -151,10 +161,10 @@ const Filenew = () => {
 						}
 						<div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>
 						{selected === 1 && (<><div className="flex bor" style={{ gap: "2rem", justifyContent: "space-between", padding: "2px 0px" }}>
-							{filingData['summaries'].map((item, index) => {
+							{filingData.summaries!=undefined&&filingData.summaries.map((item, index) => {
 								return (
 									<div style={{ display: "inline-block" }}>
-										<Button className='color btncolor' onClick={() => { setSummaryTab(index) }}>{item['heading']}</Button>
+										<Button className='color btncolor' onClick={() => { summaryTextChange(item); }}>{item.section_heading}</Button>
 									</div>
 								);
 							})}
@@ -162,55 +172,56 @@ const Filenew = () => {
 							<div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>
 							<div className="textdiv">
 								<p>
-									{filingData['summaries'][summaryTab]['text']}
+									{summaryText}
 								</p>
 							</div>
 						</>)
 						}
 						{
 							selected === 3 && <>
-								<div className='cardcontainer widthfull' style={{ marginTop: "16px", borderRadius: "6px", height: "350px" }}>
+								<div className='cardcontainer' style={{ marginTop: "16px", borderRadius: "6px", height: "150vh", width:"30vw" }}>
 									{/* Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto ex unde earum dolores neque nesciunt incidunt saepe, quasi vitae quaerat dolore ratione at quam nemo sunt corporis rerum iure pariatur.
    Nisi, rem maxime rerum sunt quos veritatis nam sint accusantium dignissimos minima quam, ea itaque aliquid cupiditate voluptatum molestiae sed in sapiente unde, qui corporis iure. Animi dolores veritatis quae!
     */}
 									{/* <div className="content" dangerouslySetInnerHTML={{__html: ref}}></div> */}
-									<iframe title='filing' src={filingData['filelink']} frameborder="0" style={{ overflowY: "scroll", height: "350px", overflowX: "hidden", width: "100%" }}></iframe>
+									<iframe title='filing' src={`http://localhost:8000${filingData['filelink']}`} frameborder="0" style={{ overflowY: "scroll", height: "50vh", overflowX: "hidden", width: "165%" }}></iframe>
 								</div>
 							</>
 						}
 						{
 							selected === 2 && (<>
-								{filingData.snippets.map((item, index) => {
+								{filingData.snippets!=undefined&&filingData.snippets.map((item, index) => {
+									console.log("Item:", item);
 									return (
-                    <div
-                      id='w-node-_5c33d9b8-e716-f790-5a4d-5a6ab8b6a278-5d4911ed'
-                      className='listing mt'
-                    >
-                      <div class='listingheader-wrapper'>
-                        <div
-                          id='w-node-_79d7448d-1164-5de1-1de4-bb294c247a68-5d4911ed'
-                          className='ui-text black100'
-                        >
-                          {item.text}
-                        </div>
-                      </div>
+										<div
+											id='w-node-_5c33d9b8-e716-f790-5a4d-5a6ab8b6a278-5d4911ed'
+											className='listing mt'
+										>
+											<div class='listingheader-wrapper'>
+												<div
+													id='w-node-_79d7448d-1164-5de1-1de4-bb294c247a68-5d4911ed'
+													className='ui-text black100'
+												>
+													{item.text}
+												</div>
+											</div>
 
-                      <div class='actions'>
-                        <div class='actioncontainer'></div>
-                        <div class='actioncontainer'></div>
-                        <a href={item.link}>
-                          <div class='actioncontainer'>
-                            <IconButton
-                              style={{ backgroundColor: "transparent" }}
-                              aria-label='delete'
-                            >
-                              <OpenInNewIcon />
-                            </IconButton>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                  );
+											<div class='actions'>
+												<div class='actioncontainer'></div>
+												<div class='actioncontainer'></div>
+												<a href={item.link}>
+													<div class='actioncontainer'>
+														<IconButton
+															style={{ backgroundColor: "transparent" }}
+															aria-label='delete'
+														>
+															<OpenInNewIcon />
+														</IconButton>
+													</div>
+												</a>
+											</div>
+										</div>
+									);
 								})}</>)
 						}
 
