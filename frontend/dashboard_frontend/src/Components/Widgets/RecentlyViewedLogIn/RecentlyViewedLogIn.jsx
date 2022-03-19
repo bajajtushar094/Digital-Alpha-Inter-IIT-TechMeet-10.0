@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { getRecentlyViewedCompanies } from "../../../actions/action";
 import { connect } from "react-redux";
 import {Link} from 'react-router-dom'
+import noview from '../../../images/no2.png'
 const RecentlyViewedLogIn = (props) => {
   const dispatch = useDispatch();
   const data = props.state.recentlyViewedCompanies || [];
@@ -17,7 +18,9 @@ const RecentlyViewedLogIn = (props) => {
     getRecentViewFunc();
   }, [props.state.user]);
   console.log("RecentlyViewedLogIn: ", data);
+const bool=true;
   return (
+    
     <div class='cardcontainer'>
       <div class='leftcardtitle'>
         <h3 class='heading-2'>Recently Viewed</h3>
@@ -27,7 +30,17 @@ const RecentlyViewedLogIn = (props) => {
           </Link>
         </a> */}
       </div>
-      <div
+      {
+       data.length==0?<>
+        <div>
+          <div>
+            <img className="widthfull" src={noview} alt=""/>
+          </div>
+          <h2 className="toptxt">Recently Viewed</h2>
+          <p className="color">create an account to track your viewed companies and filling</p>
+        </div>
+        </>:<>
+         <div
         id='w-node-_633401c4-a210-5c3e-5b31-05fd06f3863e-5d4911ed'
         class='metrics'
       >
@@ -42,6 +55,9 @@ const RecentlyViewedLogIn = (props) => {
           </ Link>
         ))}
       </div>
+        </>
+      }
+     
     </div>
   );
 };

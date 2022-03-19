@@ -33,7 +33,7 @@ function App() {
 					<Route path="/individualBasket/:basket_id">
 						<Route index element={<IndividualBasket />} />
 					</Route>
-					<Route path='/basketList'>
+					<Route path='/basketlist'>
 						<Route index element={<BasketList/>}/>
 					</Route>
 					<Route path='/company/:ticker'>
