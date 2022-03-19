@@ -130,12 +130,13 @@ const CompanyRow = (props) => {
                                 <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{ARPU ? ARPU : '-'}</h4>
                                 <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
                                     <div className="actions-1">
-                                        <Link to={`/company/${filing['ticker']}`} />
+                                        <Link to={`/company/${filing['ticker']}`} >
                                         <div className="actioncontainer ">
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
                                                 <OpenInNewIcon />
                                             </IconButton>
                                         </div>
+                                        </Link>
                                         <div className= "actioncontainer">
                                             <IconButton style={{ backgroundColor: 'transparent' }} onClick={handleClickOpen}  aria-label="delete">
                                                 <BookmarkBorderIcon />
