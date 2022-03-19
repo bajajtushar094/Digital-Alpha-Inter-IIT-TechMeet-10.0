@@ -24,27 +24,27 @@ const Data = (props) => {
 	const [paginatedCompanies, setPaginatedCompanies] = useState([]);
 	const [paginationCount, setPaginationCount] = useState(1);
 
-	useEffect(()=>{
-		setPaginationCount(Math.ceil(allCompanies.length/5));
-		if(allCompanies.length<=5)
+	useEffect(() => {
+		setPaginationCount(Math.ceil(allCompanies.length / 5));
+		if (allCompanies.length <= 5)
 			setPaginatedCompanies(allCompanies);
 		else {
-			for(let i = 0;i<5;i++) {
+			for (let i = 0; i < 5; i++) {
 				setPaginatedCompanies([...paginatedCompanies, allCompanies[i]]);
 			}
 		}
-	},[allCompanies])
+	}, [allCompanies])
 
-	const handleTable = (selectedTemp)=>{
+	const handleTable = (selectedTemp) => {
 		setSelected(selectedTemp);
 	}
-	const handleClick = (selectedTemp)=>{
+	const handleClick = (selectedTemp) => {
 		console.log("Hello")
 	}
 
-	const handlePaginationChange = (event,value) => {
-		let newArr=[];
-		for(let i = (value-1)*5;i<Math.min(value*5,allCompanies.length);i++) {
+	const handlePaginationChange = (event, value) => {
+		let newArr = [];
+		for (let i = (value - 1) * 5; i < Math.min(value * 5, allCompanies.length); i++) {
 			newArr.push(allCompanies[i]);
 		}
 		setPaginatedCompanies(newArr);
@@ -67,11 +67,16 @@ const Data = (props) => {
 						<button className={selected === 1 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(1); }}>All Companies</button>
 						<button className={selected === 2 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(2); }}>Recent Filings</button>
 					</div>
-					{selected===1&&<Table data={paginatedCompanies} hasCheckbox={false} isCompany={true} fromSearch={false}/>}
-					{selected===2&&<Table data={recentFilings} hasCheckbox={false} isCompany={false} fromSearch={false}/>}
-					<div style={{display:"flex", justifyContent:"center", marginTop:"30px"}}>
-						<Pagination count={paginationCount} onChange={handlePaginationChange} variant="outlined" color="primary" />
-					</div>
+					{selected === 1 && <Table data={paginatedCompanies} hasCheckbox={false} isCompany={true} fromSearch={false} />}
+					{selected === 2 && <Table data={recentFilings} hasCheckbox={false} isCompany={false} fromSearch={false} />}
+					{selected === 1 ?
+						<div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
+							<Pagination count={paginationCount} onChange={handlePaginationChange} variant="outlined" color="primary" />
+						</div>
+						:
+						<div></div>
+					}
+
 				</div>
 			</div>
 		</div>
