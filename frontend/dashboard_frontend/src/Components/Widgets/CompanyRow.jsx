@@ -77,6 +77,7 @@ const CompanyRow = (props) => {
         <>
             {
                 filings.map((filing, i) => {
+                    console.log(filing.key_metrics);
                     const key_metrics = filing.key_metrics ? searchFilings.key_metrics : [];
                     let ARR, CCR, LTV, CAC, ARPA, RCC;
 
@@ -143,7 +144,7 @@ const CompanyRow = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <MaxWidthDialog open={[open, setOpen]} fullWidth={[fullWidth, setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange} />
+                                <MaxWidthDialog open={[open, setOpen]} fullWidth={[fullWidth, setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange}/>
                             </div>
                             </div>);
                 })}
