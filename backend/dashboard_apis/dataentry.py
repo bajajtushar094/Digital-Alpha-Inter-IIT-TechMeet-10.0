@@ -11,7 +11,7 @@ from datetime import datetime
 # metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
 # metric_value = models.DecimalField(max_digits=8, decimal_places=2)		# 53.53, 10.00
 # metric_unit = models.CharField(max_length=5, choices=METRIC_UNITS)
-filing = Filing.objects.get(id=2)
+filing = Filing.objects.get(id=3)
 
 companies = ['GOOG', 'AAPL', 'MAI']
 vals = [0.5, 0.65, 0.34, 0.76]

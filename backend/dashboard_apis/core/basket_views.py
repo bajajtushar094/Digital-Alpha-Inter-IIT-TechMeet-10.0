@@ -4,6 +4,7 @@ from rest_framework import status
 from .models import *
 from datetime import datetime
 from .choices import *
+from .utils import *
 
 
 @api_view(["GET"])
@@ -169,6 +170,7 @@ def getBaskets(request):
     user = res[0]
     basketData = []
     for basket in user.baskets.all():
+        print("Basket", basket)
         basketData.append({
             "id": basket.id,
             "name": basket.name,
@@ -323,11 +325,13 @@ def insertIntoBasket(request):
         ticker = request.data['ticker']
         company = Company.object.get(ticker=ticker)
 
-        basketID = request.date['basketID']
-        basket = Basket.objects.get(id=basketID)
+        basketIDs = request.date['basketID']
 
-        basket.companies.add(company)
-        basket.save()
+        for basketID in basketIDs:
+            basket = Basket.objects.get(id=basketID)
+
+            basket.companies.add(company)
+            basket.save()
 
         return Response({"message": "Basket updated"}, status=status.HTTP_200_OK)
 

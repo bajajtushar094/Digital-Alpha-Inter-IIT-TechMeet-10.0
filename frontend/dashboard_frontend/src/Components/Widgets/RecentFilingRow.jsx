@@ -41,13 +41,13 @@ const RecentFilingRow = (props) => {
 					</div>
 					<div id="w-node-b6ad1064-49e9-79f3-df7a-f41125cb80fe-5d4911ed">
 						<div class="ui-text black100">{filing['company_id']}</div>
-						<h4 class="black15">{filing['company_id']}</h4>
+						{/* <h4 class="black15">{filing['company_id']}</h4> */}
 					</div>
 				</div>
 
 			</div>
 			<div className="div-block-4">
-				<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{filing['company_id']}</h4>
+				<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{filing['company_name']}</h4>
 				<h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{filing['date']}</h4>
 				<div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
 					<div className={hover ? "actioncontainer " : "actioncontainer hide"}>

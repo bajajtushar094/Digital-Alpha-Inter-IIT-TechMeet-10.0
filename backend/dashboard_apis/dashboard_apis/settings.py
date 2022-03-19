@@ -96,6 +96,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'dashboard_apis.urls'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 TEMPLATES = [
     {

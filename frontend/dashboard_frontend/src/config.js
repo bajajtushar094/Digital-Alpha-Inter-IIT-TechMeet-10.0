@@ -14,6 +14,7 @@ export const config = ()=>{
             'getRecentlyViewedCompanies': `${LOCAL_SERVER_URL}landingPage/recentlyViewedCompanies`,
             'addRecentlyViewedCompany': `${LOCAL_SERVER_URL}companies/addRecentlyViewedCompany`,
             'getBasket': `${LOCAL_SERVER_URL}basket/get`,
+            'createBasket': `${LOCAL_SERVER_URL}basket/create`,
             'getKeyMetricOfCompanyAPI':`${LOCAL_SERVER_URL}companies/getKeyMetrics`,
             'getAllMetricsOfCompany':`${LOCAL_SERVER_URL}company/metric/all`
         }

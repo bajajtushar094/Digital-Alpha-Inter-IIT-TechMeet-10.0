@@ -288,7 +288,7 @@ export const getBaskets = async (dispatch) => {
             config().getBasket,
             configHeaders
         );
-        console.log("Response: ", response.data)
+        console.log("Response of Baskets: ", response.data)
         dispatch({
             type: 'GET_BASKETS',
             baskets: response.data
@@ -331,6 +331,18 @@ export const getBasketDetails = async (basket_id, dispatch) => {
     catch(err){
         return {status: false}
     }
+}
+
+export const createBasket = async (name,company_ticker, dispatch) => {
+    let data;
+    console.log(configHeaders)
+    data = await axios.post(
+        `${config().createBasket}`,
+        {name:name, tickers:company_ticker},
+        configHeaders
+    )
+    
+    return data;
 }
 
 export const selectInBasket = (company, dispatch) => {

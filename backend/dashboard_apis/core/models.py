@@ -8,7 +8,7 @@ from datetime import date, datetime
 from django.http import JsonResponse
 
 class Company(models.Model):
-	cik = models.CharField(max_length=20, unique=True)
+	# cik = models.CharField(max_length=20, unique=True)
 	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)
@@ -97,7 +97,7 @@ class Filing(models.Model):
 	# dummy_date = models.DateField(_('dummy date'))
 	date = models.DateField(_('filing date'))
 	# verbose_text = models.TextField(_('HTML text'))				# Verbose text for drilldown
-	filelink = models.FileField(upload_to='filings/')
+	filelink = models.URLField(max_length=20000)
 
 	# def save():
 		

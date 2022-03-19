@@ -47,8 +47,22 @@ class getAllRecentFilings(APIView):
 			filing['metrics'] = metrics_list
 			filings_list.append(filing)
 
+		filingsValues=[]
+		for filing in filings.values():
+			name = Company.objects.get(ticker=filing['company_id']).name
+			filingsValues.append({
+				'id':filing['id'],
+				'company_id': filing['company_id'],
+				'company_name': name,
+				'date': filing['date'],
+				'form_type': filing['form_type'],
+				'quarter': filing['quarter'],
+				'year': filing['year'],
+				'verbose_text': filing['verbose_text'],
+			})
+		
 		return Response(
-			data=filings.values(),
+			data=filingsValues,
 			status=status.HTTP_200_OK
 		)
 

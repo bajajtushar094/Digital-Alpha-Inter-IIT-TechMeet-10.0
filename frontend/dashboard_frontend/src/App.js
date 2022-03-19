@@ -13,7 +13,6 @@ import { getRecentFilings, loginUser } from "./actions/action";
 import { useEffect } from "react";
 import RecentlyViewed from "./Pages/RecentlyViewed";
 import Filenew from "./Pages/Filenew/Filenew";
-import Aman from "./Pages/Aman/aman";
 import CompanyTitle from "./Components/Widgets/Filters/CompanyTitle/CompanyTitle";
 import test from "./Pages/test";
 import RecentlyViewedLogIn from "./Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn";
@@ -31,9 +30,6 @@ function App() {
 					<Route path="/search/:query">
 						<Route index element={<Search />} />
 					</Route>
-					<Route path="/aman/:query">
-						<Route index element={<Aman />} />
-					</Route>
 					<Route path="/individualBasket/:basket_id">
 						<Route index element={<IndividualBasket />} />
 					</Route>
@@ -49,7 +45,7 @@ function App() {
 					<Route path='/test'>
 						<Route index element={<RecentlyViewedLogIn />}/>
 					</Route>
-					<Route path='/file'>
+					<Route path='/file/:filing_id'>
 						<Route index element={<Filenew/>}/>
 					</Route>
 					<Route path="/*" element={<Error404 />} />
