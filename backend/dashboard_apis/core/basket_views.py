@@ -4,6 +4,7 @@ from rest_framework import status
 from .models import *
 from datetime import datetime
 from .choices import *
+from .utils import *
 
 
 @api_view(["GET"])
@@ -74,18 +75,7 @@ def simpleDate(date):
     print(date, f'{str(date.year)}-{str(date.month)}-01')
     return f'{str(date.year)}-{str(date.month)}-01'
 
-@api_view(["POST"])
-def getComparisonData(request):
-    """API endpoint for getting comparison data
-    
-    Args: \n
-        tickers list[string]: list of tickers to compare
-    
-    Returns: \n
-        # companies list[object]: details of all the companies provided
-        # filings list[object]: all the filings of companies provided
-        metrices[]
-    """
+def getComparisonDataUtil(request):
     print("Request data: ",request.data)
     tickers = request.data["tickers"]
     start_date = request.data["time_start"]
@@ -111,6 +101,30 @@ def getComparisonData(request):
         date_parts = i['date'].split('-')
         print("DateTime",MONTH_MAPPING[date_parts[1]])
         i['date'] = MONTH_MAPPING[date_parts[1]]+' '+date_parts[0]
+
+    return metrices
+
+
+@api_view(["POST"])
+def getComparisonDataCSV(request):
+    metrices = getComparisonDataUtil(request)
+    cols = metrices[0].keys()
+    return csvResponse(metrices, cols, cols, dic=True)
+
+@api_view(["POST"])
+def getComparisonData(request):
+    """API endpoint for getting comparison data
+    
+    Args: \n
+        tickers list[string]: list of tickers to compare
+    
+    Returns: \n
+        # companies list[object]: details of all the companies provided
+        # filings list[object]: all the filings of companies provided
+        metrices[]
+    """
+    
+    metrices = getComparisonDataUtil(request)
     
     # # metrices = []
     # for ticker in tickers:
@@ -128,6 +142,8 @@ def getComparisonData(request):
         }, 
         status=status.HTTP_200_OK
     )
+
+
 
 
 @api_view(["GET"])
@@ -154,6 +170,7 @@ def getBaskets(request):
     user = res[0]
     basketData = []
     for basket in user.baskets.all():
+        print("Basket", basket)
         basketData.append({
             "id": basket.id,
             "name": basket.name,
@@ -308,11 +325,13 @@ def insertIntoBasket(request):
         ticker = request.data['ticker']
         company = Company.object.get(ticker=ticker)
 
-        basketID = request.date['basketID']
-        basket = Basket.objects.get(id=basketID)
+        basketIDs = request.date['basketID']
 
-        basket.companies.add(company)
-        basket.save()
+        for basketID in basketIDs:
+            basket = Basket.objects.get(id=basketID)
+
+            basket.companies.add(company)
+            basket.save()
 
         return Response({"message": "Basket updated"}, status=status.HTTP_200_OK)
 

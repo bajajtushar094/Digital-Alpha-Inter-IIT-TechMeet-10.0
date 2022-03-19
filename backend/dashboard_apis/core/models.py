@@ -7,11 +7,11 @@ from django.utils.translation import gettext_lazy as _
 from datetime import date, datetime
 
 class Company(models.Model):
-	# cik = models.CharField(max_length=20, primary_key=True)
+	# cik = models.CharField(max_length=20, unique=True)
 	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)
-	logo = models.ImageField(upload_to='images')
+	logo = models.URLField(max_length=2000)
 
 	def __str__(self):
 		return f'{self.ticker} ({self.name})'

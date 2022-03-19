@@ -47,8 +47,22 @@ class getAllRecentFilings(APIView):
 			filing['metrics'] = metrics_list
 			filings_list.append(filing)
 
+		filingsValues=[]
+		for filing in filings.values():
+			name = Company.objects.get(ticker=filing['company_id']).name
+			filingsValues.append({
+				'id':filing['id'],
+				'company_id': filing['company_id'],
+				'company_name': name,
+				'date': filing['date'],
+				'form_type': filing['form_type'],
+				'quarter': filing['quarter'],
+				'year': filing['year'],
+				'verbose_text': filing['verbose_text'],
+			})
+		
 		return Response(
-			data=filings.values(),
+			data=filingsValues,
 			status=status.HTTP_200_OK
 		)
 
@@ -129,7 +143,8 @@ class recentlyViewedCompanies(APIView):
 			# print("HI")
 			# request.user
 			user = request.user
-			print(user.recently_viewed_companies.all().values().order_by('-timestamp'))
+			print(user, "###################################")
+			print(user.recently_viewed_companies.all().values().order_by('-timestamp'), "!!!!!!!!!!!!!!!!!!!!!!")
 			
 			# for index in range(len(bookmarked_companies)):
 			#     bookmarked_companies_json[index]["filings"] = bookmarked_companies[index].filing_set.all().values()
@@ -143,7 +158,7 @@ class recentlyViewedCompanies(APIView):
 			)
 
 		recently_viewed_companies = user.recently_viewed_companies.all().values('company__ticker', 'company__name', 'company__logo', 'timestamp').order_by('-timestamp')
-		
+		print(recently_viewed_companies)
 		return Response(
 
 			data=recently_viewed_companies,
@@ -151,21 +166,21 @@ class recentlyViewedCompanies(APIView):
 		)   
 
 class recentlyFiled(APIView):
-    def get(self , request, *args, **kwargs):
-        try:
-            companies = Filing.objects.order_by('-date').values('company_id').distinct()
-            print(companies.values())
-        except:
-            Response(
-                {
-                    "res":"Error while fetching the Company data"
-                },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-        return Response(
-            data=companies.company.all().values(),
-            status=status.HTTP_200_OK
-        )   
+	def get(self , request, *args, **kwargs):
+		try:
+			companies = Filing.objects.order_by('-date').values('company_id').distinct()
+			print(companies.values())
+		except:
+			Response(
+				{
+					"res":"Error while fetching the Company data"
+				},
+				status=status.HTTP_500_INTERNAL_SERVER_ERROR
+			)
+		return Response(
+			data=companies.company.all().values(),
+			status=status.HTTP_200_OK
+		)   
 
 # class getTop5(APIView):
 #     def get(self, request, *args, **kwargs):

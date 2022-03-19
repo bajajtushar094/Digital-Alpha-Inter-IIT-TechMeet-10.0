@@ -3,8 +3,8 @@ export const LOCAL_SERVER_URL = `http://localhost:8000/api/`;
 export const config = ()=>{
     const confs = {
         'local':{
-            'email':'aman@test.com',
-            'password': 'lmaolmao',
+            'email':'bajajtushar2019@gmail.com',
+            'password': 'password',
             'auth':`${LOCAL_SERVER_URL}auth/token/`,
             'search': `${LOCAL_SERVER_URL}search`,
             'getRecentFilings':`${LOCAL_SERVER_URL}landingPage/recentFilings/all`,
@@ -14,6 +14,7 @@ export const config = ()=>{
             'getRecentlyViewedCompanies': `${LOCAL_SERVER_URL}landingPage/recentlyViewedCompanies`,
             'addRecentlyViewedCompany': `${LOCAL_SERVER_URL}companies/addRecentlyViewedCompany`,
             'getBasket': `${LOCAL_SERVER_URL}basket/get`,
+            'createBasket': `${LOCAL_SERVER_URL}basket/create`,
             'getKeyMetricOfCompanyAPI':`${LOCAL_SERVER_URL}companies/getKeyMetrics`,
             'getAllMetricsOfCompany':`${LOCAL_SERVER_URL}company/metric/all`
         }

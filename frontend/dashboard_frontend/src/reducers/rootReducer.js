@@ -7,7 +7,7 @@ const initState = {
     recentFilings: [],
     allCompanies: [],
     currentCompany: {},
-    recentlyViwedCompanies: [],
+    recentlyViewedCompanies: [],
     baskets: [],
     queryFilings: {
         "tickers": [],
@@ -73,6 +73,7 @@ const rootReducer = (state=initState,action) => {
     }
     if(action.type==='GET_RECENTLY_VIEWED_COMPANIES') {
         const newArr = action.recentlyViewedCompanies;
+        console.log("GET_RECENTLY_VIEWED_COMPANIES", newArr)
         return {
             ...state,
             recentlyViewedCompanies: newArr
@@ -101,6 +102,7 @@ const rootReducer = (state=initState,action) => {
             queryFilings: { 
                 tickers: [],
                 form_type: [],
+                metric_type:[],
                 time_start: "",
                 time_end: ""
             }
@@ -138,10 +140,10 @@ const rootReducer = (state=initState,action) => {
         }
     }
     if(action.type === "STORE_SEARCH_FILINGS"){
-        const newArr = action.searchFilings;
+        const newArr = action.searchFillings;
         return {
             ...state,
-            searchFilings: newArr
+            searchFillings: newArr
         }
     }
 
@@ -209,7 +211,7 @@ const rootReducer = (state=initState,action) => {
     if(action.type === 'RESET_SEARCH_FILINGS'){
         return{
             ...state,
-            searchFilings: []
+            searchFillings: []
         }
     }
 

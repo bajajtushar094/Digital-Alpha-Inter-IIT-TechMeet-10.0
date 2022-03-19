@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../../Components/Global/Navbar/Navbar'
-import MainFilter from '../../Components/Widgets/Filters/MainFilter';
-import Ticker from '../../Components/Widgets/Filters/Ticker';
-import SearchCompany from '../../Components/Widgets/Filters/SearchCompany';
+import React, { useEffect, useState } from "react";
+import Navbar from "../../Components/Global/Navbar/Navbar";
+import MainFilter from "../../Components/Widgets/Filters/MainFilter";
+import Ticker from "../../Components/Widgets/Filters/Ticker";
+import SearchCompany from "../../Components/Widgets/Filters/SearchCompany";
 import SearchImage from "../../images/widgets/Search_black.svg";
-import Table from '../../Components/Widgets/Table';
+import Table from "../../Components/Widgets/Table";
 import "../../global.scss";
 import "./search.scss";
 import { useParams } from "react-router-dom";
-import { connect, useDispatch } from 'react-redux';
-import { searchFilings, simpleSearch, searchCompanyAPI } from '../../actions/action';
-import vector1 from '../../images/nav/Market.svg';
+import { connect, useDispatch } from "react-redux";
+import {
+    searchFillings,
+    simpleSearch,
+    searchCompanyAPI,
+} from "../../actions/action";
+import vector1 from "../../images/nav/Market.svg";
 
 const Search = (props) => {
     const dispatch = useDispatch();
@@ -26,7 +30,7 @@ const Search = (props) => {
     // })
 
     const [selected, setSelected] = useState(1);
-    console.log("Search Filings:",props.state.searchFilings)
+    console.log("Search Filings:", props.state.searchFillings);
 
     // const [displayData, setDisplayData] = useState(false);
     // let dummyData=[];
@@ -36,52 +40,57 @@ const Search = (props) => {
             console.log("queryFilings", queryFilings);
 
             let data_byFilings;
-            const data_bySimple = await simpleSearch(query, dispatch);
-            if(selected==2){
-                data_byFilings = await searchFilings(queryFilings, dispatch);
-            }
-            else if(selected==1){
+
+            if (selected == 2) {
+                data_byFilings = await searchFillings(queryFilings, dispatch);
+            } else if (selected == 1) {
                 data_byFilings = await searchCompanyAPI(queryFilings, dispatch);
             }
-            
-            // console.log("search :", data_bySimple);
-            // console.log("Filings:", data_byFilings);
-            setCompanies_bySimple(data_bySimple);
-            // setCompanies_byFiling(data_byFilings);
-            console.log("Data F:", data_byFilings);
-			dispatch({
-				type: "STORE_SEARCH_FILINGS",
-				searchFilings: data_byFilings.data
-			})
+            dispatch({
+                type: "STORE_SEARCH_FILINGS",
+                searchFillings: data_byFilings.data,
+            });
+
+            console.log("Data BY Filings:", data_byFilings);
         };
         func();
 
+        return function cleanup() {
+            dispatch({
+                type: "CLEAN_QUERY_FILINGS",
+            });
+        };
+    }, []);
 
+    useEffect(() => {
+        const func = async () => {
+            const data_bySimple = await simpleSearch(query, dispatch);
+            setCompanies_bySimple(data_bySimple);
+        };
 
-
-    }, [dispatch, query, queryFilings])
+        func();
+    }, []);
 
     const handleTable = (selectedTemp) => {
         setSelected(selectedTemp);
-		dispatch({
-			type:'RESET_QUERY_FILINGS',
-			queryFilings: {
-                "tickers": [],
-                "form_type": [],
-                "time_start": "",
-                "time_end": ""
-            }
-		})
         dispatch({
-            type:"RESET_SEARCH_FILINGS",
-            searchFilings:[]
-        })
+            type: "RESET_QUERY_FILINGS",
+            queryFilings: {
+                tickers: [],
+                form_type: [],
+                time_start: "",
+                time_end: "",
+            },
+        });
+        dispatch({
+            type: "RESET_SEARCH_FILINGS",
+            searchFillings: [],
+        });
+    };
 
-    }
-
-    console.log("Search Filings:", props.state.searchFilings)
-    // if(props.state.searchFilings!=null){
-    //     Object.entries(props.state.searchFilings).forEach(item => {
+    console.log("Search Filings:", props.state.searchFillings);
+    // if(props.state.searchFillings!=null){
+    //     Object.entries(props.state.searchFillings).forEach(item => {
     //         let oldArray = filingsData;
     //         console.log("Item:", item);
     //         // oldArray = oldArray.concat(item[1]);
@@ -95,30 +104,65 @@ const Search = (props) => {
     return (
         <>
             <Navbar />
-            <div className='landingdata'>
-			<div className='top'>
-				<img src={vector1} alt="" />
-				<h3>Filter</h3>
-			</div>
-			<div className='body'>
-				<div className='cardsec'>
-                    {selected==1&&<SearchCompany/>}
-					{selected==2&&<MainFilter/>}
-				</div>
-				<div className='tablesec'>
-					<div className="table_top">
-						<button className={selected === 1 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(1); }}>Companies</button>
-						<button className={selected === 2 ? 'btn-link active' : 'btn-link'} onClick={() => { handleTable(2); }}>Filings</button>
-					</div>
-					{selected==1&&<Table data={props.state.searchFilings!=undefined?props.state.searchFilings:[]} hasCheckbox={false} isCompany={true} fromSearch={true}/>}
-					{selected==2&&<Table data={props.state.searchFilings!=undefined?props.state.searchFilings:[]} hasCheckbox={false} isCompany={false} fromSearch={true}/>}
-				</div>
-			</div>
-		</div>
+            <div className="landingdata">
+                <div className="top">
+                    <img src={vector1} alt="" />
+                    <h3>Filter</h3>
+                </div>
+                <div className="body">
+                    <div className="cardsec">
+                        {selected == 1 && <SearchCompany />}
+                        {selected == 2 && <MainFilter />}
+                    </div>
+                    <div className="tablesec">
+                        <div className="table_top">
+                            <button
+                                className={selected === 1 ? "btn-link active" : "btn-link"}
+                                onClick={() => {
+                                    handleTable(1);
+                                }}
+                            >
+                                Companies
+                            </button>
+                            <button
+                                className={selected === 2 ? "btn-link active" : "btn-link"}
+                                onClick={() => {
+                                    handleTable(2);
+                                }}
+                            >
+                                Filings
+                            </button>
+                        </div>
+                        {selected == 1 && (
+                            <Table
+                                data={
+                                    props.state.searchFillings != undefined
+                                        ? props.state.searchFillings
+                                        : []
+                                }
+                                hasCheckbox={false}
+                                isCompany={true}
+                                fromSearch={true}
+                            />
+                        )}
+                        {selected == 2 && (
+                            <Table
+                                data={
+                                    props.state.searchFillings != undefined
+                                        ? props.state.searchFillings
+                                        : []
+                                }
+                                hasCheckbox={false}
+                                isCompany={false}
+                                fromSearch={true}
+                            />
+                        )}
+                    </div>
+                </div>
+            </div>
         </>
-
     );
-}
+};
 
 // const mapDispatchToProps = (dispatch) => {
 //     return {
@@ -127,11 +171,11 @@ const Search = (props) => {
 // }
 
 const mapStateToProps = (state) => {
-  // console.log("State:", state);
-  return {
-    // To get the list of employee details from store
-    state: state,
-  };
+    // console.log("State:", state);
+    return {
+        // To get the list of employee details from store
+        state: state,
+    };
 };
 
 export default connect(mapStateToProps, null)(Search);

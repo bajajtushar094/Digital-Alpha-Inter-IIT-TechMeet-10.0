@@ -7,10 +7,11 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import './table.scss';
-import { getMetricsFromFiling, getKeyMetricOfCompany, searchFilings } from '../../actions/action';
+import { getMetricsFromFiling, getKeyMetricOfCompany, searchFillings } from '../../actions/action';
 import MaxWidthDialog from './DialogBox';
 
 const CompanyRow = (props) => {
+    console.log("props", props);
     const dispatch = useDispatch();
     const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
     const [isCompany, setIsCompany] = useState(props.isCompany);
@@ -76,9 +77,8 @@ const CompanyRow = (props) => {
     return (
         <>
             {
-                filings.map((filing, i) => {
-                    console.log(filing.key_metrics);
-                    const key_metrics = filing.key_metrics ? searchFilings.key_metrics : [];
+                filings != undefined && filings.map((filing, i) => {
+                    const key_metrics = filing.key_metrics ? filing.key_metrics : [];
                     let ARR, CCR, LTV, CAC, ARPA, RCC;
 
                     for (let i = 0; i < key_metrics.length; i++) {
@@ -115,7 +115,10 @@ const CompanyRow = (props) => {
 
                                     <>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{filing['company_id']}</div></Link>
+                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling"><img src={props.filing.logo} width="20px" /></div></Link>
+                                        </div>
+                                        <div className="filingcontainer">
+                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['name'] : filing['company_id']}</div></Link>
                                         </div>
                                     </>
 
@@ -146,10 +149,10 @@ const CompanyRow = (props) => {
                                 </div>
                                 <MaxWidthDialog open={[open, setOpen]} fullWidth={[fullWidth, setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange}/>
                             </div>
-                            </div>);
+                        </div>);
                 })}
-                        </>
-                    )
-                }
+        </>
+    )
+}
 
 export default CompanyRow;

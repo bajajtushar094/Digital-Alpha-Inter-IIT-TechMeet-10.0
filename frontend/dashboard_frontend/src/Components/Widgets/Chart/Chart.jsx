@@ -79,6 +79,7 @@ function Chart(props) {
     }:"";
 
     try{
+        console.log("Basket compare: ", props.state.queryFilings)
       const response = await axios.post(
         "http://localhost:8000/api/basket/compare", props.state.queryFilings,
         {
@@ -92,7 +93,6 @@ function Chart(props) {
       let dummyArray = response.data.data;
       setChartData(dummyArray);
 
-      console.log("Chart Data", chartData);
     }
     catch(err){
       console.log("Error", err);

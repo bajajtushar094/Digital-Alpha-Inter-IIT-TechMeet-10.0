@@ -1,7 +1,8 @@
 from .models import *
 from rest_framework.response import Response
 from rest_framework import status
-
+import csv
+from django.http import HttpResponse
 def get_company(ticker):
     if ticker == "":
         return Response(
@@ -19,3 +20,17 @@ def get_company(ticker):
 
     return company
 
+def csvResponse(queryset, headerfieldnames, dictfieldnames, dic=False):
+    response = HttpResponse (content_type='text/csv')
+    writer = csv.writer(response)
+    writer.writerow(headerfieldnames)
+    if dic:
+        qs = queryset
+    else:
+        qs = queryset.values()
+    arr = []
+    for q in qs:
+        arr.append([q[fieldname] for fieldname in dictfieldnames])
+    writer.writerows(arr)
+    
+    return response

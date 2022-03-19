@@ -103,7 +103,9 @@ const Company = (props) => {
     useEffect(async () => {
         setIsMetricLoading(true);
         const response = await searchCompanies(url_ticker, dispatch);
-        setCompany(response.data[0]);
+        // console.log("Response EEEEEEEEEe:", response);
+        // console.log("Response EEEEEEEEEe:", response.data);
+        setCompany(response[0]);
 
         addRecentlyViewedCompany(url_ticker);
 
