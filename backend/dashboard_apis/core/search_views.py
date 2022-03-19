@@ -299,7 +299,7 @@ def simpleSearch(request):
 
     query = request.data.get("query")
     withFilings = request.data.get("with_filings") or False
-    num_of_companies = request.data.get("num_of_companies") or 5
+    num_of_companies = request.data.get("num_of_companies") or 1
     words = query.split(" ")
     words = [word.upper() for word in words if word != ""]
 
