@@ -13,6 +13,7 @@
 2.  [Node & npm](https://nodejs.org/en/download/) _(version 12 or greater)_.
 3.  A fork of the repo.
 4. Python3 environment to install Django and its dependencies
+5. [PyTorch](https://pytorch.org/)
 
 ### Directory Structure
 
