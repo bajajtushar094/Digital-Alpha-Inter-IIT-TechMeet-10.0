@@ -141,8 +141,8 @@ const Company = (props) => {
                 </div>
 
                 <div className="companycontent">
-                    <div>
-                        <CompanyFilter company={company} arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} />
+                    <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
+                        <CompanyFilter  company={company} arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} />
                         <RecentlyViewedLogIn />
                     </div>
 

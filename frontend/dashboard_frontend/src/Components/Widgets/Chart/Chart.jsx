@@ -1,5 +1,6 @@
 import { useDispatch, connect } from 'react-redux';
 import React, { useEffect, useState } from "react";
+import no from '../../../images/no.png'
 import {
   BarChart,
   Bar,
@@ -80,6 +81,7 @@ function Chart(props) {
 
     try{
         console.log("Basket compare: ", props.state.queryFilings)
+        // if(props.state.queryFiling)
       const response = await axios.post(
         "http://localhost:8000/api/basket/compare", props.state.queryFilings,
         {
@@ -128,9 +130,20 @@ function Chart(props) {
     listOfBars.push(<Bar dataKey={ticker}/>)
   }
 
+  const  bool=true
   return (
     <>
-    {chartData.length!=0&&
+    {chartData.length==0?<>
+      {/* {bool?<> */}
+      <div style={{width:"100%",display:"flex",flexDirection:"column",textAlign:"center"}}>
+        <div>
+        <img src={no} alt="" />
+        </div>
+        <h2>Your Watchlist is empty</h2>
+        <br />
+        <p className='color'>Start browsing and add companies to watchlist</p>
+      </div>
+    </>:
     <>
     <ResponsiveContainer height={600} width="90%">
     <BarChart

@@ -54,13 +54,7 @@ const Search = (props) => {
             console.log("Data BY Filings:", data_byFilings);
         };
         func();
-
-        return function cleanup() {
-            dispatch({
-                type: "CLEAN_QUERY_FILINGS",
-            });
-        };
-    }, []);
+    }, [queryFilings]);
 
     useEffect(() => {
         const func = async () => {
@@ -69,6 +63,12 @@ const Search = (props) => {
         };
 
         func();
+
+        return function cleanup() {
+            dispatch({
+                type: "CLEAN_QUERY_FILINGS",
+            });
+        };
     }, []);
 
     const handleTable = (selectedTemp) => {
