@@ -88,9 +88,11 @@ function Chart(props) {
           },
         }
       )
+
+      console.log("Response data:", response.data);
       let dummyArray = response.data.data;
       setChartData(dummyArray);
-      console.log("Chart Data", response);
+
     }
     catch(err){
       console.log("Error", err);
