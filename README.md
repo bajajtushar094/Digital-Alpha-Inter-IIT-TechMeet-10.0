@@ -1,7 +1,3 @@
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/MLH-Fellowship/Auto-Tagger.svg)](https://github.com/bajajtushar094/Digital-Alpha-Inter-IIT-TechMeet-10.0/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/MLH-Fellowship/Auto-Tagger.svg)](https://github.com/bajajtushar094/Digital-Alpha-Inter-IIT-TechMeet-10.0/pulls)
-
 <h2 align="center">DIGITAL ALPHA'S SEC FILING ANALYZER FOR SAAS COMPANIES</h2>
 <h4 align="left">SEC Filings have always been a huge source of information for investors. We are trying to automate and analyze filings and generate insights in context of SAAS companies</h4>
 
@@ -71,10 +67,6 @@ backend/
 ```
 
 ## Installation
-
-### Clone
-
-- Clone this repo to your local machine using `https://github.com/bajajtushar094/Digital-Alpha-Inter-IIT-TechMeet-10.0/`
 
 ### Steps to run backend
 
