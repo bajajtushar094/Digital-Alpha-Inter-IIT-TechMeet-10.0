@@ -10,6 +10,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { Button, IconButton, TextField, Typography } from "@mui/material";
 
 const moduleModalStyle = {
   position: 'absolute',
@@ -60,10 +63,21 @@ const Watchlist = (props) => {
           aria-describedby="modal-modal-description"
         >
           <Box style={moduleModalStyle}>
-            Create WatchList
-            <br/><br/>
-            <input type="text" id="newWatchlist" /><br/><br/>
-            <button type="button" onClick={handleAddWatchlist}>Create</button>
+            <div style={{display:"flex",gap:"10px",flexDirection:"column"}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+             <h4 className="watchtext"> Create WatchList</h4>
+            <IconButton style={{background:"transparent"}} onClick={()=>{setWatchlistModalOpen(false)}}>
+             <CloseOutlinedIcon style={{background:"transparent"}}/>
+            </IconButton>
+            </div>
+            <div className="flex">
+              <TextField size="small"/>
+            </div>
+            <Button onClick={()=>{handleAddWatchlist()}} style={{background:"black",marginTop:"6px"}} variant="contained" fullWidth>Create</Button>
+            </div>
+            {/* <br/><br/>
+            <input type="text" id="newWatchlist" /><br/><br/> */}
+            {/* <button type="button" onClick={handleAddWatchlist}>Create</button> */}
           </Box>
         </Modal>
       </div>

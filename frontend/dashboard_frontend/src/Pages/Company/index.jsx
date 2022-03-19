@@ -139,15 +139,15 @@ const Company = (props) => {
                     <h2 style={{ lineHeight: "20px", fontWeight: "400" }}>Company</h2>
                 </div>
                 <div className="companycontent">
-                    <div>
-                        <CompanyFilter company={company} arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} />
+                    <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
+                        <CompanyFilter  company={company} arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} />
                         <RecentlyViewedLogIn />
                     </div>
                     {/* <div > */}
                     <div style={{ width: "70%" }}>
                         <div className="padchart" style={{ padding: "0px 25px" }}>
-                            <TableHead />
-                            <h4 style={{ padding: "12px 10px" }}>Key Metrices</h4>
+                            <TableHead childone="Key Metrices"/>
+                            {/* <h4 style={{ padding: "12px 10px" }}>Key Metrices</h4> */}
                             <div className="stat-tab isvisual">
                                 <Button style={(metric_types[value]=="ARR")?{ color: "black" }:{color:"#9b9b9c"}} name="ARR" onClick={handleClickM1}>ARR (in mil $)</Button>
                                 <Button style={(metric_types[value]=="CCR")?{ color: "black" }:{color:"#9b9b9c"}} name="CCR" onClick={handleClickM2}>Customer Churn Rate</Button>
