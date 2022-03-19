@@ -200,7 +200,7 @@ def advancedSearch(request):
         ).filter(
             YQ__in=searched_YQs,
             company__in=searched_companies,
-            form_type__in=searched_form_types,
+            form_type__in=searched_form_types, isDummy=False
         )
 
         return Response(
@@ -219,7 +219,7 @@ def advancedSearch(request):
         queryset = Filing.objects.filter(
             company__in=searched_companies,
             form_type__in=searched_form_types,
-            date__in=searched_dates,
+            date__in=searched_dates, isDummy=False
         )
         return Response(
             {
@@ -237,7 +237,7 @@ def advancedSearch(request):
         queryset = Filing.objects.filter(
             company__in=searched_companies,
             form_type__in=searched_form_types,
-            year__in=searched_years,
+            year__in=searched_years, isDummy=False
         )
         return Response(
             {
@@ -252,7 +252,7 @@ def advancedSearch(request):
         )
 
     filings = Filing.objects.filter(
-        company__in=searched_companies, form_type__in=searched_form_types
+        company__in=searched_companies, form_type__in=searched_form_types, isDummy=False
     )
 
     if not filings:
@@ -321,7 +321,7 @@ def simpleSearch(request):
         }
         type = "searched_tickers"
         if(withFilings):
-            filings = Filing.objects.filter(company__in=searched_companies)
+            filings = Filing.objects.filter(company__in=searched_companies, isDummy=False)
             data["filings"] = filings.values()
             type = "searched_tickers_with_filings"
         
@@ -360,7 +360,7 @@ def simpleSearch(request):
                 "name": company['name'],
                 "logo": company['logo'],
                 "score": ranked_companies[company['ticker']],
-                "filing": Filing.objects.filter(company=company["ticker"]).values()
+                "filing": Filing.objects.filter(company=company["ticker"], isDummy=False).values()
             } for company in companies.values() if company['ticker'] in top_ranked]
         else:
             res_companies = [{

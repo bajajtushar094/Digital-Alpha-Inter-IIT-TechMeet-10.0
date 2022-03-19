@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from datetime import date, datetime
 
 class Company(models.Model):
-	# cik = models.CharField(max_length=20, unique=True)
+	cik = models.CharField(max_length=20, unique=True)
 	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)
@@ -93,6 +93,7 @@ class Filing(models.Model):
 	form_type = models.CharField(_('filing form type'), max_length=10, choices=FILING_TYPES)
 	year = models.IntegerField()
 	quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
+	isDummy = models.BooleanField(default=False)
 	# dummy_date = models.DateField(_('dummy date'))
 	date = models.DateField(_('filing date'))
 	verbose_text = models.TextField()				# Verbose text for drilldown
@@ -109,23 +110,17 @@ class Filing(models.Model):
 class KeyMetric(models.Model):
 	company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='key_metrics')
 	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='key_metrics')	# Filing for drilldown
-	# source = models.CharField(max_length=8, choices=SOURCE_TYPES)
+	source = models.CharField(max_length=2000, null=True)
 	# 
-	date = models.DateField(default=datetime.now())
-	yearly = models.BooleanField(_('Yearly or quaterly'), default=False)
-	drilldown_offset = models.IntegerField()								# Drilldown Highlight offset
-	drilldown_length = models.IntegerField()								# Drilldown Highlight length
-	metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
-	metric_value = models.DecimalField(max_digits=8, decimal_places=2)		# 53.53, 10.00
-	metric_unit = models.CharField(max_length=5, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
 	date = models.DateField()
-	# year = models.IntegerField()
-	# quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
-
-	def __str__(self):
-		if self.filing.quarter:
-			return f'{self.company.name}-{self.metric_type}-Y{self.filing.year}Q{self.filing.quarter}' 
-		return f'{self.company.name}-{self.metric_type}-Y{self.filing.year}' 
+	isYearly = models.BooleanField(default=False)
+	drilldown_offset = models.IntegerField(null=True)								# Drilldown Highlight offset
+	drilldown_length = models.IntegerField(null=True)								# Drilldown Highlight length
+	metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
+	metric_value = models.DecimalField(max_digits=16, decimal_places=2)		# 53.53, 10.00
+	metric_unit = models.CharField(max_length=32, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
+	year = models.IntegerField()
+	quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
 
 
 
