@@ -14,6 +14,7 @@ import { getKeyMetrics, searchCompanies, addRecentlyViewedCompany } from "../../
 import { useDispatch } from "react-redux";
 import Watchlist from '../../Components/Widgets/Watchlist';
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 // const metric_types = [
 // 	{'ARR': 'Annual Recurring Revenue'},
 // 	{'Customer Churn Rate': 'Customer Churn Rate'},
@@ -80,21 +81,34 @@ const Company = () => {
                     <ApartmentOutlinedIcon />
                     <h2 style={{ lineHeight: "20px", fontWeight: "400" }}>Company</h2>
                 </div>
+
                 <div className="companycontent">
                     <div>
                         <CompanyFilter company={company} arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} />
                         <RecentlyViewedLogIn />
                     </div>
+
                     {/* <div > */}
                     <div style={{ width: "70%" }}>
                         <div className="padchart" style={{ padding: "0px 25px" }}>
-                            <TableHead />
-                            <h4 style={{ padding: "12px 10px" }}>Key Metrices</h4>
-                            <div className="stat-tab isvisual">
-                                <Button style={{ color: "#9b9b9c" }}>ARR (in mil $)</Button>
-                                <Button style={{ color: "#9b9b9c" }}>LTV/CAC</Button>
-                                <Button style={{ color: "#9b9b9c" }} >Product-Market Fit</Button>
-                                <Button style={{ color: "#9b9b9c" }}>Churn Rate</Button>
+
+                            <div className='tablesec' style={{display:"flex"}}>
+                                <div className="table_top">
+                                    <button className='btn-link active' >Key Metrics</button>
+                                </div>
+                                <div style={{marginLeft:"auto", paddingBottom:"10px"}}>
+                                    <Button style={{ color: '#9B9B9C' }}>Download stats CSV  <FileDownloadIcon /></Button>
+                                </div>
+                            </div>
+                            <div className="stat-tab">
+                                <div><Button style={{ color: "#9b9b9c" }}>ARR (in mil $)</Button></div>
+                                <div><Button style={{ color: "#9b9b9c" }}>LTV/CAC</Button></div>
+                                <div><Button style={{ color: "#9b9b9c" }} >Product-Market Fit</Button></div>
+                                <div><Button style={{ color: "#9b9b9c" }}>Churn Rate</Button></div>
+                                <div><Button style={{ color: "#9b9b9c" }}>ARR (in mil $)</Button></div>
+                                <div><Button style={{ color: "#9b9b9c" }}>LTV/CAC</Button></div>
+                                <div><Button style={{ color: "#9b9b9c" }} >Product-Market Fit</Button></div>
+                                <div><Button style={{ color: "#9b9b9c" }}>Churn Rate</Button></div>
                             </div>
                             <Chart />
                         </div>
