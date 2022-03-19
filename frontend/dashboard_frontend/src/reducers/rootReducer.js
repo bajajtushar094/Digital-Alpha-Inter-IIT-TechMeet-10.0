@@ -30,7 +30,8 @@ const initState = {
         }
     },
     basketSelectedCompanies:[],
-    visualize: false
+    visualize: false,
+    currentBasket: null
 }
 
 const rootReducer = (state=initState,action) => {
@@ -190,6 +191,7 @@ const rootReducer = (state=initState,action) => {
     }
 
     if(action.type == 'DISABLE_VISUALIZE'){
+
         return {
             ...state,
             visualize: false
@@ -212,6 +214,14 @@ const rootReducer = (state=initState,action) => {
         return{
             ...state,
             searchFillings: []
+        }
+    }
+
+    if(action.type === 'SET_CURRENT_BASKET'){
+        const basket = action.basket;
+        return{
+            ...state,
+            currentBasket: basket
         }
     }
 

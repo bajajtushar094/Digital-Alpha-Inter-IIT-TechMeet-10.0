@@ -45,6 +45,7 @@ const Table = (props) => {
 		return response;
 	};
 
+	
 	return (
 		<div id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f379-5d4911ed" className="metrics widthfull">
 			<div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>

@@ -68,17 +68,26 @@ const Watchlist = (props) => {
         </Modal>
       </div>
       {data.map((el) => (
-        <Component name={el.name} companies_count={el.companies_count} basket_id={el.id} />
+        <Component name={el.name} companies_count={el.companies_count} basket_id={el.id} basket={el} />
       ))}
     </div>
   );
 };
 
-const Component = ({ name, companies_count, basket_id }) => (
-  <Link to={`/individualBasket/${basket_id}`} style={{ textDecoration: "none" }}>
+const Component = ({ name, companies_count, basket_id, basket }) => {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch({
+      type:'SET_CURRENT_BASKET',
+      basket:basket,
+    })
+  }
+  return(
+  
     <div
       id='w-node-_303deb7f-543b-7e3b-b9af-eb356f928477-5d4911ed'
       class='listing issmall'
+      onClick={handleClick}
     >
       <div class='listingheader-wrapper'>
         <div id='w-node-_303deb7f-543b-7e3b-b9af-eb356f92847d-5d4911ed'>
@@ -89,12 +98,14 @@ const Component = ({ name, companies_count, basket_id }) => (
       <div class='actions issmall'>
         <div class='actioncontainer'></div>
         <div class='actioncontainer'>
+          <Link to={`/individualBasket/${basket_id}`} style={{ textDecoration: "none" }}>
           <img src={Pen} loading='lazy' alt='' />
+          </Link>
         </div>
       </div>
     </div>
-  </Link>
-);
+  
+)};
 
 // export default Watchlist;
 
