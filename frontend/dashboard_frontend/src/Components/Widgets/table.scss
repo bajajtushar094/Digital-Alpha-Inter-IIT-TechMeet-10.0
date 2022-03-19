@@ -143,6 +143,7 @@
     justify-content: flex-end;
 }
 .actioncontainer-1 {
+    visibility: visible;
     display: flex;
     width: 24px;
     height: 24px;
@@ -153,8 +154,10 @@
         display: inline-block;
     }
 }
+
 .listing:hover .actioncontainer-1{
     display: none;
+    visibility: hidden;
 }
 .ishover {
     background-color: #f7f7f7;

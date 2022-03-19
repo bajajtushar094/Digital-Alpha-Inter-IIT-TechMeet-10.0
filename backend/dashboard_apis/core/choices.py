@@ -5,17 +5,24 @@ FILING_TYPES = [
 ]
 
 METRIC_TYPES = [
+  ('Total Revenue','Total Revenue'),
 	('ARR', 'Annual Recurring Revenue'),
 	('CCR', 'Customer Churn Rate'),
+  ('MRR','MRR'),
+  ('MRR Expansion','MRR Expansion'),
+  ('ARPU','ARPU'),
 	('LTV', 'Lifetime Value'),
 	('CAC', 'Customer Acquisition Cost'),
 	('ARPA', 'Average Run Per Account'),
 	('RCC', 'Revenue Churn Rate'),
-	('total_revenue', 'Total Revenue'),
-	('cost_of_revenue', 'Cost Of Revenue'),
-	('gross_profit', 'Gross Profit'),
-	('gross_margin', 'Gross Margin'),
-
+	("No Of Customers", "No Of Customers"),
+  ('Churn', 'Churn'),
+  ('MRR Expansion', 'MRR Expansion'),
+  ('Number of qualified leads', 'Number of qualified leads'),
+  ('Penetration Rate', 'Penetration Rate'),
+  ('Sales and Marketing', 'Sales and Marketing'),
+  ('CAC payback', 'CAC payback'),
+  ('Gross Margin', 'ross Margin'),
 ]
 
 METRIC_UNITS = [
@@ -23,7 +30,9 @@ METRIC_UNITS = [
 	('M', 'Million'),
 	('K', 'Thousand'),
 	('%', 'Percent'),
-	('USD', 'USD')
+  ('USD','USD'),
+	('Thousand USD', 'Thousand USD'),
+	('Number', 'Number'),
 ]
 
 SOURCE_TYPES = [

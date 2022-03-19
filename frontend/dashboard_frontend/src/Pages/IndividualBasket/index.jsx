@@ -14,6 +14,8 @@ import Chart from '../../Components/Widgets/Chart/Chart'
 import { Box } from '@mui/system';
 import { ResponsiveContainer } from 'recharts';
 import MetricTabs from './MetricTabs';
+import {handleDownloadGet} from '../../utils/downloadCsv';
+import { LOCAL_SERVER_URL } from '../../config';
 
 const IndividualBasket = (props)=>{
     const dispatch = useDispatch();
@@ -50,6 +52,9 @@ const IndividualBasket = (props)=>{
         addSelector();
     }, []);
 
+    const downloadCSV = () => {
+        handleDownloadGet(LOCAL_SERVER_URL + "api/basket/detailsCSV" + "?basket_id=" + basket_id, );
+    }
 
     return (
         <>

@@ -67,6 +67,15 @@ def searchFillings(request):
     form_type = request.data.get("form_type")
     time_start = request.data.get("time_start")
     time_end = request.data.get("time_end")
+    isAll = request.data.get("isAll") or False
+
+    if(isAll):
+        companies = Company.objects.all()
+        tickers = [company.ticker for company in companies]
+        form_type = []
+        time_start = None
+        time_end = None
+
     if time_start:
         time_start = time_start.split("-")
         time_start = date(int(time_start[0]), int(time_start[1]), int(time_start[2]))
@@ -82,6 +91,10 @@ def searchFillings(request):
     companies = Company.objects.filter(ticker__in=tickers)
 
     filings = {company.ticker: company.filings.values() for company in companies}
+    # filingsForTicker = Filing.objects.filter(company__in=companies).order_by('-date')
+    # filingToTicker = {filing['id']: filing.company.ticker for filing in filingsForTicker}
+    # filings = Filing.objects.filter(company__in=companies).order_by('-date').all().values()
+    # filings = {filingToTicker[filing]: filing for filing in filings}
 
     res = {}
     for company in filings.keys():
@@ -117,6 +130,11 @@ def searchFillings(request):
 @api_view(["POST"])
 def companyMetric(request):
     tickers = request.data.get("tickers")
+    isAll = request.data.get("isAll") or False
+
+    if(isAll):
+        companies = Company.objects.all()
+        tickers = [company.ticker for company in companies]
 
     responseArray = []
     for ticker in tickers:
@@ -200,7 +218,7 @@ def advancedSearch(request):
         ).filter(
             YQ__in=searched_YQs,
             company__in=searched_companies,
-            form_type__in=searched_form_types,
+            form_type__in=searched_form_types, isDummy=False
         )
 
         return Response(
@@ -219,7 +237,7 @@ def advancedSearch(request):
         queryset = Filing.objects.filter(
             company__in=searched_companies,
             form_type__in=searched_form_types,
-            date__in=searched_dates,
+            date__in=searched_dates, isDummy=False
         )
         return Response(
             {
@@ -237,7 +255,7 @@ def advancedSearch(request):
         queryset = Filing.objects.filter(
             company__in=searched_companies,
             form_type__in=searched_form_types,
-            year__in=searched_years,
+            year__in=searched_years, isDummy=False
         )
         return Response(
             {
@@ -252,7 +270,7 @@ def advancedSearch(request):
         )
 
     filings = Filing.objects.filter(
-        company__in=searched_companies, form_type__in=searched_form_types
+        company__in=searched_companies, form_type__in=searched_form_types, isDummy=False
     )
 
     if not filings:
@@ -321,7 +339,7 @@ def simpleSearch(request):
         }
         type = "searched_tickers"
         if(withFilings):
-            filings = Filing.objects.filter(company__in=searched_companies)
+            filings = Filing.objects.filter(company__in=searched_companies, isDummy=False)
             data["filings"] = filings.values()
             type = "searched_tickers_with_filings"
         
@@ -360,7 +378,7 @@ def simpleSearch(request):
                 "name": company['name'],
                 "logo": company['logo'],
                 "score": ranked_companies[company['ticker']],
-                "filing": Filing.objects.filter(company=company["ticker"]).values()
+                "filing": Filing.objects.filter(company=company["ticker"], isDummy=False).values()
             } for company in companies.values() if company['ticker'] in top_ranked]
         else:
             res_companies = [{
