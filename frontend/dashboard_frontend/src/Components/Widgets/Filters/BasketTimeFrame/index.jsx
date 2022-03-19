@@ -10,7 +10,7 @@ import { connect, useDispatch } from "react-redux";
 const TimeFrame = ({state}) => {
 
   const [selectedStartDate, setSelectedStartDate] = useState(
-    new Date(new Date().setFullYear(new Date().getFullYear() - 2))
+    new Date(new Date().setFullYear(new Date().getFullYear() - 3))
   );
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const dispatch = useDispatch()

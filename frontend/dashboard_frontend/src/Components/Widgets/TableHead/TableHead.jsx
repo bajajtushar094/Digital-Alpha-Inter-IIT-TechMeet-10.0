@@ -3,18 +3,8 @@ import React from 'react'
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {handleDownloadPost}  from '../../../utils/downloadCsv';
 const TableHead = (props) => {
-  const handleDownload = (url,body) => {
-    axios.post(url,body)
-      .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'company.csv'); //or any other extension
-        document.body.appendChild(link);
-        link.click();
-  });
-  }
   console.log("Props lelo", props.state);
   // const downloadFile = (body, url) => {
   //   axios.post(url, body)
