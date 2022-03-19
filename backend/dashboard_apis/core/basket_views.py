@@ -325,11 +325,13 @@ def insertIntoBasket(request):
         ticker = request.data['ticker']
         company = Company.object.get(ticker=ticker)
 
-        basketID = request.date['basketID']
-        basket = Basket.objects.get(id=basketID)
+        basketIDs = request.date['basketID']
 
-        basket.companies.add(company)
-        basket.save()
+        for basketID in basketIDs:
+            basket = Basket.objects.get(id=basketID)
+
+            basket.companies.add(company)
+            basket.save()
 
         return Response({"message": "Basket updated"}, status=status.HTTP_200_OK)
 
