@@ -137,15 +137,16 @@ const CompanyRow = (props) => {
                                                 <OpenInNewIcon />
                                             </IconButton>
                                         </div>
-                                        <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
+                                        <div className= "actioncontainer">
                                             <IconButton style={{ backgroundColor: 'transparent' }} onClick={handleClickOpen}  aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
-                                        <div className="actioncontainer-1 ">
-                                            <MoreVertIcon />
-                                        </div>
+                                        
                                     </div>
+                                    <div className="actioncontainer-1 ">
+                                            <MoreVertIcon />
+                                     </div>
                                 </div>
                                 <MaxWidthDialog open={[open, setOpen]} fullWidth={[fullWidth, setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange} ticker={filing.company_id}/>
                             </div>
