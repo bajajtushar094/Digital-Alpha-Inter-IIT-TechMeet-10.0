@@ -11,7 +11,7 @@ class Company(models.Model):
 	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)
-	logo = models.ImageField(upload_to='images')
+	logo = models.URLField(max_length=2000)
 
 	def __str__(self):
 		return f'{self.ticker} ({self.name})'
