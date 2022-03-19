@@ -23,7 +23,7 @@ const TableHead = (props) => {
         <Button style={{color:'#9B9B9C'}}>{props.childtwo}</Button>
         </div>
         <div>
-            <Button style={{color:'#9B9B9C'}} onClick={() => {handleDownload(props.childthree,props.data)}}>Download stats CSV  <FileDownloadIcon /></Button>
+            <Button style={{color:'#9B9B9C'}} onClick={() => {handleDownloadPost(props.childthree,props.data)}}>Download stats CSV  <FileDownloadIcon /></Button>
         </div>
         
     </div>
