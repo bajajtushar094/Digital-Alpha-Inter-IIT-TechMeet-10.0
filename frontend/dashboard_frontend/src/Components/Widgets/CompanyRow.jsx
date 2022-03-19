@@ -112,7 +112,7 @@ const CompanyRow = (props) => {
                                     {hasCheckbox && <div className="actiondiv">
                                         <input className='checkbox' type="checkbox" />
                                     </div>}
-
+                                    
                                     <>
                                         <div className="filingcontainer">
                                             <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling"><img src={props.filing.logo} width="20px" /></div></Link>
@@ -138,7 +138,7 @@ const CompanyRow = (props) => {
                                             </IconButton>
                                         </div>
                                         <div className={hover ? "actioncontainer " : "actioncontainer hide"}>
-                                            <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
+                                            <IconButton style={{ backgroundColor: 'transparent' }} onClick={handleClickOpen}  aria-label="delete">
                                                 <BookmarkBorderIcon />
                                             </IconButton>
                                         </div>
@@ -147,7 +147,7 @@ const CompanyRow = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <MaxWidthDialog open={[open, setOpen]} fullWidth={[fullWidth, setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange} />
+                                <MaxWidthDialog open={[open, setOpen]} fullWidth={[fullWidth, setFullWidth]} maxWidth={[maxWidth, setMaxWidth]} handleClickOpen={handleClickOpen} handleClose={handleClose} handleMaxWidthChange={handleMaxWidthChange} handleFullWidthChange={handleFullWidthChange} ticker={filing.company_id}/>
                             </div>
                         </div>);
                 })}

@@ -12,9 +12,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
-import { Checkbox, FormGroup, Grid, List, Typography } from '@mui/material';
+import { Checkbox, FormGroup, Grid, List, ListItem, Typography } from '@mui/material';
 import { getBaskets } from '../../actions/action';
 import { connect, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 
 function CBLabel(props){
@@ -30,6 +31,7 @@ function CBLabel(props){
 
 function MaxWidthDialog(props) {
   const dispatch = useDispatch();
+  const ticker_to_add = props.ticker;
   const [open, setOpen] = props.open;
   const [fullWidth, setFullWidth] = props.fullWidth;
   const [maxWidth, setMaxWidth] =props.maxWidth;
@@ -37,24 +39,43 @@ function MaxWidthDialog(props) {
   const [state, setState] = React.useState([]);
   let selectedBasketId =[];
 
-  const handleChange = (event) => {
-    let temp = state;
+  const addSelector = () => {
+    let temp = baskets;
     for(let i=0;i<temp.length;i++){
-      if(event.target.name === i.toString())
-        temp[i] = !temp[i];
+        temp[i].selected = false;
     }
-    setState(temp);
-    console.log("state after selection: ", state);
-    selectedBasketId=[];
-    for(let i=0;i<state.length;i++){
-      if(state[i]){
-        selectedBasketId.push(baskets[i].id)
+    setBaskets(temp);
+  }   
+
+  const handleChange = (event, basket) => {
+    if(basket.selected === true) {
+        basket.selected = false;
+        selectedBasketId.push(basket.id);
+    } else {
+        basket.selected = true;
+        let temp = selectedBasketId;
+        temp = temp.filter((basketId) => basket.id !== basketId);
+    }
+}
+
+
+  const handleAdd = async (event) => {
+    const temp = baskets;
+    let basketIds = [];
+    for(let basket of temp){
+      if(basket.selected){
+        basketIds.push(basket.id)
       }
     }
-  };
-
-  const handleAdd = (event) => {
-    console.log(selectedBasketId);
+    console.log(props.ticker);
+    const configHeaders = localStorage.getItem('authTokens')?{
+      headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
+      }
+    }:""
+    await axios.post("http://localhost:8000/api/basket/insertIntoBasket",{basketID:basketIds, ticker: props.ticker},configHeaders)
+    .then((response)=>{console.log(response)})
+    .catch((err)=>{console.log(err)});
   }
 
   const handleClickOpen = props.handleClickOpen;
@@ -70,16 +91,11 @@ function MaxWidthDialog(props) {
         const response = await getBaskets(dispatch);
         console.log("In dialog box file:",response);
         setBaskets(response.data);
-        console.log("This is the basket rn", baskets)
-        let temp=[];
-        for(var i=0;i<baskets.length;i++){
-          temp.push(false);
-        }
-        setState(temp);
     }
-
     getBasketsAPI();
-  },[])
+    addSelector();
+  },[]);
+
   return (
     <React.Fragment>
       <Dialog
@@ -87,10 +103,10 @@ function MaxWidthDialog(props) {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>Optional sizes</DialogTitle>
+        <DialogTitle>Add To Watchlist</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            You can set my maximum width and whether to adapt or not.
+            Pick atleast 1 watchlist to add company.
           </DialogContentText>
           <Box
             noValidate
@@ -104,18 +120,16 @@ function MaxWidthDialog(props) {
               padding:"20px"
             }}
           >
-        <FormGroup>
-          {(baskets.length>0)?baskets.map((basket, i)=>{
-            return(
-                <FormControlLabel
-                control={
-                  <Checkbox checked={state[i]} onChange={handleChange} name={i.toString()} />
-                }
-                label={<CBLabel name={basket.name}/>}
-              />);
-              }):"No baskets available for this user"}
-          
-        </FormGroup>
+        <List>
+            {(baskets.length>0)?baskets.map((basket,i)=> {
+                return(
+                    <ListItem>
+                        <Checkbox checked={basket.selected} onChange={(event) => handleChange(event,basket)}/>
+                        <Typography variant="h6">{basket.name}</Typography>
+                    </ListItem>
+                )
+            }):"No baskets available for this user"}
+            </List>
           </Box>
           
         </DialogContent>

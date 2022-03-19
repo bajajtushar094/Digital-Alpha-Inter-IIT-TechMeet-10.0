@@ -2,16 +2,17 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
-from .choices import FILING_TYPES, METRIC_TYPES, METRIC_UNITS, SOURCE_TYPES
+from .choices import *
 from django.utils.translation import gettext_lazy as _
 from datetime import date, datetime
+from django.http import JsonResponse
 
 class Company(models.Model):
 	cik = models.CharField(max_length=20, unique=True)
 	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)
-	logo = models.URLField(max_length=2000)
+	logo = models.URLField(null=True)
 
 	def __str__(self):
 		return f'{self.ticker} ({self.name})'
@@ -96,7 +97,8 @@ class Filing(models.Model):
 	isDummy = models.BooleanField(default=False)
 	# dummy_date = models.DateField(_('dummy date'))
 	date = models.DateField(_('filing date'))
-	verbose_text = models.TextField()				# Verbose text for drilldown
+	# verbose_text = models.TextField(_('HTML text'))				# Verbose text for drilldown
+	filelink = models.URLField(max_length=20000)
 
 	# def save():
 		
@@ -105,6 +107,7 @@ class Filing(models.Model):
 		if self.quarter:
 			return f'{self.company.name}-{self.form_type}-Y{self.year}Q{self.quarter}' 
 		return f'{self.company.name}-{self.form_type}-Y{self.year}' 
+
 
 
 class KeyMetric(models.Model):
@@ -123,6 +126,19 @@ class KeyMetric(models.Model):
 	quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
 
 
+class Snippet(models.Model):
+	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='snippets')
+	text = models.TextField()
+	link = models.CharField(max_length=128, null=True)
+
+
+
+class Summary(models.Model):
+	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='summaries')
+	text = models.TextField()
+	section_heading = models.CharField(max_length=128, null=True)
+	polarity_score = models.DecimalField(max_digits=8, decimal_places=5)
+	sentiment_label = models.CharField(max_length=8, choices=SENTIMENT_LABELS)
 
 class RecentlyViewed(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recently_viewed_companies')
