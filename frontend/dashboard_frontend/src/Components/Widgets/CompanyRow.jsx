@@ -114,10 +114,10 @@ const CompanyRow = (props) => {
                                     
                                     <>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling"><img src={props.filing.logo} width="20px" /></div></Link>
+                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling"><img src={props.filing.logo} width="20px" /></div></Link>
                                         </div>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['company_id']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['name'] : filing['company_id']}</div></Link>
+                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['name'] : filing['company_id']}</div></Link>
                                         </div>
                                     </>
 
@@ -130,7 +130,7 @@ const CompanyRow = (props) => {
                                 <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{ARPU ? ARPU : '-'}</h4>
                                 <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
                                     <div className="actions-1">
-                                        <Link to={`/company/${filing['company_id']}`} />
+                                        <Link to={`/company/${filing['ticker']}`} />
                                         <div className="actioncontainer ">
                                             <IconButton style={{ backgroundColor: 'transparent' }} aria-label="delete">
                                                 <OpenInNewIcon />
