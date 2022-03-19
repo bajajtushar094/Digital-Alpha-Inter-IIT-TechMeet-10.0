@@ -94,7 +94,7 @@ class Filing(models.Model):
 	form_type = models.CharField(_('filing form type'), max_length=10, choices=FILING_TYPES)
 	year = models.IntegerField()
 	quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
-	isDummy = models.BooleanField(default=False)
+	# isDummy = models.BooleanField(default=False)
 	# dummy_date = models.DateField(_('dummy date'))
 	date = models.DateField(_('filing date'))
 	# verbose_text = models.TextField(_('HTML text'))				# Verbose text for drilldown

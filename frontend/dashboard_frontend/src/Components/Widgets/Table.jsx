@@ -54,10 +54,10 @@ const Table = (props) => {
 				<h4>{isCompany ? 'Ticker' : 'Filing Ticker'}</h4>
 				{isCompany ?
 					<div class="div-block-4">
-						<h4 id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f37e-5d4911ed" class="iscolumn">ARR</h4>
-						<h4 id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f380-5d4911ed" class="iscolumn">CCR</h4>
-						<h4 id="w-node-_06af9ce0-e762-bd28-f8f4-da23828e9c33-5d4911ed" class="iscolumn">LTV</h4>
-						<h4 id="w-node-cb07bc53-cdcb-0899-354b-99a0f44924bb-5d4911ed" class="iscolumn">CAC</h4>
+						<h4 id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f37e-5d4911ed" class="iscolumn">CAC</h4>
+						<h4 id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f380-5d4911ed" class="iscolumn">GROSS MARGIN</h4>
+						<h4 id="w-node-_06af9ce0-e762-bd28-f8f4-da23828e9c33-5d4911ed" class="iscolumn">MRR</h4>
+						<h4 id="w-node-cb07bc53-cdcb-0899-354b-99a0f44924bb-5d4911ed" class="iscolumn">ARPU</h4>
 						<h4 id="w-node-_0a377e6d-9df9-25b2-2352-cfe26081a062-5d4911ed" class="iscolumn isaction">Actions</h4>
 					</div>
 					:

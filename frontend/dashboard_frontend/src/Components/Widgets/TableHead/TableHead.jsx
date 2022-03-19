@@ -3,18 +3,8 @@ import React from 'react'
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {handleDownloadPost}  from '../../../utils/downloadCsv';
 const TableHead = (props) => {
-  const handleDownload = (url,body) => {
-    axios.post(url,body)
-      .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'company.csv'); //or any other extension
-        document.body.appendChild(link);
-        link.click();
-  });
-  }
   console.log("Props lelo", props.state);
   // const downloadFile = (body, url) => {
   //   axios.post(url, body)
@@ -33,13 +23,7 @@ const TableHead = (props) => {
         <Button style={{color:'#9B9B9C'}}>{props.childtwo}</Button>
         </div>
         <div>
-            <Button style={{color:'#9B9B9C'}} onClick={() => {handleDownload('http://localhost:8000/api/companies/getKeyMetricsCSV',
-            {
-              "ticker":props.state.queryFilings.tickers[0],
-              'time_start': props.state.queryFilings.time_start,
-              'time_end': props.state.queryFilings.time_end,
-              "metric_type":props.state.queryFilings.metric_type,
-            })}}>Download stats CSV  <FileDownloadIcon /></Button>
+            <Button style={{color:'#9B9B9C'}} onClick={() => {handleDownloadPost(props.childthree,props.data)}}>Download stats CSV  <FileDownloadIcon /></Button>
         </div>
         
     </div>
