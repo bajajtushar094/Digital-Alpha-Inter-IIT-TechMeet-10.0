@@ -111,7 +111,7 @@ class getRecentFilings(APIView):
         if isinstance(company, Response):
             return company
         try:
-            filings = Filing.objects.filter(company=company, isDummy=False).order_by('-date')
+            filings = Filing.objects.filter(company=company).order_by('-date')
         except:
             return Response(
                 {"res":"Error while fetching filings of the company"},
