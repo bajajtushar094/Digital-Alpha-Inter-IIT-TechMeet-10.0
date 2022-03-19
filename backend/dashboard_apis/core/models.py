@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from datetime import date, datetime
 
 class Company(models.Model):
-	cik = models.CharField(max_length=20, unique=True)
+	# cik = models.CharField(max_length=20, unique=True)
 	# ticker = models.CharField(max_length=10, unique=True)
 	ticker = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=256, unique=True)

@@ -122,21 +122,6 @@ class getRecentFilings(APIView):
             data=filings.values(),
             status=status.HTTP_200_OK
         )
-
-def csvResponse(queryset, headerfieldnames, dictfieldnames, dic=False):
-    response = HttpResponse (content_type='text/csv')
-    writer = csv.writer(response)
-    writer.writerow(headerfieldnames)
-    if dic:
-        qs = queryset
-    else:
-        qs = queryset.values()
-    arr = []
-    for q in qs:
-        arr.append([q[fieldname] for fieldname in dictfieldnames])
-    writer.writerows(arr)
-    
-    return response
     
 class getKeyMetricsCSV(APIView):
     # permission_classes = [permissions.IsAuthenticated]
