@@ -11,8 +11,9 @@ import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/Re
 import { Button, IconButton } from '@mui/material';
 import { LOCAL_SERVER_URL } from "../../config";
 import { useParams } from 'react-router-dom';
-
+import { PieChart, Pie } from 'recharts';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FileTable from './FileTable';
 
 const ref = require('./te.htm')
 
@@ -86,6 +87,14 @@ const Filenew = () => {
 		}
 		func()
 	}, [filing_id])
+
+
+    const data01 = [
+        { name: 'Group A', value: 400 },
+        { name: 'Group B', value: 300 },
+        { name: 'Group C', value: 300 },
+        { name: 'Group D', value: 200 },
+      ];
 	return (
 		<>
 			<Navbar />
@@ -171,8 +180,15 @@ const Filenew = () => {
 						</div>
 							<div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>
 							<div className="textdiv">
+                                <div className="piechart" style={{height:"208px",display:"flex",justifyContent:"center"}}>
+                                <PieChart width={730} height={250}>
+  <Pie endAngle={180}  data={data01} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110} fill="#8884d8" />
+  
+</PieChart>
+   
+                                </div>
 								<p>
-									{summaryText}
+									Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus qui illo sapiente minus inventore esse dignissimos illum id eligendi! Ea officia optio maxime id quam nesciunt nobis, obcaecati cumque in!
 								</p>
 							</div>
 						</>)
@@ -189,40 +205,46 @@ const Filenew = () => {
 							</>
 						}
 						{
-							selected === 2 && (<>
-								{filingData.snippets!=undefined&&filingData.snippets.map((item, index) => {
-									console.log("Item:", item);
-									return (
-										<div
-											id='w-node-_5c33d9b8-e716-f790-5a4d-5a6ab8b6a278-5d4911ed'
-											className='listing mt'
-										>
-											<div class='listingheader-wrapper'>
-												<div
-													id='w-node-_79d7448d-1164-5de1-1de4-bb294c247a68-5d4911ed'
-													className='ui-text black100'
-												>
-													{item.text}
-												</div>
-											</div>
+							// selected === 2 && (<>
+							// 	{filingData.snippets!=undefined&&filingData.snippets.map((item, index) => {
+							// 		console.log("Item:", item);
+							// 		return (
+							// 			<div
+							// 				id='w-node-_5c33d9b8-e716-f790-5a4d-5a6ab8b6a278-5d4911ed'
+							// 				className='listing mt'
+							// 			>
+							// 				<div class='listingheader-wrapper'>
+							// 					<div
+							// 						id='w-node-_79d7448d-1164-5de1-1de4-bb294c247a68-5d4911ed'
+							// 						className='ui-text black100'
+							// 					>
+							// 						{item.text}
+							// 					</div>
+							// 				</div>
 
-											<div class='actions'>
-												<div class='actioncontainer'></div>
-												<div class='actioncontainer'></div>
-												<a href={item.link}>
-													<div class='actioncontainer'>
-														<IconButton
-															style={{ backgroundColor: "transparent" }}
-															aria-label='delete'
-														>
-															<OpenInNewIcon />
-														</IconButton>
-													</div>
-												</a>
-											</div>
-										</div>
-									);
-								})}</>)
+							// 				<div class='actions'>
+							// 					<div class='actioncontainer'></div>
+							// 					<div class='actioncontainer'></div>
+							// 					<a href={item.link}>
+							// 						<div class='actioncontainer'>
+							// 							<IconButton
+							// 								style={{ backgroundColor: "transparent" }}
+							// 								aria-label='delete'
+							// 							>
+							// 								<OpenInNewIcon />
+							// 							</IconButton>
+							// 						</div>
+							// 					</a>
+							// 				</div>
+							// 			</div>
+							// 		);
+							// 	})}</>)
+
+                                selected === 2 && (<>
+                                    <FileTable />
+                                   
+                                            
+                                    </>)
 						}
 
 					</div>

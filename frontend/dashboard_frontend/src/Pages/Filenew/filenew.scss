@@ -37,3 +37,13 @@
 .mt{
     margin-top: 0.5rem;
 }
+.filetable{
+    .full{
+       max-width: 100% !important;
+    }
+    .iscolumn{
+        width: 300px;
+        text-align: left;
+    }
+
+}

@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import RecentlyViewed from "./Pages/RecentlyViewed";
 import Filenew from "./Pages/Filenew/Filenew";
 import CompanyTitle from "./Components/Widgets/Filters/CompanyTitle/CompanyTitle";
-import test from "./Pages/test";
+import FileTable from "./Pages/Filenew/FileTable";
 import RecentlyViewedLogIn from "./Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn";
 import Error404 from "./Pages/Error404";
 
@@ -43,7 +43,7 @@ function App() {
 						<Route index element={<RecentlyViewed/>}/>
 					</Route>
 					<Route path='/test'>
-						<Route index element={<RecentlyViewedLogIn />}/>
+						<Route index element={<FileTable />}/>
 					</Route>
 					<Route path='/file/:filing_id'>
 						<Route index element={<Filenew/>}/>
