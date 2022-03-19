@@ -1,0 +1,25 @@
+CAC(Customer Acquisition Cost) : CAC , 
+GM%(Gross Margin Percentage) : Gross Margin,
+ MRR(Monthly Recurring Revenue): MRR, 
+ ARPU(Average Revenue Per User): ARPU, 
+ AU(Active Users):Number of customers
+ ARR(Monthly Recurring Revenue): ARR,
+ Churn Rate: Churn,
+ MRR expansion rate: MRR Expansion,
+ # qualified leads : Number of qualified leads,
+ % Penetration : Penetration Rate,
+ Total Revenue : Total revenue
+Assets : 'Total Assets',
+Liabilities : 'Total Liabilities Net Minority Interest',
+Debt ratio : 'debt ratio',
+Total Equity: 'Total Equity Gross Minority Interest',
+Total Debt   : 'Total Debt',
+ Common Stock Equity:      'Common Stock Equity',
+  Total Capitalization:      'Total Capitalization', 
+ Shareholder Equity :      'Shareholder Equity',
+ Private Shareholding:      'Private Shareholding',
+ Public Shareholding  :     'Public Shareholding'
+ LTV(Lifetime Value) : LTV
+ CAC payback period in months : 'CAC payback period',
+Average Selling Price : 'ASP',
+ LTV : CAC ratio : 'LTV : CAC ratio'

@@ -112,23 +112,26 @@ class Filing(models.Model):
 
 class KeyMetric(models.Model):
 	company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='key_metrics')
-	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='key_metrics')	# Filing for drilldown
+	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='key_metrics', null=True)	# Filing for drilldown
 	source = models.CharField(max_length=2000, null=True)
 	# 
 	date = models.DateField()
 	isYearly = models.BooleanField(default=False)
 	drilldown_offset = models.IntegerField(null=True)								# Drilldown Highlight offset
 	drilldown_length = models.IntegerField(null=True)								# Drilldown Highlight length
-	metric_type = models.CharField(max_length=32, choices=METRIC_TYPES)
+	metric_type = models.CharField(max_length=64, choices=METRIC_TYPES)
 	metric_value = models.DecimalField(max_digits=16, decimal_places=2)		# 53.53, 10.00
-	metric_unit = models.CharField(max_length=32, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
+	metric_unit = models.CharField(max_length=64, choices=METRIC_UNITS)		# Eg. Billion, %, etc.
 	year = models.IntegerField()
 	quarter = models.IntegerField(blank=True, null=True)		# null for yearly forms
 
 
 class Snippet(models.Model):
 	filing = models.ForeignKey(Filing, on_delete=models.CASCADE, related_name='snippets')
-	text = models.TextField()
+	question = models.TextField()
+	answer = models.TextField()
+	context = models.TextField()
+	confidence_score = models.DecimalField(max_digits=8, decimal_places=5)
 	link = models.CharField(max_length=128, null=True)
 
 
