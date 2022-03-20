@@ -26,6 +26,15 @@ backend/
 |   ├── dbsqlite3
 |   ├── manage.py
 |   └── requirements.txt
+|── analytics/
+|   |──given data/
+|   |──source code/
+|   |  |__ python source code files for edgar scraping/
+|   |  |__ python source code files for metrics calculations/
+|   |  |__ python source code files for miscellaneous work/
+|   |  |__ python source code files for outside sources scraping/
+|   |  |__ python source code files for text analysis - NLP/
+|   |
 └── frontend/
     ├── public/
     │   ├── index.html
@@ -85,6 +94,20 @@ In order to install all packages follow the steps below:
  2. Move into dashboard_frontend
  3. `npm install`
  4. `npm start`
+
+
+ ### Steps To Extract Raw Edgar Filings in Analytics
+ 1. Move to backend folder
+ 2. Move into analytics folder
+ 3. Move into analytics folder
+ 4. Move into folder python source code files for edgar scraping
+ 5. Move into folder directory_for_scraping_edgar_metadata
+ 6. Install dependencies via `pip install -r requirements.txt`
+ 7. Before running any script, you can edit the `config.json` file to adjust parameters.
+ 8. To download financial reports from EDGAR, run `python edgar_crawler.py
+ 9. To clean and extract specific item sections from already-downloaded 10-K documents, run `python extract_items.py`.
+ Note : All folders in analytics folder are named according to the python files they contain.
+
 
 
 
