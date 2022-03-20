@@ -1,5 +1,3 @@
-from sqlite3 import complete_statement
-from turtle import end_poly
 from django.http import response
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
