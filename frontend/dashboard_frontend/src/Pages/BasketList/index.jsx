@@ -6,6 +6,7 @@ import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/Re
 import Table from '../../Components/Widgets/Table';
 import Watchlist from '../../Components/Widgets/Watchlist';
 import BasketImage from "../../images/widgets/Basket.svg";
+import img from './NoBasket.png';
 import './basket.scss'
 const BasketList = (props) => {
     // const dispatch = useDispatch();
@@ -42,7 +43,9 @@ const BasketList = (props) => {
             <Watchlist/>
             <RecentlyViewedLogIn/>
             </div>
-                <Table/>
+                <div style={{width:"100%",height:"430px",display:"flex",justifyContent:"center"}}>
+                <img style={{marginTop:"6rem"}}  src={img} alt="" />
+                </div>
             </div>
             </div>
         </>
