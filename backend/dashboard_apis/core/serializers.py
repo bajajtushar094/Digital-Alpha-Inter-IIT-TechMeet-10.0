@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
 class SnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snippet
-        fields = ['text', 'link']
+        fields = ['question','answer', 'confidence_score' ,'context' , 'link']
 
 
 class SummarySerializer(serializers.ModelSerializer):

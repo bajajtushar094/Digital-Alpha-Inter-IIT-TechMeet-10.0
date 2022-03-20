@@ -66,6 +66,8 @@ const Filenew = () => {
 	const [companyName, setCompanyName] = useState('');
 	const [filingData, setFilingData] = useState({});
 	const [summaryText, setSummaryText] = useState("");
+	const [snippetContext, setSnippetContext] = useState([]);
+	const [contextToQA, setContextToQA] = useState({});
 	const summaryTextChange = (item)=>{
 		setSummaryText(item.text);
 	}
@@ -77,9 +79,20 @@ const Filenew = () => {
 			
 			setCompanyName(res.data.company.name);
 			let response = res.data;
-			setFilingData(filingData=>({
-				...response
-			}));
+			// setFilingData(filingData=>({
+			// 	...response
+			// }));
+			const snippets = res.data.snippets;
+			let context = snippets.map(snippet => snippet.context);
+			context = context.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+			let mapping = {};
+			snippets.forEach(snippet => {
+				if(mapping[snippet.context] === undefined)
+					mapping[snippet.context] = [];
+				mapping[snippet.context].push({'question': snippet.question, 'answer': snippet.answer, 'confidence_score': snippet.confidence_score});
+			});
+			setContextToQA(mapping);
+			setSnippetContext(context)
 			setFilingData(response);
 			setSummaryText(filingData.summaries[0].text);
 			console.log("Filing Data:", filingData.summaries[0].text);
@@ -92,7 +105,7 @@ const Filenew = () => {
 			<div className="filecontainer">
 				<div className="companyheading" style={{ display: "flex", color: "#9B9B9C" }}>
 					<FileCopyIcon />
-					<h2 style={{ lineHeight: "20px", fontWeight: "400" }}>Company</h2>
+					<h2 style={{ lineHeight: "20px", fontWeight: "400" }}>Filing</h2>
 				</div>
 				<div className="companycontent" style={{ dispaly: "flex", gap: "2rem" }}>
 					<div style={{ display: "flex", flexDirection: "column", height: "400px", gap: "2rem" }}>
@@ -190,38 +203,59 @@ const Filenew = () => {
 						}
 						{
 							selected === 2 && (<>
-								{filingData.snippets!=undefined&&filingData.snippets.map((item, index) => {
+								{snippetContext!==undefined&&snippetContext.map((item, index) => {
 									console.log("Item:", item);
 									return (
-										<div
-											id='w-node-_5c33d9b8-e716-f790-5a4d-5a6ab8b6a278-5d4911ed'
-											className='listing mt'
-										>
-											<div class='listingheader-wrapper'>
-												<div
-													id='w-node-_79d7448d-1164-5de1-1de4-bb294c247a68-5d4911ed'
-													className='ui-text black100'
-												>
-													{item.text}
-												</div>
-											</div>
+                    <div
+                      id='w-node-_5c33d9b8-e716-f790-5a4d-5a6ab8b6a278-5d4911ed'
+                      className='listing mt'
+                    >
+                      <div class='listingheader-wrapper'>
+                        <div
+                          id='w-node-_79d7448d-1164-5de1-1de4-bb294c247a68-5d4911ed'
+                          className='ui-text black100'
+                        >
+                          <span style={{ fontWeight: "600" }}>Context: </span>
+                          {item}
+                          <br />
+						  {contextToQA[item].map((QandA, idx) => {
+							  return (
+								<>
+									<span style={{ fontWeight: "600" }}>Question: </span>
+									{QandA.question}
+									<br />
+									<div style={{ display: "flex" }}>
+									<p style={{ flex: "0.8" }}>
+										<span style={{ fontWeight: "600" }}>Answer: </span>
+										{QandA.answer}
+									</p>
+									<p style={{ flex: "0.2" }}>
+										<span style={{ fontWeight: "600" }}>Score: </span>
+										{QandA.confidence_score}
+									</p>
+									</div>
+								</>
+								);
+						  })}
+                        </div>
+                      </div>
 
-											<div class='actions'>
-												<div class='actioncontainer'></div>
-												<div class='actioncontainer'></div>
-												<a href={item.link}>
-													<div class='actioncontainer'>
-														<IconButton
-															style={{ backgroundColor: "transparent" }}
-															aria-label='delete'
-														>
-															<OpenInNewIcon />
-														</IconButton>
-													</div>
-												</a>
-											</div>
-										</div>
-									);
+                      {/* <div class='actions'>
+                        <div class='actioncontainer'></div>
+                        <div class='actioncontainer'></div>
+                        <a href={item.link}>
+                          <div class='actioncontainer'>
+                            <IconButton
+                              style={{ backgroundColor: "transparent" }}
+                              aria-label='delete'
+                            >
+                              <OpenInNewIcon />
+                            </IconButton>
+                          </div>
+                        </a>
+                      </div> */}
+                    </div>
+                  );
 								})}</>)
 						}
 
