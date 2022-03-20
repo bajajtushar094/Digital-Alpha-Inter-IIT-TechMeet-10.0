@@ -9,9 +9,8 @@ import axios from 'axios'
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 import { Button, IconButton } from '@mui/material';
-import { LOCAL_SERVER_URL, LOCAL_SERVER_URL_IP } from "../../config";
 import { useParams , useNavigate } from 'react-router-dom';
-import { LOCAL_SERVER_URL_MAIN } from '../../config';
+import { LOCAL_SERVER_URL_MAIN, LOCAL_SERVER_URL_IP, LOCAL_SERVER_URL } from '../../config';
 
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
