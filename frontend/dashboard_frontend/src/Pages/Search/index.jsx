@@ -115,7 +115,7 @@ const Search = (props) => {
             <div className="landingdata">
                 <div className="top">
                     <img src={vector1} alt="" />
-                    <h3>Filter</h3>
+                    <h3>Search</h3>
                 </div>
                 <div className="body">
                     <div className="cardsec">
