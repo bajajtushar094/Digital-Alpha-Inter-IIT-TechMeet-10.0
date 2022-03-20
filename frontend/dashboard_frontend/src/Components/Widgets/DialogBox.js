@@ -61,7 +61,7 @@ function MaxWidthDialog(props) {
           }
         }
         
-        setBaskets(temp);
+        // setBaskets(temp);
         selectedBasketId.push(basket.id);
     } else {
       console.log("basket.selected is false")
@@ -74,7 +74,7 @@ function MaxWidthDialog(props) {
             temp[i].selected = false;
           }
         }
-        setBaskets(temp);
+        // setBaskets(temp);
     }
 }
 
