@@ -93,7 +93,7 @@ const IndividualBasket = (props)=>{
 <div className="listingheader-wrapper" >
     <div className="listingheadergrid hascheckbox gap">
         <div>
-            <input style={{height:"20px",width:"20px"}} type="checkbox" />
+            <input style={{height:"20px",width:"20px"}} type="checkbox" checked={company.selected} onChange={(event) => handleChange(event,company)}/>
         </div>
         <div className="compcontainer isbig">
             <div className="logo-wrapper isbig watchlist">
