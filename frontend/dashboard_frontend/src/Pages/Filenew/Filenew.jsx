@@ -9,7 +9,7 @@ import axios from 'axios'
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 import { Button, IconButton } from '@mui/material';
-import { LOCAL_SERVER_URL } from "../../config";
+import { LOCAL_SERVER_URL, LOCAL_SERVER_URL_IP } from "../../config";
 import { useParams , useNavigate } from 'react-router-dom';
 import { LOCAL_SERVER_URL_MAIN } from '../../config';
 
@@ -208,7 +208,7 @@ const Filenew = () => {
    Nisi, rem maxime rerum sunt quos veritatis nam sint accusantium dignissimos minima quam, ea itaque aliquid cupiditate voluptatum molestiae sed in sapiente unde, qui corporis iure. Animi dolores veritatis quae!
     */}
 									{/* <div className="content" dangerouslySetInnerHTML={{__html: ref}}></div> */}
-									<iframe title='filing' src={`http://127.0.0.1:8000/media/filings/78749_10K_2021_0001564590-21-029319.htm`} frameborder="0" style={{ overflowY: "scroll",overflowX: "hidden", width: "100%",height:"400px" }}></iframe>
+									<iframe title='filing' src={`${LOCAL_SERVER_URL_IP}/media/filings/${filingData['filelink']}.htm`} frameborder="0" style={{ overflowY: "scroll",overflowX: "hidden", width: "100%",height:"400px" }}></iframe>
 								</div>
 							</>
 						}
