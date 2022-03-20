@@ -94,14 +94,14 @@ class getAllFilingData(APIView):
         try:
             filing = Filing.objects.get(id=id)
         except Exception as e:
-            print(e)
+            # print(e)
             return Response(
                 {"res": "Error"}, 
                 status = status.HTTP_404_NOT_FOUND
             )
         # print(filing.values())
         serializer = FilingSerializer(instance=filing)
-        print("Filing Data:",serializer.data)
+        # print("Filing Data:",serializer.data)
         return JsonResponse(serializer.data, safe=False)
         # return Response(
         #     data=filing,

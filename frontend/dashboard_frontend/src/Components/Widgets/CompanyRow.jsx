@@ -86,7 +86,7 @@ const CompanyRow = (props) => {
                         if (key_metrics[i]['metric_type'] == "CAC") {
                             CAC = key_metrics[i]['metric_value']
                         }
-                        else if (key_metrics[i]['metric_type'] == "GROSS_MARGIN") {
+                        else if (key_metrics[i]['metric_type'] == "Gross Margin") {
                             GROSS_MARGIN = key_metrics[i]['metric_value']
                         }
                         else if (key_metrics[i]['metric_type'] == "MRR") {
@@ -102,6 +102,7 @@ const CompanyRow = (props) => {
                             ARR = key_metrics[i]['metric_value']
                         }
                     }
+                    
                     return (
                         <div className="listing" onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut}>
                             <div className="listingheader-wrapper">
@@ -114,10 +115,10 @@ const CompanyRow = (props) => {
                                     
                                     <>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling"><img src={props.filing.logo} width="20px" /></div></Link>
+                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling"><img src={filing.logo} width="30px" /></div></Link>
                                         </div>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['name'] : filing['company_id']}</div></Link>
+                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['ticker'] : filing['company_id']}</div></Link>
                                         </div>
                                     </>
 
@@ -126,8 +127,8 @@ const CompanyRow = (props) => {
                             <div className="div-block-4">
                                 <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e4-5d4911ed" className="iscolumn black50">{CAC ? CAC : '-'}</h4>
                                 <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e6-5d4911ed" className="iscolumn black50">{GROSS_MARGIN ? GROSS_MARGIN : '-'}</h4>
-                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{MRR ? MRR : '-'}</h4>
-                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{ARPU ? ARPU : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn black50">{MRR ? MRR : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn black50">{ARPU ? ARPU : '-'}</h4>
                                 <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
                                     <div className="actions-1">
                                         <Link to={`/company/${filing['ticker']}`} >
