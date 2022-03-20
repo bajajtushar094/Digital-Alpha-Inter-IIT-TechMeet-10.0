@@ -85,14 +85,35 @@ const IndividualBasket = (props)=>{
             
             {visualize?<MetricTabs/>:
             <List>
+                 <div style={{display:"flex",flexDirection:"column",gap:"2rem"}}>
             {basketDetails.data.companies.map((company)=> {
+              console.log("hiiii"+company)
                 return(
-                    <ListItem>
-                        <Checkbox checked={company.selected} onChange={(event) => handleChange(event,company)}/>
-                        {company.name}
-                    </ListItem>
+               
+<div className="listingheader-wrapper" >
+    <div className="listingheadergrid hascheckbox gap">
+        <div>
+            <input style={{height:"20px",width:"20px"}} type="checkbox" />
+        </div>
+        <div className="compcontainer isbig">
+            <div className="logo-wrapper isbig watchlist">
+                <img src={company.logo} alt=""/>
+                    </div>
+                    </div>
+                    <div id="w-node-c89bc2cb-3ec9-b26a-c1ca-cdb566446426-5d4911ed">
+                        <h3>{company.name}</h3>
+                        <h4 className="black15">{company.ticker}</h4>
+                        </div>
+                        </div>
+                        </div>
+                        
+                    // <ListItem>
+                    //     <Checkbox checked={company.selected} onChange={(event) => handleChange(event,company)}/>
+                    //     {company.name}
+                    // </ListItem>
                 )
             })}
+            </div>
             </List>
             }
             </div>

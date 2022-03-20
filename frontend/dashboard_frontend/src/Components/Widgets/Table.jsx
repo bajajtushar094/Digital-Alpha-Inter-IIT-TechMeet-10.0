@@ -51,7 +51,9 @@ const Table = (props) => {
 			<div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>
 
 			<div class="metric-entry istable">
-				<h4>{isCompany ? 'Ticker' : 'Filing Ticker'}</h4>
+				<div style={{display:"flex",flexDirection:"row",gap:'16px'}}>
+				{isCompany?<h4>Ticker</h4>:<><h4>Filling</h4> <h4>Ticker</h4></>}
+				</div>
 				{isCompany ?
 					<div class="div-block-4">
 						<h4 id="w-node-_436487ff-0a8b-05ed-b67d-aafecf95f37e-5d4911ed" class="iscolumn">CAC</h4>
