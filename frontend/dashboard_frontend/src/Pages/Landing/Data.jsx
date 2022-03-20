@@ -1,20 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './data.scss'
 import { useState } from 'react';
 import vector1 from '../../images/nav/Market.svg';
 //componenets
 import PerformerCard from '../../Components/Widgets/PerformerCard'
 import ViewedCard from '../../Components/Widgets/ViewedCard';
-import Table from '../../Components/Widgets/Table';
+import Table from '../../Components/Widgets/LandingTable';
 import { connect } from 'react-redux';
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
+import { LandingContext } from './Landing';
 
 const Data = (props) => {
 	const [selected, setSelected] = useState(1);
-	// const [hasCheckbox, setHasCheckbox] = useState(false);
-	// const [isCompany, setIsCompany] = useState(false);
-	// console.log("State from data:", props);
-	console.log("Props State:", props.state);
+	const landingContext = useContext(LandingContext);
+	const [page, setPage] = landingContext.page;
 	const recentFilings = props.state.recentFilings;
 	// const bookmarkedCompanies = props.state.bookmarkedCompanies;
 	const allCompanies = props.state.allCompanies;
@@ -24,6 +23,7 @@ const Data = (props) => {
 
 	const handleTable = (selectedTemp)=>{
 		setSelected(selectedTemp);
+		landingContext.page[1](1);
 	}
 	const handleClick = (selectedTemp)=>{
 		console.log("Hello")
@@ -51,10 +51,11 @@ const Data = (props) => {
 						hasCheckbox={false}
 						isCompany={true}
 						fromSearch={true}
+						isLandingPage={true}
 					/>
 					}
 					{selected===2&&
-					<Table data={recentFilings} hasCheckbox={false} isCompany={false} fromSearch={false}/>
+					<Table data={recentFilings} hasCheckbox={false} isCompany={false} fromSearch={false} isLandingPage={true} isRecentFiling={true}/>
 					}
 				</div>
 			</div>

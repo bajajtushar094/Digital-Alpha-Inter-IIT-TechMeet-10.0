@@ -369,4 +369,34 @@ font-size: 16px;
 .widthfull{
     width: 100% !important;
 }
-
+.pagination {
+    display: inline-block;
+    margin:auto;
+    padding:"15px";
+  }
+  
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+  }
+  
+  .pagination a.active {
+    background-color: #387ef7;
+    color: white;
+    border: 1px solid #387ef7;
+  }
+  
+  .pagination a:hover:not(.active) {background-color: #ddd;}
+  
+  .pagination a:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .pagination a:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }

@@ -20,7 +20,7 @@ df = pd.read_csv(filespath + fileName)
 
 
 
-metrics_type = ['Total Revenue', 'Number of customers', 'MRR', 'ARR', 'ARPU', 'MRR Expansion', 'Number of qualified leads', 'Penetration Rate', 'Sales and Marketing', 'CAC', 'CAC payback', 'Gross Margin', 'CAC payback period', 'ASP', 'Total Assets', 'Total Liabilities Net Minority Interest', 'debt ratio', 'Total Equity Gross Minority Interest', 'Total Debt','Common Stock Equity',	'Total Capitalization',	'Shareholder Equity','Private Shareholding','Public Shareholding']
+metrics_type = ['Total Revenue', 'Number of Customers', 'MRR', 'ARR', 'ARPU', 'MRR Expansion', 'Number of qualified leads', 'Penetration Rate', 'Sales and Marketing', 'CAC', 'CAC payback', 'Gross Margin', 'CAC payback period', 'ASP', 'Total Assets', 'Total Liabilities Net Minority Interest', 'Debt Ratio', 'Total Equity Gross Minority Interest', 'Total Debt','Common Stock Equity',	'Total Capitalization',	'Shareholder Equity','Private Shareholding','Public Shareholding']
 
 metrics_unit = ['Thousand USD', 'Number','Thousand USD','Thousand USD','Thousand USD','Ratio','Ratio','Ratio','Thousand USD','Thousand USD','Ratio','Percent','Number','Number','Thousand USD','Thousand USD','Ratio','Thousand USD','Thousand USD','Thousand USD','Thousand USD','Thousand USD','Ratio','Ratio']
 
@@ -49,7 +49,7 @@ def func(row, metric_type, metric_unit):
     company = Company.objects.get(cik=row['cik'])
     dd = getDate(row['year_month'])
     # print(row['year_month'], dd)
-    if dd and row[metric_type]!=np.nan:
+    if dd and (not isinstance(row[metric_type],str)) and (not np.isnan(row[metric_type])) and abs(row[metric_type])!=np.inf and row[metric_type]!='' and row[metric_type]!='inf' :
         
         year, quarter = getyearquarter(row['quater_year_string'])
         # try:
@@ -63,8 +63,14 @@ def func(row, metric_type, metric_unit):
         #         print(c)
         # except:
         #     pass
-
-        arr.append(KeyMetric(company=company, date=getDate(row['year_month']), source=row['url'], metric_type=metric_type, metric_unit=metric_unit, metric_value=row[metric_type], year=year, quarter=quarter))
+        if c <=340000:
+            arr.append(KeyMetric(company=company, date=getDate(row['year_month']), source=row['url'], metric_type=metric_type, metric_unit=metric_unit, metric_value=row[metric_type], year=year, quarter=quarter))
+        else:
+            try:
+                KeyMetric.objects.create(company=company, date=getDate(row['year_month']), source=row['url'], metric_type=metric_type, metric_unit=metric_unit, metric_value=row[metric_type], year=year, quarter=quarter)
+            except Exception as e:
+                print(row)
+                print(e)
         try:
             if len(arr) >= 100:
                 KeyMetric.objects.bulk_create(arr)
@@ -73,12 +79,19 @@ def func(row, metric_type, metric_unit):
                 print(c)
                 print("done")
         except Exception as e:
+            c += 1
+            arr = []
+            print(row)
+            print(arr)
             print(e)
             pass
             
     else:
-        # TTM
         pass
+
+
+
+
 
 for (metric_type, metric_unit) in zip(metrics_type, metrics_unit):
     cols = meta + [metric_type]

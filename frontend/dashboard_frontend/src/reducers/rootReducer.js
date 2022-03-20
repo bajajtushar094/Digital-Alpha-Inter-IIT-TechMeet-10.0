@@ -1,5 +1,11 @@
 import jwt_decode from "jwt-decode";
 
+let endDate = new Date();
+const startDate = `${endDate.getFullYear() - 3}-${endDate.getMonth() + 1
+    }-${endDate.getDate()}`
+endDate = `${endDate.getFullYear()}-${endDate.getMonth() + 1
+    }-${endDate.getDate()}`
+
 const initState = {
     isAuthenticated:  localStorage.getItem('authTokens')?(JSON.parse(localStorage.getItem('authTokens')).access):false,
     user: localStorage.getItem('authTokens')?jwt_decode(JSON.parse(localStorage.getItem('authTokens')).access):null,
@@ -13,8 +19,8 @@ const initState = {
         "tickers": [],
         "metric_type": [],
         "form_type":[],
-        "time_start": new Date(new Date().setFullYear(new Date().getFullYear() - 3)),
-        "time_end": new Date()
+        "time_start": startDate,
+        "time_end": endDate
     },
     queryFilingsData: null,
     basketDetails: {
@@ -31,7 +37,8 @@ const initState = {
     },
     basketSelectedCompanies:[],
     visualize: false,
-    currentBasket: null
+    currentBasket: null,
+    page:1
 }
 
 const rootReducer = (state=initState,action) => {
@@ -222,6 +229,21 @@ const rootReducer = (state=initState,action) => {
         return{
             ...state,
             currentBasket: basket
+        }
+    }
+
+    if(action.type === 'RESET_PAGE'){
+        return {
+            ...state,
+            page:1
+        }
+    }
+
+    if(action.type === 'SET_PAGE'){
+        const page = action.page;
+        return{
+            ...state,
+            page:page
         }
     }
 

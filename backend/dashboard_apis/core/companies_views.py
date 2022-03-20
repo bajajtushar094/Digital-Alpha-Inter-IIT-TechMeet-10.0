@@ -136,7 +136,7 @@ class getKeyMetricsCSV(APIView):
             return company
 
         try:
-            metrics = KeyMetric.objects.filter(company=company, metric_type=metric_type, date__range=[time_start, time_end])
+            metrics = KeyMetric.objects.filter(company=company, date__range=[time_start, time_end])
         except Exception as e:
             # print(e, "################################")
             return Response(

@@ -16,6 +16,7 @@ import { Checkbox, FormGroup, Grid, List, ListItem, Typography } from '@mui/mate
 import { getBaskets } from '../../actions/action';
 import { connect, useDispatch } from 'react-redux';
 import axios from 'axios';
+import {config} from "../../config";
 
 
 function CBLabel(props){
@@ -35,31 +36,51 @@ function MaxWidthDialog(props) {
   const [open, setOpen] = props.open;
   const [fullWidth, setFullWidth] = props.fullWidth;
   const [maxWidth, setMaxWidth] =props.maxWidth;
-  const [baskets, setBaskets] = React.useState([]);
+  // const [baskets, setBaskets] = React.useState([]);
+  const baskets = props.state.baskets.data || [];
+  baskets.forEach((basket)=>{basket['selected'] = false});
   const [state, setState] = React.useState([]);
   let selectedBasketId =[];
 
-  const addSelector = () => {
-    let temp = baskets;
-    for(let i=0;i<temp.length;i++){
-        temp[i].selected = false;
-    }
-    setBaskets(temp);
-  }   
+  // const addSelector = () => {
+  //   let temp = baskets;
+  //   for(let i=0;i<temp.length;i++){
+  //       temp[i].selected = false;
+  //   }
+  //   setBaskets(temp);
+  // }   
 
   const handleChange = (event, basket) => {
+    
+    const temp = baskets;
     if(basket.selected === true) {
-        basket.selected = false;
+      console.log("basket.selected is true")
+        for(let i=0;i<baskets.length;i++){
+          if(basket.id === temp[i].selected){
+            temp[i].selected=false;
+          }
+        }
+        
+        setBaskets(temp);
         selectedBasketId.push(basket.id);
     } else {
-        basket.selected = true;
-        let temp = selectedBasketId;
-        temp = temp.filter((basketId) => basket.id !== basketId);
+      console.log("basket.selected is false")
+        let temp_1 = selectedBasketId;
+        temp_1 = temp_1.filter((basketId) => basket.id !== basketId);
+        selectedBasketId = temp_1;
+        let temp = baskets;
+        for(let i=0;i<baskets.length;i++){
+          if(basket.id === temp[i].selected){
+            temp[i].selected = false;
+          }
+        }
+        setBaskets(temp);
     }
 }
 
 
   const handleAdd = async (event) => {
+    console.log("handleAdd", baskets);
     const temp = baskets;
     let basketIds = [];
     for(let basket of temp){
@@ -73,9 +94,10 @@ function MaxWidthDialog(props) {
           'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
       }
     }:""
-    await axios.post("http://localhost:8000/api/basket/insertIntoBasket",{basketID:basketIds, ticker: props.ticker},configHeaders)
+    await axios.post(config().insertIntoBasket,{basketID:basketIds, ticker: props.ticker},configHeaders)
     .then((response)=>{console.log(response)})
     .catch((err)=>{console.log(err)});
+    setOpen(false);
   }
 
   const handleClickOpen = props.handleClickOpen;
@@ -86,15 +108,16 @@ function MaxWidthDialog(props) {
 
   const handleFullWidthChange = props.handleFullWidthChange;
 
-  React.useEffect(()=>{
-    const getBasketsAPI = async () => {
-        const response = await getBaskets(dispatch);
-        console.log("In dialog box file:",response);
-        setBaskets(response.data);
-    }
-    getBasketsAPI();
-    addSelector();
-  },[]);
+  // React.useEffect(()=>{
+  //   const getBasketsAPI = async () => {
+  //       const response = await getBaskets(dispatch);
+  //       console.log("In dialog box file:",response);
+  //       setBaskets(response.data);
+  //   }
+  //   getBasketsAPI();
+  //   addSelector();
+  // },[]);
+
 
   return (
     <React.Fragment>
@@ -136,7 +159,6 @@ function MaxWidthDialog(props) {
         <Box sx={{display:"flex", justifyContent:"center", padding:"15px"}} >
         <Button  variant="contained" sx={{backgroundColor:"#515051",width:"200px",'&:hover':{backgroundColor:"black"}}} onClick={handleAdd}>Add</Button>
         </Box>
-        
       </Dialog>
     </React.Fragment>
   );

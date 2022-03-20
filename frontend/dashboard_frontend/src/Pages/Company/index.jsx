@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import Watchlist from '../../Components/Widgets/Watchlist';
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import {config} from "../../config";
 // const metric_types = [
 // 	{'ARR': 'Annual Recurring Revenue'},
 // 	{'Customer Churn Rate': 'Customer Churn Rate'},
@@ -27,13 +28,57 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const Company = (props) => {
 
-  const metrics = ['Total Revenue', 'Number of customers','CAC' ,'MRR', 'ARRU']
+  const metrics = [
+    "Total Revenue",
+    "Number of customers",
+    "MRR",
+    "ARR",
+    "ARPU",
+    "MRR Expansion",
+    "Number of qualified leads",
+    "Penetration Rate",
+    "Sales and Marketing",
+    "CAC",
+    "CAC payback",
+    "Gross Margin",
+    "CAC payback period",
+    "ASP",
+    "Total Assets",
+    "Total Liabilities Net Minority Interest",
+    "debt ratio",
+    "Total Equity Gross Minority Interest",
+    "Total Debt",
+    "Common Stock Equity",
+    "Total Capitalization",
+    "Shareholder Equity",
+    "Private Shareholding",
+    "Public Shareholding",
+  ];
   const [allMetrics , setAllMetrics] = useState({
-    'Total Revenue': [],
-    'Number of customers': [],
-    'CAC': [],
-    'MRR': [],
-    'ARRU': []
+    "Total Revenue": [],
+    "Number of customers": [],
+    "MRR": [],
+    "ARR": [],
+    "ARPU": [],
+    "MRR Expansion": [],
+    "Number of qualified leads": [],
+    "Penetration Rate": [],
+    "Sales and Marketing": [],
+    "CAC": [],
+    "CAC payback": [],
+    "Gross Margin": [],
+    "CAC payback period": [],
+    "ASP": [],
+    "Total Assets": [],
+    "Total Liabilities Net Minority Interest": [],
+    "debt ratio": [],
+    "Total Equity Gross Minority Interest": [],
+    "Total Debt": [],
+    "Common Stock Equity": [],
+    "Total Capitalization": [],
+    "Shareholder Equity": [],
+    "Private Shareholding": [],
+    "Public Shareholding": []
   })
 
   const dispatch = useDispatch();
@@ -177,7 +222,7 @@ const Company = (props) => {
                                     <Button style={{ color: '#9B9B9C' }}>Download stats CSV  <FileDownloadIcon /></Button>
                                 </div>
                             </div> */}
-              <TableHead childone="Key Metrics" childthree="http://localhost:8000/api/companies/getKeyMetricsCSV" data=
+              <TableHead childone="Key Metrics" childthree={config().getKeyMetricsCSVUrl} data=
                 {{
                   "ticker": props.state.queryFilings.tickers[0],
                   'time_start': props.state.queryFilings.time_start,

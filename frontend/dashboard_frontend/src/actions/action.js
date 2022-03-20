@@ -40,7 +40,7 @@ export const loginUser = async (loginData, dispatch) => {
 const updateToken = async () => {
     try {
         const data = await axios.post(
-            'http://localhost:8000/api/auth/token/refresh/',
+            config().refresh,
             { 'refresh': localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')).refresh : null }
         )
         if (data.status === 200) {
@@ -250,7 +250,7 @@ export const getBookmarkCompanies = async (id, dispatch) => {
     // }
     try {
         const response = await axios.get(
-            `http://localhost:8000/api/landingPage/bookmarkedCompanies/${1}`,
+            `${config().bookmarkCompanyUrl}${1}`,
             configHeaders
         )
         dispatch({
@@ -288,7 +288,7 @@ export const getBaskets = async (dispatch) => {
             config().getBasket,
             configHeaders
         );
-        console.log("Response of Baskets: ", response.data)
+        // console.log("Response of Baskets: ", response.data)
         dispatch({
             type: 'GET_BASKETS',
             baskets: response.data
@@ -303,7 +303,7 @@ export const getBaskets = async (dispatch) => {
 export const getKeyMetricOfCompany = async (ticker, metric_type) => {
     try{
         const response = await axios.get(
-            `http://localhost:8000/api/companies/getKeyMetrics/AAPL/ARR`,
+            `${config().getMetricOfCompanyUrl}${ticker}/${metric_type}`,
             configHeaders
         );
 
@@ -318,7 +318,7 @@ export const getKeyMetricOfCompany = async (ticker, metric_type) => {
 export const getBasketDetails = async (basket_id, dispatch) => {
     try {
         const response = await axios.get(
-            `http://localhost:8000/api/basket/details?basket_id=${basket_id}`,
+            `${config().getBasketDetailsUrl}${basket_id}`,
             configHeaders
         );
         dispatch({
@@ -377,7 +377,7 @@ export const getKeyMetrics = async (metric, dispatch) => {
         }
     }
     data = await axios.get(
-        `http://localhost:8000/api/companies/getKeyMetrics/${metric.ticker}/${metric.metric_type}`,
+        `${config().getKeyMetricUrl}${metric.ticker}/${metric.metric_type}`,
         config
     )
     
