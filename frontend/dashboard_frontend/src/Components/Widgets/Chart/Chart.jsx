@@ -153,9 +153,9 @@ function Chart(props) {
         <div>
         <img src={no} alt="" />
         </div>
-        <h2>Your Watchlist is empty</h2>
+        <h2>Data is not available for this metric</h2>
         <br />
-        <p className='color'>Start browsing and add companies to watchlist</p>
+        <p className='color'>Try another metric</p>
       </div>
     </>:
     <>
