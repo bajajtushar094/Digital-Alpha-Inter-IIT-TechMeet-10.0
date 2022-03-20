@@ -106,26 +106,38 @@ function MetricTabs(props) {
     addTickerToRequest();
   }, [value])
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" sx={{flexWrap:'wrap'}}>
-          {metrics.map((el,i) => {
-            return <Tab label={el} {...a11yProps(i)} />
-          })
-          }
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          TabIndicatorProps={{ sx: { display: "none" } }}
+          sx={{
+            "& .MuiTabs-flexContainer": {
+              flexWrap: "wrap",
+            },
+          }}
+          value={value}
+          onChange={handleChange}
+          aria-label='basic tabs example'
+          // sx={{ flexWrap: "wrap" }}
+        >
+          {metrics.map((el, i) => {
+            return <Tab label={el} {...a11yProps(i)} />;
+          })}
 
-          <div style={{marginLeft:"auto"}}><Button style={{ color: '#9B9B9C' }} onClick={handleDownload}>Download stats CSV  <FileDownloadIcon /></Button></div>
+          <div style={{ marginLeft: "auto" }}>
+            <Button style={{ color: "#9B9B9C" }} onClick={() => handleDownload()}>
+              Download stats CSV <FileDownloadIcon />
+            </Button>
+          </div>
         </Tabs>
-        
       </Box>
-      {metrics.map((el,i) => {
-        return(
+      {metrics.map((el, i) => {
+        return (
           <TabPanel value={value} index={i}>
             <Chart metric={el} query={queryFilings} />
           </TabPanel>
-        )
+        );
       })}
-      
     </Box>
   );
 }
