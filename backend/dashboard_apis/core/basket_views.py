@@ -119,11 +119,17 @@ def getComparisonDataCSV(request):
     metrices = []
     for date in dates:
         # print(date, str(date["date"]))
-        metrices.append({"date": str(date["date"])})
-        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], isYearly=False)
+        temp = {"date": str(date["date"])}
+        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], isYearly=False, metric_type=metric_type)
         # print(metrices_l)
+        f = 1
         for ticker in tickers:
-            metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
+            if metrices_l.filter(company__ticker=ticker).exists():
+                temp[ticker] = metrices_l.get(company__ticker=ticker).metric_value
+            else:
+                f = -1
+        if f == 1:
+            metrices.append(temp)
             
 
     # print("Metrics",metrices)
@@ -163,11 +169,17 @@ def getComparisonData(request):
     metrices = []
     for date in dates:
         # print(date, str(date["date"]))
-        metrices.append({"date": str(date["date"])})
+        temp = {"date": str(date["date"])}
         metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], isYearly=False, metric_type=metric_type)
         # print(metrices_l)
+        f = 1
         for ticker in tickers:
-            metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
+            if metrices_l.filter(company__ticker=ticker).exists():
+                temp[ticker] = metrices_l.get(company__ticker=ticker).metric_value
+            else:
+                f = -1
+        if f == 1:
+            metrices.append(temp)
             
 
     # print("Metrics",metrices)
