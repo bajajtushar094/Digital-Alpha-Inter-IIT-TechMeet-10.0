@@ -12,7 +12,7 @@ import axios from 'axios';
 
 
  
-
+const metrics=['CAC','Gross Margin','MRR','ARPU','Number of customers','MRR Expansion','ARR','Number of Qualified Leads','Penetration rate','Total Revenue','Total Assets','Total Liabilities','Debt Ratio','Total Equity','Total Debt','Common Stock Equity','Total Capitalization','Shareholder Equity','Private Shareholding','Public Shareholding','LTV','CAC payback period','ASP','LTV:CAC ratio']
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   
@@ -51,8 +51,7 @@ function MetricTabs(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-
+  const metrics=['Total Revenue', 'Number of customers', 'MRR', 'ARR', 'ARPU', 'MRR Expansion', 'Number of qualified leads', 'Penetration Rate', 'Sales and Marketing', 'CAC', 'CAC payback', 'Gross Margin', 'CAC payback period', 'ASP', 'Total Assets', 'Total Liabilities Net Minority Interest', 'debt ratio', 'Total Equity Gross Minority Interest', 'Total Debt','Common Stock Equity',	'Total Capitalization',	'Shareholder Equity','Private Shareholding','Public Shareholding']
   const handleDownload = () => {
     // console.log("console log",body, props)
     const url = 'http://localhost:8000/api/basket/compareCSV'
@@ -81,7 +80,7 @@ function MetricTabs(props) {
   const companies = props.state.basketSelectedCompanies;
   const queryFilings = props.state.queryFilings;
   let company_ticker = [];
-  const metrics = ["ARR", "CCR"]
+  
   function getTickers() {
     for (let i = 0; i < companies.length; i++) {
       console.log(companies[i]);
@@ -108,19 +107,24 @@ function MetricTabs(props) {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="ARR" {...a11yProps(0)} />
-          <Tab label="CCR" {...a11yProps(1)} />
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" sx={{flexWrap:'wrap'}}>
+          {metrics.map((el,i) => {
+            return <Tab label={el} {...a11yProps(i)} />
+          })
+          }
+
           <div style={{marginLeft:"auto"}}><Button style={{ color: '#9B9B9C' }} onClick={handleDownload}>Download stats CSV  <FileDownloadIcon /></Button></div>
         </Tabs>
         
       </Box>
-      <TabPanel value={value} index={0}>
-        <Chart metric="ARR" query={queryFilings} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Chart metric="CCR" query={queryFilings} />
-      </TabPanel>
+      {metrics.map((el,i) => {
+        return(
+          <TabPanel value={value} index={i}>
+            <Chart metric={el} query={queryFilings} />
+          </TabPanel>
+        )
+      })}
+      
     </Box>
   );
 }
