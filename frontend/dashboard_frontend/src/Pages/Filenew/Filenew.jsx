@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Navbar from '../../Components/Global/Navbar/Navbar'
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import CompanyTitle from '../../Components/Widgets/Filters/CompanyTitle/CompanyTitle';
@@ -10,12 +10,11 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 import { Button, IconButton } from '@mui/material';
 import { LOCAL_SERVER_URL } from "../../config";
-import { useParams } from 'react-router-dom';
+import { useParams , useNavigate } from 'react-router-dom';
 
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const ref = require('./te.htm')
-
 const init_filing_data = {
 	filing_id: '1',
 	form_type: '8K',
@@ -63,7 +62,9 @@ const Filenew = () => {
 	const handleTable = (selectedTemp) => {
 		setSelected(selectedTemp);
 	}
-	const [companyName, setCompanyName] = useState('');
+	const shareRef = useRef();
+	const navigation = useNavigate();
+	const [companyName, setCompanyName] = useState('Loading');
 	const [filingData, setFilingData] = useState({});
 	const [summaryText, setSummaryText] = useState("");
 	const [snippetContext, setSnippetContext] = useState([]);
@@ -76,7 +77,6 @@ const Filenew = () => {
 			let res = await axios.get(
 				LOCAL_SERVER_URL + "filings/getAllFilingData/" + filing_id
 			);
-			
 			setCompanyName(res.data.company.name);
 			let response = res.data;
 			// setFilingData(filingData=>({
@@ -127,11 +127,21 @@ const Filenew = () => {
 								<div class="actions  force1" >
 
 									<div class="actioncontainer" style={{ display: "flex" }}>
-										<IconButton style={{ background: "transparent" }}>
-											<ShareOutlinedIcon className='color' />
+										<IconButton className='tooltip' style={{ background: "transparent" }}>
+											<ShareOutlinedIcon className='color'  onClick={() => {
+											navigator.clipboard.writeText(window.location.href);
+											shareRef.current.innerHTML = "Copied!";
+											}}
+											onMouseOut={() => shareRef.current.innerHTML = "Copy link to Clipboard"}
+											/>
+											<span className='tooltiptext' ref={shareRef}>
+												Copy link to Clipboard
+											</span>
 										</IconButton>
 										<IconButton style={{ background: "transparent" }}>
-											<ApartmentOutlinedIcon className='color' />
+											<ApartmentOutlinedIcon className='color' onClick={()=> {
+												navigation('/company/' + filingData['company']['ticker']);
+											}}/>
 										</IconButton></div>
 								</div>
 							</div>
