@@ -13,6 +13,7 @@ import {
     searchFillings,
     simpleSearch,
     searchCompanyAPI,
+    getBaskets,
 } from "../../actions/action";
 import vector1 from "../../images/nav/Market.svg";
 
@@ -71,6 +72,13 @@ const Search = (props) => {
         };
     }, []);
 
+    useEffect(() => {
+        const getBasketsAPI = async () => {
+          await getBaskets(dispatch);
+        };
+        getBasketsAPI();
+    })
+
     const handleTable = (selectedTemp) => {
         setSelected(selectedTemp);
         dispatch({
@@ -107,7 +115,7 @@ const Search = (props) => {
             <div className="landingdata">
                 <div className="top">
                     <img src={vector1} alt="" />
-                    <h3>Filter</h3>
+                    <h3>Search</h3>
                 </div>
                 <div className="body">
                     <div className="cardsec">

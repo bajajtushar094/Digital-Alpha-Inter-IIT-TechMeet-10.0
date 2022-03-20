@@ -11,6 +11,7 @@ import {
   loginUser,
   getBookmarkCompanies,
   searchFillings,
+  getBaskets,
 } from "../../actions/action";
 import { useDispatch } from "react-redux";
 import { turnOn, turnOff } from "../../constants/spinnerActions";
@@ -87,6 +88,11 @@ const Landing = (props) => {
 
     
 
+  
+    const getBasketsAPI = async () => {
+      await getBaskets(dispatch);
+    };
+
     const getBookmarkCompaniesAPI = async () => {
       try {
         const response = await getBookmarkCompanies(user.user_id, dispatch);
@@ -99,6 +105,7 @@ const Landing = (props) => {
     fetchRecentFilings();
     fetchAllCompanies();
     getBookmarkCompaniesAPI();
+    getBasketsAPI();
     const data = await loginUser(
       { email: config().email, password: config().password },
       dispatch
