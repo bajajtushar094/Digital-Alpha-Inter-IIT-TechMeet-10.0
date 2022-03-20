@@ -102,6 +102,7 @@ const CompanyRow = (props) => {
                             ARR = key_metrics[i]['metric_value']
                         }
                     }
+                    
                     return (
                         <div className="listing" onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut}>
                             <div className="listingheader-wrapper">
@@ -114,10 +115,10 @@ const CompanyRow = (props) => {
                                     
                                     <>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling"><img src={props.filing.logo} width="20px" /></div></Link>
+                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling"><img src={filing.logo} width="30px" /></div></Link>
                                         </div>
                                         <div className="filingcontainer">
-                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['name'] : filing['company_id']}</div></Link>
+                                            <Link to={`/company/${filing['ticker']}`}><div className="ui-text issecondarybutton isfiling">{fromSearch == true ? filing['ticker'] : filing['company_id']}</div></Link>
                                         </div>
                                     </>
 
