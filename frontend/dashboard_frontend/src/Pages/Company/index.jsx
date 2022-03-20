@@ -24,37 +24,39 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 // 	{'Revenue Churn Rate': 'Revenue Churn Rate'}
 // ]
 
-const metric_types = [
-  'ARR',
-  'CCR',
-  'LTV',
-  'CAC',
-  'ARPA',
-  'RCR'
-]
 
 const Company = (props) => {
+
+  const metrics = ['Total Revenue', 'Number of customers','CAC' ,'MRR', 'ARRU']
+  const [allMetrics , setAllMetrics] = useState({
+    'Total Revenue': [],
+    'Number of customers': [],
+    'CAC': [],
+    'MRR': [],
+    'ARRU': []
+  })
+
   const dispatch = useDispatch();
   const [company, setCompany] = useState([]);
-  const [arrMetric, setArrMetric] = useState([]);
-  const [ccrMetric, setCcrMetric] = useState([]);
-  const [ltvMetric, setLtvMetric] = useState([]);
-  const [cacMetric, setCacMetric] = useState([]);
-  const [arpaMetric, setArpaMetric] = useState([]);
-  const [rcrMetric, setRcrMetric] = useState([]);
+  // const [arrMetric, setArrMetric] = useState([]);
+  // const [ccrMetric, setCcrMetric] = useState([]);
+  // const [ltvMetric, setLtvMetric] = useState([]);
+  // const [cacMetric, setCacMetric] = useState([]);
+  // const [arpaMetric, setArpaMetric] = useState([]);
+  // const [rcrMetric, setRcrMetric] = useState([]);
   const [isMetricLoading, setIsMetricLoading] = useState([]);
   // const [metric,setMetric] = useState([]);
   // const [copyMetric,setCopyMetric] = useState([]);
   const url_ticker = useParams().ticker;
 
   const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
   // const companies = props.state.basketSelectedCompanies;
   const queryFilings = props.state.queryFilings;
-  let company_ticker = [];
+  // let company_ticker = [];
   // function getTickers() {
   //   for(let i=0;i<companies.length;i++){
   //     console.log(companies[i]);
@@ -69,39 +71,40 @@ const Company = (props) => {
       queryFilings: {
         ...queryFilings,
         tickers: [url_ticker],
-        metric_type: metric_types[value],
+        metric_type: metrics[value],
       }
     })
   }
 
-  const handleClickM1 = async () => {
-    setValue(0);
-  }
+  // const handleClickM1 = async () => {
+  //   setValue(0);
+  // }
 
-  const handleClickM2 = async () => {
-    setValue(1);
-  }
+  // const handleClickM2 = async () => {
+  //   setValue(1);
+  // }
 
-  const handleClickM3 = () => {
-    setValue(2);
-    // console.log(metric_types[value])
-  }
-  const handleClickM4 = () => {
-    setValue(3);
-    // console.log(metric_types[value])
-  }
-  const handleClickM5 = () => {
-    setValue(4);
-    // console.log(metric_types[value])
-  }
-  const handleClickM6 = () => {
-    setValue(5);
-    // console.log(metric_types[value])
-  }
+  // const handleClickM3 = () => {
+  //   setValue(2);
+  //   // console.log(metric_types[value])
+  // }
+  // const handleClickM4 = () => {
+  //   setValue(3);
+  //   // console.log(metric_types[value])
+  // }
+  // const handleClickM5 = () => {
+  //   setValue(4);
+  //   // console.log(metric_types[value])
+  // }
+  // const handleClickM6 = () => {
+  //   setValue(5);
+  //   // console.log(metric_types[value])
+  // }
 
 
 
-  useEffect(async () => {
+  useEffect(() => {
+    const func = async () => {
     setIsMetricLoading(true);
     const response = await searchCompanies(url_ticker, dispatch);
     // console.log("Response EEEEEEEEEe:", response);
@@ -110,24 +113,39 @@ const Company = (props) => {
 
     addRecentlyViewedCompany(url_ticker);
 
-    const response1 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARR' }, dispatch);
-    setArrMetric(response1.data);
-    const response2 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'CCR' }, dispatch);
-    setCcrMetric(response2.data);
-    const response3 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'LTV' }, dispatch);
-    setLtvMetric(response3.data);
-    const response4 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'CAC' }, dispatch);
-    setCacMetric(response4.data);
-    const response5 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARPA' }, dispatch);
-    setArpaMetric(response5.data);
-    const response6 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'RCR' }, dispatch);
-    setRcrMetric(response6.data);
+    await Promise.all(
+      metrics.map(async (el) => {
+        const res = await getKeyMetrics(
+          { ticker: url_ticker, metric_type: el },
+          dispatch
+        );
+        setAllMetrics({
+          ...allMetrics,
+          el: res.data,
+        });
+      })
+    );
+
+    // const response1 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARR' }, dispatch);
+    // setArrMetric(response1.data);
+    // const response2 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'CCR' }, dispatch);
+    // setCcrMetric(response2.data);
+    // const response3 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'LTV' }, dispatch);
+    // setLtvMetric(response3.data);
+    // const response4 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'CAC' }, dispatch);
+    // setCacMetric(response4.data);
+    // const response5 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'ARPA' }, dispatch);
+    // setArpaMetric(response5.data);
+    // const response6 = await getKeyMetrics({ ticker: url_ticker, metric_type: 'RCR' }, dispatch);
+    // setRcrMetric(response6.data);
 
 
     setIsMetricLoading(false);
+    }
+    func();
   }, []);
   React.useEffect(() => {
-    console.log(metric_types[value]);
+    console.log(metrics[value]);
     addTickerToRequest();
   }, [value])
 
@@ -142,7 +160,8 @@ const Company = (props) => {
 
         <div className="companycontent">
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <CompanyFilter company={company} arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} />
+            {/* <CompanyFilter company={company} arrMetric={arrMetric} ccrMetric={ccrMetric} ltvMetric={ltvMetric} cacMetric={cacMetric} arpaMetric={arpaMetric} rcrMetric={rcrMetric} isMetricLoading={isMetricLoading} /> */}
+            <CompanyFilter company={company} allMetrics={allMetrics} isMetricLoading={isMetricLoading} />
             <RecentlyViewedLogIn />
           </div>
 
@@ -166,14 +185,11 @@ const Company = (props) => {
                   "metric_type": props.state.queryFilings.metric_type,
                 }} />
               <div className="stat-tab">
-                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>ARR (in mil $)</Button></div>
-                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>LTV/CAC</Button></div>
-                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1} >Product-Market Fit</Button></div>
-                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>Churn Rate</Button></div>
-                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>ARR (in mil $)</Button></div>
-                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>LTV/CAC</Button></div>
-                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>Product-Market Fit</Button></div>
-                <div><Button style={(metric_types[value] == "ARR") ? { color: "black" } : { color: "#9b9b9c" }} name="ARR" onClick={handleClickM1}>Churn Rate</Button></div>
+                {metrics.map((el, i) => {
+                  return (
+                    <div><Button style={(metrics[value] === el) ? { color: "black" } : { color: "#9b9b9c" }} name={el} onClick={() => {setValue(i)}}>{el}</Button></div>
+                  )
+                })}
               </div>
               <Chart />
             </div>

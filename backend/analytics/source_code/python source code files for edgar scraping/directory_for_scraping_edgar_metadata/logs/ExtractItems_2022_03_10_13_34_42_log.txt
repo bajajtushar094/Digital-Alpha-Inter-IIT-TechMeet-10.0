@@ -1,0 +1,6 @@
+03-10-2022 19:04 - ExtractItems - INFO - Starting extraction...
+
+03-10-2022 19:04 - ExtractItems - INFO - 
+Item extraction is completed successfully.
+03-10-2022 19:04 - ExtractItems - INFO - 19 files were processed.
+03-10-2022 19:04 - ExtractItems - INFO - Extracted filings are saved to: C:\Users\gitan\OneDrive\Desktop\interiit\curredgar\edgar-crawler-main\datasets\EXTRACTED_FILINGS

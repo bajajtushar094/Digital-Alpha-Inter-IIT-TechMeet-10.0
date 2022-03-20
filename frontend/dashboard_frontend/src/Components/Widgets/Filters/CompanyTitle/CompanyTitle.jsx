@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import "../../../../global.scss";
 import "./CompanyTitle.scss";
 import More from "../../../../images/widgets/More.svg";
@@ -6,6 +6,13 @@ import More from "../../../../images/widgets/More.svg";
 const CompanyTitle = (props) => {
 
     const [bool,setbool]=useState(false)
+    const [metricsArray, setMetricsArray] = useState([]);
+    useEffect(() => {
+        var values = Object.keys(props.allMetrics).map(function(key){
+            return props.allMetrics[key];
+        });
+        setMetricsArray(values);
+    }, [])
 
     return (
         <>
@@ -32,52 +39,18 @@ const CompanyTitle = (props) => {
                     <div></div>
                         :
                     <div>
-                        {props.arrMetric?.map((item)=>{
-                            return(
-                                <div class="metric-entry">
-                                    <h4 class="black50">{item.metric_type}</h4>
-                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
-                                </div>
-                            )
-                            
-                        })}
-                            {props.ccrMetric?.map((item)=>{
-                            return(
-                                <div class="metric-entry">
-                                    <h4 class="black50">{item.metric_type}</h4>
-                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
-                                </div>
-                            )
-                            
-                        })}
-                            {props.ltvMetric?.map((item)=>{
-                            return(
-                                <div class="metric-entry">
-                                    <h4 class="black50">{item.metric_type}</h4>
-                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
-                                </div>
-                            )
-                            
-                        })}
-                            {props.cacMetric?.map((item)=>{
-                            return(
-                                <div class="metric-entry">
-                                    <h4 class="black50">{item.metric_type}</h4>
-                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
-                                </div>
-                            )
-                            
-                        })}
-                            {props.rcrMetric?.map((item)=>{
-                            return(
-                                <div class="metric-entry">
-                                    <h4 class="black50">{item.metric_type}</h4>
-                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
-                                </div>
-                            )
-                            
-                        })}
 
+                        {
+                            metricsArray.map((item)=>{
+                            return(
+                                <div class="metric-entry">
+                                    <h4 class="black50">{item.metric_type}</h4>
+                                    <h4 id="w-node-_38f3be73-8770-01e7-500a-24cc06557600-5d4911ed" class="iscolumn black50">{item.metric_value} {item.metric_unit}</h4>
+                                </div>
+                            )})
+                        }
+                        
+                    
                     </div>
                 }
                 
