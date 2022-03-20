@@ -11,50 +11,20 @@ import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/Re
 import { Button, IconButton } from '@mui/material';
 import { LOCAL_SERVER_URL } from "../../config";
 import { useParams , useNavigate } from 'react-router-dom';
+import { PieChart, Pie } from 'recharts';
 
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
+
+// const data01 = [
+// 	{ name: 'Group A', value: 0.56 },
+// 	{ name: 'Group B', value: 0.65 },
+// 	{ name: 'Group C', value: 0.54 },
+// 	{ name: 'Group D', value: -0.21 },
+// ];
+
+let pieDataDummy=[];
 const ref = require('./te.htm')
-const init_filing_data = {
-	filing_id: '1',
-	form_type: '8K',
-	company: 'AAPL',
-	summaries: [
-		{
-			'section_heading': 'loading',
-			'text': '1',
-			'polarity_score': '1',
-			'sentiment_label': '1',
-		},
-		{
-			'section_heading': 'hehe',
-			'text': '2',
-			'polarity_score': '1',
-			'sentiment_label': '1',
-		},
-		{
-			'section_heading': 'cool',
-			'text': '3',
-			'polarity_score': '1',
-			'sentiment_label': '1',
-		},
-	],
-	snippets: [
-		{
-			'text': 'loading',
-			'link': 'url'
-		},
-		{
-			'text': 'loading',
-			'link': 'url'
-		},
-		{
-			'text': 'loading',
-			'link': 'url'
-		}
-	],
-	filelink: ''
-}
 
 const Filenew = () => {
 	const filing_id = useParams().filing_id;
@@ -72,6 +42,90 @@ const Filenew = () => {
 	const summaryTextChange = (item)=>{
 		setSummaryText(item.text);
 	}
+	// const [pieData, setPieData] = useState([]);
+
+	let pieData = [
+		{
+			"name": "item_1",
+			"value": "0.05139"
+		},
+		{
+			"name": "item_1A",
+			"value": "0.14333"
+		},
+		{
+			"name": "item_1B",
+			"value": "0.00000"
+		},
+		{
+			"name": "item_2",
+			"value": "-0.08333"
+		},
+		{
+			"name": "item_3",
+			"value": "0.04000"
+		},
+		{
+			"name": "item_4",
+			"value": "0.00000"
+		},
+		{
+			"name": "item_5",
+			"value": "-0.15000"
+		},
+		{
+			"name": "item_6",
+			"value": "0.04688"
+		},
+		{
+			"name": "item_7",
+			"value": "0.37500"
+		},
+		{
+			"name": "item_7A",
+			"value": "-0.06473"
+		},
+		{
+			"name": "item_8",
+			"value": "0.00000"
+		},
+		{
+			"name": "item_9",
+			"value": "0.00000"
+		},
+		{
+			"name": "item_9A",
+			"value": "0.02778"
+		},
+		{
+			"name": "item_9B",
+			"value": "-0.02083"
+		},
+		{
+			"name": "item_10",
+			"value": "-0.06250"
+		},
+		{
+			"name": "item_11",
+			"value": "0.00000"
+		},
+		{
+			"name": "item_12",
+			"value": "0.00000"
+		},
+		{
+			"name": "item_13",
+			"value": "0.00000"
+		},
+		{
+			"name": "item_14",
+			"value": "-0.06667"
+		},
+		{
+			"name": "item_15",
+			"value": "-0.05556"
+		}
+	];
 	useEffect(() => {
 		const func = async () => {
 			let res = await axios.get(
@@ -94,11 +148,27 @@ const Filenew = () => {
 			setContextToQA(mapping);
 			setSnippetContext(context)
 			setFilingData(response);
-			setSummaryText(filingData.summaries[0].text);
-			console.log("Filing Data:", filingData.summaries[0].text);
+			// setSummaryText(filingData.summaries[0].text);
+			console.log("Filing Data:", filingData.summaries);
+
+			// let dataJson = {};
+			for(let i=0;i<response.summaries.length;i++){
+				console.log("Response 1", response.summaries[i]);
+				// dataJson['name'] = response.summaries[i].section_heading;
+				// dataJson['polarity_score'] = response.summaries[i].polarity_score;
+				let dataJson = {
+					'name': response.summaries[i].section_heading,
+					'value': response.summaries[i].polarity_score
+				}
+				pieDataDummy.push(dataJson);
+				// console.log("Pie Data:", pieData);
+			}
+
+			// setPieData(...pieDataDummy);
+			console.log("Pie Data:", pieDataDummy);
 		}
 		func()
-	}, [filing_id])
+	}, [filing_id]);
 	return (
 		<>
 			<Navbar />
@@ -194,6 +264,14 @@ const Filenew = () => {
 						</div>
 							<div id="w-node-_2c6e5316-4ef7-fb3c-7fc6-16076e37e42b-5d4911ed" className="separator"></div>
 							<div className="textdiv">
+								<div className="piechart" style={{ height: "208px", display: "flex", justifyContent: "center" }}>
+									<PieChart width={730} height={250}>
+										<Pie label endAngle={180} data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110} fill="#8884d8" />
+
+									</PieChart>
+								</div>
+							</div>
+							<div className="textdiv">
 								<p>
 									{summaryText}
 								</p>
@@ -276,4 +354,4 @@ const Filenew = () => {
 	)
 }
 
-export default Filenew
+export default Filenew;
