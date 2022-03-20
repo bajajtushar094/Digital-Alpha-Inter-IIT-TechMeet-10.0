@@ -13,7 +13,7 @@ import Modal from '@mui/material/Modal';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { Button, IconButton, TextField, Typography } from "@mui/material";
-
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const moduleModalStyle = {
   position: 'absolute',
   top: '50%',
@@ -120,7 +120,7 @@ const Component = ({ name, companies_count, basket_id, basket }) => {
         <div class='actioncontainer'></div>
         <div class='actioncontainer'>
           <Link to={`/individualBasket/${basket_id}`} style={{ textDecoration: "none" }}>
-          <img src={Pen} loading='lazy' alt='' />
+          <ArrowForwardIosIcon loading='lazy' sx={{color:'#9B9B9C'}}/>
           </Link>
         </div>
       </div>
