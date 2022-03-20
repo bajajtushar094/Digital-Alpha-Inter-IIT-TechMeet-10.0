@@ -22,7 +22,7 @@ def searchCompanies(request):
     """
 
     tickers = request.data.get("tickers")
-    print(tickers)
+    # print(tickers)
 
     if not tickers:
         return Response(
@@ -117,12 +117,18 @@ def searchFillings(request):
         error = {"message": errorMsg, "data": notFound}
     
     responseArray = []
+    count = 0
     for companies in res.keys():
         for index , filing in enumerate(res[companies]):
             metrics = KeyMetric.objects.filter(company=filing['company_id'])
             res[companies][index]['key_metrics'] = metrics.values()
+            count = count + 1
             # print("Response:", res[companies][index])
-            responseArray.append(res[companies][index])        
+            responseArray.append(res[companies][index])     
+            if count > 30:
+                break
+        if count > 30:
+            break   
 
 
     return Response({"error": error, "data": responseArray}, status=status.HTTP_200_OK)
@@ -136,12 +142,16 @@ def companyMetric(request):
         companies = Company.objects.all()
         tickers = [company.ticker for company in companies]
 
+    count = 0
     responseArray = []
     for ticker in tickers:
+        count = count + 1
+        if count > 30:
+            break
         metrics = KeyMetric.objects.filter(company=ticker)
         companies = Company.objects.filter(ticker=ticker)
         metrics_list=[]
-        print("Metrics:", companies.values()[0])
+        # print("Metrics:", companies.values()[0])
         company = companies.values()[0]
         for i in metrics.values():
             metrics_list.append(i)
@@ -156,7 +166,7 @@ def companyMetric(request):
         #     res['key_metrics'] = metrics.values()
         #     responseArray.append(res)
 
-    print("Metric List:", responseArray)
+    # print("Metric List:", responseArray)
     return Response( {"error":None,"data": responseArray}, status=status.HTTP_200_OK)
 
 @api_view(["POST"])

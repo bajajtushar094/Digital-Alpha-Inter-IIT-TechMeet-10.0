@@ -30,6 +30,7 @@ const moduleModalStyle = {
 
 const Watchlist = (props) => {
   const dispatch = useDispatch();
+  const [newBasketName, setNewBasketName] = useState("");
   const data = props.state.baskets.data || [];
   const [watchlistModalOpen, setWatchlistModalOpen] = useState(false);
 
@@ -40,8 +41,14 @@ const Watchlist = (props) => {
     getBasketFunc();
   }, [dispatch]);
 
+  const handleChange = (event) => {
+    setNewBasketName(event.target.value);
+  }
+
   const handleAddWatchlist = () => {
-    const name = document.getElementById('newWatchlist').value;
+    console.log("handleAddWatchList Fired");
+    const name = newBasketName;
+    console.log(name)
     async function createBasketFunc() {
       const data = await createBasket(name,"",dispatch);
       console.log(data);
@@ -71,7 +78,7 @@ const Watchlist = (props) => {
             </IconButton>
             </div>
             <div className="flex">
-              <TextField size="small"/>
+              <TextField value={newBasketName} onChange={handleChange} size="small"/>
             </div>
             <Button onClick={()=>{handleAddWatchlist()}} style={{background:"black",marginTop:"6px"}} variant="contained" fullWidth>Create</Button>
             </div>

@@ -69,7 +69,7 @@ class addRecentlyViewedCompany(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        print("HELLo")
+        # print("HELLo")
         MAX_RECENTLY_VIEWED_COMPANIES = 3
         # user_id = request.user.id
         ticker = kwargs['ticker']
@@ -83,7 +83,7 @@ class addRecentlyViewedCompany(APIView):
                 entry.save()
                 # print("hello")
             except Exception as e:
-                print(e)
+                # print(e)
                 ids = RecentlyViewed.objects.order_by("-timestamp").values_list("pk", flat=True)[MAX_RECENTLY_VIEWED_COMPANIES-1:]
                 RecentlyViewed.objects.filter(pk__in=list(ids)).delete()
 
@@ -96,7 +96,7 @@ class addRecentlyViewedCompany(APIView):
 
 
         except Exception as e:
-            print(e)
+            # print(e)
             return Response(
                     {"res":"Not able to add company to recently viewed"},
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -138,7 +138,7 @@ class getKeyMetricsCSV(APIView):
         try:
             metrics = KeyMetric.objects.filter(company=company, metric_type=metric_type, date__range=[time_start, time_end])
         except Exception as e:
-            print(e, "################################")
+            # print(e, "################################")
             return Response(
                 {"res":"Error while fetching filings of the company"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
