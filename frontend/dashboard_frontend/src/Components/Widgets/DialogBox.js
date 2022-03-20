@@ -39,7 +39,7 @@ function MaxWidthDialog(props) {
   // const [baskets, setBaskets] = React.useState([]);
   const baskets = props.state.baskets.data || [];
   baskets.forEach((basket)=>{basket['selected'] = false});
-  const [state, setState] = React.useState([]);
+  const [checkedState, setCheckedState] = React.useState( new Array(baskets.length).fill(false));
   let selectedBasketId =[];
 
   // const addSelector = () => {
@@ -50,42 +50,20 @@ function MaxWidthDialog(props) {
   //   setBaskets(temp);
   // }   
 
-  const handleChange = (event, basket) => {
+  const handleChange = (event, position) => {
     
-    const temp = baskets;
-    if(basket.selected === true) {
-      console.log("basket.selected is true")
-        for(let i=0;i<baskets.length;i++){
-          if(basket.id === temp[i].selected){
-            temp[i].selected=false;
-          }
-        }
-        
-        // setBaskets(temp);
-        selectedBasketId.push(basket.id);
-    } else {
-      console.log("basket.selected is false")
-        let temp_1 = selectedBasketId;
-        temp_1 = temp_1.filter((basketId) => basket.id !== basketId);
-        selectedBasketId = temp_1;
-        let temp = baskets;
-        for(let i=0;i<baskets.length;i++){
-          if(basket.id === temp[i].selected){
-            temp[i].selected = false;
-          }
-        }
-        // setBaskets(temp);
+    const updatedCheckedState = checkedState.map((item, index)=> index===position?!item:item);
+    setCheckedState(updatedCheckedState);
     }
-}
+
 
 
   const handleAdd = async (event) => {
-    console.log("handleAdd", baskets);
-    const temp = baskets;
+    
     let basketIds = [];
-    for(let basket of temp){
-      if(basket.selected){
-        basketIds.push(basket.id)
+    for(let i=0;i<checkedState.length;i++){
+      if(checkedState[i]){
+        basketIds.push(baskets[i].id)
       }
     }
     console.log(props.ticker);
@@ -147,7 +125,7 @@ function MaxWidthDialog(props) {
             {(baskets.length>0)?baskets.map((basket,i)=> {
                 return(
                     <ListItem>
-                        <Checkbox checked={basket.selected} onChange={(event) => handleChange(event,basket)}/>
+                        <Checkbox checked={checkedState[i]} onChange={(event) => handleChange(event,i)}/>
                         <Typography variant="h6">{basket.name}</Typography>
                     </ListItem>
                 )
