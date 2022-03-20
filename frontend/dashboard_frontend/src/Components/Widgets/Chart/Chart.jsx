@@ -13,6 +13,7 @@ import {
   LineChart
 } from "recharts";
 import axios from 'axios';
+import {config} from "../../../config"; 
 
  const colors = [
   "#8884D8",
@@ -94,7 +95,7 @@ function Chart(props) {
         console.log("Basket compare: ", props.state.queryFilings)
         // if(props.state.queryFiling)
       const response = await axios.post(
-        "http://localhost:8000/api/basket/compare", props.state.queryFilings,
+        config().basketCompanreUrl, props.state.queryFilings,
         {
           headers: {
               'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
