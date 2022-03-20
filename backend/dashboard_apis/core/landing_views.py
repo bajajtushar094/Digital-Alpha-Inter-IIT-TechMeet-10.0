@@ -143,13 +143,13 @@ class recentlyViewedCompanies(APIView):
 			# print("HI")
 			# request.user
 			user = request.user
-			print(user, "###################################")
-			print(user.recently_viewed_companies.all().values().order_by('-timestamp'), "!!!!!!!!!!!!!!!!!!!!!!")
+			# print(user, "###################################")
+			# print(user.recently_viewed_companies.all().values().order_by('-timestamp'), "!!!!!!!!!!!!!!!!!!!!!!")
 			
 			# for index in range(len(bookmarked_companies)):
 			#     bookmarked_companies_json[index]["filings"] = bookmarked_companies[index].filing_set.all().values()
 		except Exception as e:
-			print("Exception: ", e)
+			# print("Exception: ", e)
 			Response(
 				{
 					"res":"Error while fetching the Company data"
@@ -158,7 +158,7 @@ class recentlyViewedCompanies(APIView):
 			)
 
 		recently_viewed_companies = user.recently_viewed_companies.all().values('company__ticker', 'company__name', 'company__logo', 'timestamp').order_by('-timestamp')
-		print(recently_viewed_companies)
+		# print(recently_viewed_companies)
 		return Response(
 
 			data=recently_viewed_companies,
@@ -169,7 +169,7 @@ class recentlyFiled(APIView):
 	def get(self , request, *args, **kwargs):
 		try:
 			companies = Filing.objects.order_by('-date').values('company_id').distinct()
-			print(companies.values())
+			# print(companies.values())
 		except:
 			Response(
 				{

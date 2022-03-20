@@ -72,11 +72,11 @@ def getDate(dateS):
     return dateS + '-01'
 
 def simpleDate(date):
-    print(date, f'{str(date.year)}-{str(date.month)}-01')
+    # print(date, f'{str(date.year)}-{str(date.month)}-01')
     return f'{str(date.year)}-{str(date.month)}-01'
 
 def getComparisonDataUtil(request):
-    print("Request data: ",request.data)
+    # print("Request data: ",request.data)
     tickers = request.data["tickers"]
     start_date = request.data["time_start"]
     end_date = request.data["time_end"]
@@ -107,7 +107,7 @@ def getComparisonDataUtil(request):
 
 @api_view(["POST"])
 def getComparisonDataCSV(request):
-    print("Request data: ",request.data)
+    # print("Request data: ",request.data)
     tickers = request.data["tickers"]
     start_date = request.data["time_start"]
     end_date = request.data["time_end"]
@@ -126,12 +126,12 @@ def getComparisonDataCSV(request):
             metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
             
 
-    print("Metrics",metrices)
+    # print("Metrics",metrices)
     if len(metrices) > 0 :
         for i in metrices:
             # i['date'] = i['date'].strftime("%d-%B-%Y")
             date_parts = i['date'].split('-')
-            print("DateTime",MONTH_MAPPING[date_parts[1]])
+            # print("DateTime",MONTH_MAPPING[date_parts[1]])
             i['date'] = MONTH_MAPPING[date_parts[1]]+' '+date_parts[0]
         cols = metrices[0].keys()
         return csvResponse(metrices, cols, cols, dic=True)
@@ -151,7 +151,7 @@ def getComparisonData(request):
         metrices[]
     """
     
-    print("Request data: ",request.data)
+    # print("Request data: ",request.data)
     tickers = request.data["tickers"]
     start_date = request.data["time_start"]
     end_date = request.data["time_end"]
@@ -159,22 +159,22 @@ def getComparisonData(request):
 
     dates = KeyMetric.objects.filter(date__range=[start_date, end_date], company__ticker=tickers[0], isYearly=False, metric_type=metric_type).values("date").distinct()
 
-    print("Possible Dates are: ",dates)
+    # print("Possible Dates are: ",dates)
     metrices = []
     for date in dates:
-        print(date, str(date["date"]))
+        # print(date, str(date["date"]))
         metrices.append({"date": str(date["date"])})
         metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], isYearly=False, metric_type=metric_type)
-        print(metrices_l)
+        # print(metrices_l)
         for ticker in tickers:
             metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value
             
 
-    print("Metrics",metrices)
+    # print("Metrics",metrices)
     for i in metrices:
         # i['date'] = i['date'].strftime("%d-%B-%Y")
         date_parts = i['date'].split('-')
-        print("DateTime",MONTH_MAPPING[date_parts[1]])
+        # print("DateTime",MONTH_MAPPING[date_parts[1]])
         i['date'] = MONTH_MAPPING[date_parts[1]]+' '+date_parts[0]
     
     # # metrices = []
@@ -208,7 +208,7 @@ def getBaskets(request):
         baskets list[object]: details of all the baskets provided
     """
     user = request.user
-    print(user)
+    # print(user)
     if not user.is_authenticated:
         return Response(
             {"error": {"message": "User not authenticated"}}, status=status.HTTP_401_UNAUTHORIZED
@@ -228,7 +228,7 @@ def getBaskets(request):
             "companies": basket.companies.values(),
             "companies_count": basket.companies.count()
         })
-    print(basketData)
+    # print(basketData)
     return Response(
         {
         "error":None,
@@ -376,7 +376,7 @@ def insertIntoBasket(request):
         ticker = request.data['ticker']
         company = Company.objects.get(ticker=ticker)
         basketIDs = request.data['basketID']
-        print("--", ticker)
+        # print("--", ticker)
         for basketID in basketIDs:
             basket = Basket.objects.get(id=basketID)
 
@@ -386,7 +386,7 @@ def insertIntoBasket(request):
         return Response({"message": "Basket updated"}, status=status.HTTP_200_OK)
 
     except Exception as e:
-        print(e)
+        # print(e)
         return Response(
             {"error": {"message": "Wrong basket or ticker"}}, status=status.HTTP_404_NOT_FOUND
         )

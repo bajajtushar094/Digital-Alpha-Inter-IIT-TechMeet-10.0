@@ -22,7 +22,7 @@ def searchCompanies(request):
     """
 
     tickers = request.data.get("tickers")
-    print(tickers)
+    # print(tickers)
 
     if not tickers:
         return Response(
@@ -141,7 +141,7 @@ def companyMetric(request):
         metrics = KeyMetric.objects.filter(company=ticker)
         companies = Company.objects.filter(ticker=ticker)
         metrics_list=[]
-        print("Metrics:", companies.values()[0])
+        # print("Metrics:", companies.values()[0])
         company = companies.values()[0]
         for i in metrics.values():
             metrics_list.append(i)
@@ -156,7 +156,7 @@ def companyMetric(request):
         #     res['key_metrics'] = metrics.values()
         #     responseArray.append(res)
 
-    print("Metric List:", responseArray)
+    # print("Metric List:", responseArray)
     return Response( {"error":None,"data": responseArray}, status=status.HTTP_200_OK)
 
 @api_view(["POST"])
