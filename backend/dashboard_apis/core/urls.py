@@ -18,11 +18,13 @@ urlpatterns = [
     # Search APIs
     path('search/companies', searchCompanies,),
     path('search/filings', searchFillings,),
+    path('search/filings/landing',searchFillingsLanding),
     path('search/advanced', advancedSearch,),
     path('search', simpleSearch,),
 
     #Company APIs
     path('company/metric/all', companyMetric),
+    path('company/metric/all/landing', companyMetricLanding),
     path("companies/bookmark/<str:ticker>", bookmarkCompanyView.as_view()),
     path("companies/recentFilings/<str:ticker>", getRecentFilings.as_view()),
     path("companies/addToBasket/<str:ticker>",addToBasket.as_view()),

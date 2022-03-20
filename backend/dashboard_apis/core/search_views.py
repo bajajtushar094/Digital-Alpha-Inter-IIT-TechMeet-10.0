@@ -1,4 +1,5 @@
 from sqlite3 import complete_statement
+from turtle import end_poly
 from django.http import response
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -116,16 +117,134 @@ def searchFillings(request):
         errorMsg = "No Company Found for Tickers: " + ", ".join(notFound)
         error = {"message": errorMsg, "data": notFound}
     
+    count = 0
     responseArray = []
     for companies in res.keys():
         for index , filing in enumerate(res[companies]):
+            count = count + 1
             metrics = KeyMetric.objects.filter(company=filing['company_id'])
             res[companies][index]['key_metrics'] = metrics.values()
             # print("Response:", res[companies][index])
             responseArray.append(res[companies][index])        
-
+        
 
     return Response({"error": error, "data": responseArray}, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def searchFillingsLanding(request):
+    """API endpoint for searching fillings of given companies
+    Args: \n
+        tickers (list[string]): Unique ids to identify the company \n
+        form_type (list[string]): types of filling to include; options- 10K, 10Q, 8K \n
+        time_start (string): start date of the filling; format- YYYY-MM-DD \n
+        time_end (string): end date of the filling; format- YYYY-MM-DD \n
+    Returns: \n
+        fillings list[object]: details of all the fillings provided
+    """
+
+    tickers = request.data.get("tickers")
+    form_type = request.data.get("form_type")
+    time_start = request.data.get("time_start")
+    time_end = request.data.get("time_end")
+    isAll = request.data.get("isAll") or False
+    batch = request.data.get("batch") or 0
+    no_rows = request.data.get("no_rows") or 10
+    start = batch*no_rows
+    end = start+no_rows
+
+    # if(isAll):
+    #     companies = Company.objects.all()
+    #     tickers = [company.ticker for company in companies]
+    #     form_type = []
+    #     time_start = None
+    #     time_end = None
+
+    # if time_start:
+    #     time_start = time_start.split("-")
+    #     time_start = date(int(time_start[0]), int(time_start[1]), int(time_start[2]))
+    # if time_end:
+    #     time_end = time_end.split("-")
+    #     time_end = date(int(time_end[0]), int(time_end[1]), int(time_end[2]))
+
+    # if not tickers:
+    #     return Response(
+    #         {"error": {"message": "No Ticker Found"}}, status=status.HTTP_404_NOT_FOUND
+    #     )
+
+    # companies = Company.objects.filter(ticker__in=tickers)
+
+    # filings = {company.ticker: company.filings.values() for company in companies}
+
+    # res = {}
+    # for company in filings.keys():
+    #     res[company] = []
+    #     for filing in filings[company]:
+    #         if (
+    #             ((not form_type) or (form_type and filing["form_type"] in form_type))
+    #             and ((not time_start) or (time_start and filing["date"] >= time_start))
+    #             and ((not time_end) or (time_end and filing["date"] <= time_end))
+    #         ):
+    #             res[company].append(filing)
+
+    # notFound = []
+    # for ticker in tickers:
+    #     if ticker not in [company.ticker for company in companies]:
+    #         notFound.append(ticker)
+    # error = None
+    # if len(notFound):
+    #     errorMsg = "No Company Found for Tickers: " + ", ".join(notFound)
+    #     error = {"message": errorMsg, "data": notFound}
+    
+    # count = 0
+    # responseArray = []
+    # for companies in res.keys():
+    #     for index , filing in enumerate(res[companies]):
+    #         count = count + 1
+    #         metrics = KeyMetric.objects.filter(company=filing['company_id'])
+    #         res[companies][index]['key_metrics'] = metrics.values()
+    #         # print("Response:", res[companies][index])
+    #         responseArray.append(res[companies][index])  
+    error = None      
+    responseArray = Filing.objects.all().order_by('-date')[start:end]
+    print(responseArray.values())    
+
+    return Response({"error": error, "data": responseArray.values()}, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def companyMetricLanding(request):
+    tickers = request.data.get("tickers")
+    isAll = request.data.get("isAll") or False
+    batch = request.data.get("batch") or 0
+    no_rows = request.data.get("no_rows") or 10
+
+    if(isAll):
+        start = batch*no_rows
+        end = min(batch*no_rows+no_rows,len(Company.objects.all().values()))
+        companies = Company.objects.all()[start:end]
+        tickers = [company.ticker for company in companies]
+
+    responseArray = []
+    for ticker in tickers:
+        metrics = KeyMetric.objects.filter(company=ticker)
+        companies = Company.objects.filter(ticker=ticker)
+        metrics_list=[]
+        # print("Metrics:", companies.values()[0])
+        company = companies.values()[0]
+        for i in metrics.values():
+            metrics_list.append(i)
+
+        company['key_metrics'] = metrics_list
+        responseArray.append(company)
+
+        # responseArray = []
+        # for company in companies.values():
+        #     res = company
+        #     print("Company:", company)
+        #     res['key_metrics'] = metrics.values()
+        #     responseArray.append(res)
+    # print(len(responseArray))
+    # print("Metric List:", responseArray)
+    return Response( {"error":None,"data": responseArray}, status=status.HTTP_200_OK)
 
 @api_view(["POST"])
 def companyMetric(request):
@@ -136,8 +255,12 @@ def companyMetric(request):
         companies = Company.objects.all()
         tickers = [company.ticker for company in companies]
 
+    count = 0
     responseArray = []
     for ticker in tickers:
+        count = count + 1
+        if count > 30:
+            break
         metrics = KeyMetric.objects.filter(company=ticker)
         companies = Company.objects.filter(ticker=ticker)
         metrics_list=[]

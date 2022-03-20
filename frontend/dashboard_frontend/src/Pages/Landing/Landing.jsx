@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import "./landing.scss";
 //components
 import Navbar from "../../Components/Global/Navbar/Navbar";
@@ -21,11 +21,56 @@ import DataSec from "./DataSec";
 import {LOCAL_SERVER_URL} from '../../config'
 import axios from 'axios';
 
+
+
+export const LandingContext = createContext();
+
 const Landing = (props) => {
   const dispatch = useDispatch();
   const user = props.state.user;
-  console.log("State:", props.state);
+  const [page, setPage] = useState(1);
+  
+  // console.log("State:", props.state);
+  const fetchAllCompanies = async () => {
+    try {
+      const response = await axios.post(LOCAL_SERVER_URL + 'company/metric/all/landing', {
+        isAll: true,
+        "batch":page-1,
+        "no_rows": 10
+      })
+      
+          dispatch({
+              type: 'GET_ALL_COMPANIES',
+              allCompanies: response.data
+          });
+          // data = response.data
+    }
+    catch(err) {
+      console.log(err)
+    }
+  }
 
+  const fetchRecentFilings = async () => {
+    // console.log("Dasdhkjasdhals")
+    const data_byFilings = await axios.post(`${config().search}/filings/landing` , {
+      "isAll": true,
+      "batch":page-1,
+      "no_rows":20
+    });
+    const data = data_byFilings.data;
+    // console.log("data_byFilings:" , data_byFilings);
+     dispatch({
+       type: "GET_RECENT_FILINGS",
+       recentFilings: data.data,
+     });
+
+  }
+
+
+  useEffect( async () => {
+    fetchRecentFilings();
+    fetchAllCompanies();
+  },[page])
   useEffect(async () => {
     // const fetchRecentFilings = async () => {
     //   try {
@@ -38,43 +83,9 @@ const Landing = (props) => {
     //   }
     // };
 
-    const fetchRecentFilings = async () => {
-      console.log("Dasdhkjasdhals")
-      const data_byFilings = await axios.post(`${config().search}/filings` , {
-        "isAll": true
-      });
-      const data = data_byFilings.data;
-      console.log("data_byFilings:" , data_byFilings);
-       dispatch({
-         type: "GET_RECENT_FILINGS",
-         recentFilings: data.data,
-       });
+    
 
-    }
-
-    // const fetchAllCompanies = async () => {
-    //   try {
-        // const response = await getAllCompanies(dispatch);
-      // } catch (err) {
-    //     console.log("Error:", err);
-    //   }
-    // };
-    const fetchAllCompanies = async () => {
-      try {
-        const response = await axios.post(LOCAL_SERVER_URL + 'company/metric/all', {
-          isAll: true
-        })
-        
-            dispatch({
-                type: 'GET_ALL_COMPANIES',
-                allCompanies: response.data
-            });
-            data = response.data
-      }
-      catch(err) {
-        console.log(err)
-      }
-    }
+    
 
     const getBookmarkCompaniesAPI = async () => {
       try {
@@ -96,9 +107,11 @@ const Landing = (props) => {
 
   return (
     <div className='landing'>
+      <LandingContext.Provider value={{page: [page, setPage], fetchAllCompanies:fetchAllCompanies}}> 
       <Navbar />
       <Hero />
       <Data />
+      </LandingContext.Provider>
       {/* <DataSec /> */}
     </div>
   );
