@@ -70,6 +70,7 @@ class getAllCompanies(APIView):  #returns company data along with filings and th
 	def get(self, request, *args, **kwargs):
 		try:
 			companies = Company.objects.all().values()
+		
 			for company in companies:
 				filings = Filing.objects.filter(company_id = company['ticker']).values()
 				for filing in filings:

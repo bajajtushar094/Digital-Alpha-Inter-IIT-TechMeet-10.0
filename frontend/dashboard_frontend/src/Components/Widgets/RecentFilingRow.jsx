@@ -14,8 +14,8 @@ const RecentFilingRow = (props) => {
 	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
 	const [isCompany, setIsCompany] = useState(props.isCompany);
 	const filing = props.filing;
-	console.log("Filing at line 17 :", filing);
-	const [open, setOpen] = React.useState(false);
+	// console.log("filing:", filing);
+
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverBg] = useState(false);
 	const handleClickOpen = () => {
@@ -80,7 +80,8 @@ const RecentFilingRow = (props) => {
           className='actions'
         >
           <div className='actions-1'>
-            <Link to={`/company/${filing["company_id"]}`}>
+            {/* <Link to={`/company/${filing["company_id"]}`}> */}
+            <Link to={`/file/${filing["id"]}`}>
               <div className='actioncontainer '>
                 <IconButton
                   style={{ backgroundColor: "transparent" }}

@@ -120,7 +120,7 @@ def getComparisonDataCSV(request):
     for date in dates:
         # print(date, str(date["date"]))
         metrices.append({"date": str(date["date"])})
-        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], isYearly=False, metric_type=metric_type)
+        metrices_l = KeyMetric.objects.filter(company__ticker__in=tickers, date=date['date'], isYearly=False)
         # print(metrices_l)
         for ticker in tickers:
             metrices[-1][ticker] = metrices_l.get(company__ticker=ticker).metric_value

@@ -10,14 +10,20 @@ import { getMetricsFromFiling, getKeyMetricOfCompany} from '../../actions/action
 import RecentFilingRow from "./RecentFilingRow.jsx";
 import CompanyRow from "./CompanyRow.jsx"
 import { Pagination } from '@mui/material';
+import { LandingContext } from '../../Pages/Landing/Landing';
 
 const Table = (props) => {
 	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
 	const [isCompany, setIsCompany] = useState(props.isCompany);
+	const handleChange = (event, value) => {
+		setPage(value);
+	};
 	const data = props.data || [];
+	const landingContext = useContext(LandingContext);
 	const isLandingPage = props.isLandingPage || false;
 	const isRecentFiling = props.isRecentFiling || false;
 	console.log(isLandingPage)
+	const [page, setPage] = landingContext.page;
 	// console.log("Data from Table for search filings:", data);
 	const dispatch = useDispatch();
 	// console.log("Props", props);
@@ -94,6 +100,8 @@ const Table = (props) => {
 			})}
 			{isCompany==true&&fromSearch==true&&
 			<CompanyRow filing={data} hasCheckbox={false} fromSearch={true}/>}
+			{isLandingPage&&isRecentFiling==false&& <Pagination sx={{margin:"auto"}} page={page} onChange={handleChange} count={19} color="primary"/>}
+			{isLandingPage&&isRecentFiling&& <Pagination sx={{margin:"auto"}} page={page} onChange={handleChange} count={97} color="primary"/>}
 		</div>
 	)
 }

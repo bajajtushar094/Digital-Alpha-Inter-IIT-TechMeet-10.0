@@ -11,13 +11,13 @@ import { getMetricsFromFiling, getKeyMetricOfCompany, searchFillings } from '../
 import MaxWidthDialog from './DialogBox';
 
 const CompanyRow = (props) => {
-    console.log("props", props);
+    // console.log("props", props);
     const dispatch = useDispatch();
     const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
     const [isCompany, setIsCompany] = useState(props.isCompany);
     let filings = [];
     const fromSearch = props.fromSearch
-    console.log("Props from Row:", props)
+    // console.log("Props from Row:", props)
     if (fromSearch == false) {
         filings = props.filing.filings
     }
@@ -25,7 +25,7 @@ const CompanyRow = (props) => {
         filings = props.filing
     }
 
-    console.log("Filings from Company Row:", filings);
+    // console.log("Filings from Company Row:", filings);
 
     const [ARR, setARR] = useState("");
     const [CCR, setCCR] = useState("");
@@ -86,7 +86,7 @@ const CompanyRow = (props) => {
                         if (key_metrics[i]['metric_type'] == "CAC") {
                             CAC = key_metrics[i]['metric_value']
                         }
-                        else if (key_metrics[i]['metric_type'] == "GROSS_MARGIN") {
+                        else if (key_metrics[i]['metric_type'] == "Gross Margin") {
                             GROSS_MARGIN = key_metrics[i]['metric_value']
                         }
                         else if (key_metrics[i]['metric_type'] == "MRR") {
@@ -127,8 +127,8 @@ const CompanyRow = (props) => {
                             <div className="div-block-4">
                                 <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e4-5d4911ed" className="iscolumn black50">{CAC ? CAC : '-'}</h4>
                                 <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e6-5d4911ed" className="iscolumn black50">{GROSS_MARGIN ? GROSS_MARGIN : '-'}</h4>
-                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn green">{MRR ? MRR : '-'}</h4>
-                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn red">{ARPU ? ARPU : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194e8-5d4911ed" className="iscolumn black50">{MRR ? MRR : '-'}</h4>
+                                <h4 id="w-node-_5f9bbd68-5925-7f41-4e08-47c4097194ea-5d4911ed" className="iscolumn black50">{ARPU ? ARPU : '-'}</h4>
                                 <div onMouseOver={handleMouseIn} onMouseLeave={handleMouseOut} className="actions">
                                     <div className="actions-1">
                                         <Link to={`/company/${filing['ticker']}`} >

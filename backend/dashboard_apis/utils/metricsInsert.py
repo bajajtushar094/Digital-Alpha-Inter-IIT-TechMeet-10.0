@@ -20,7 +20,7 @@ df = pd.read_csv(filespath + fileName)
 
 
 
-metrics_type = ['Total Revenue', 'Number of customers', 'MRR', 'ARR', 'ARPU', 'MRR Expansion', 'Number of qualified leads', 'Penetration Rate', 'Sales and Marketing', 'CAC', 'CAC payback', 'Gross Margin', 'CAC payback period', 'ASP', 'Total Assets', 'Total Liabilities Net Minority Interest', 'debt ratio', 'Total Equity Gross Minority Interest', 'Total Debt','Common Stock Equity',	'Total Capitalization',	'Shareholder Equity','Private Shareholding','Public Shareholding']
+metrics_type = ['Total Revenue', 'Number of Customers', 'MRR', 'ARR', 'ARPU', 'MRR Expansion', 'Number of qualified leads', 'Penetration Rate', 'Sales and Marketing', 'CAC', 'CAC payback', 'Gross Margin', 'CAC payback period', 'ASP', 'Total Assets', 'Total Liabilities Net Minority Interest', 'Debt Ratio', 'Total Equity Gross Minority Interest', 'Total Debt','Common Stock Equity',	'Total Capitalization',	'Shareholder Equity','Private Shareholding','Public Shareholding']
 
 metrics_unit = ['Thousand USD', 'Number','Thousand USD','Thousand USD','Thousand USD','Ratio','Ratio','Ratio','Thousand USD','Thousand USD','Ratio','Percent','Number','Number','Thousand USD','Thousand USD','Ratio','Thousand USD','Thousand USD','Thousand USD','Thousand USD','Thousand USD','Ratio','Ratio']
 
