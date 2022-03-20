@@ -343,75 +343,76 @@ def simpleSearch(request):
     searched_companies = Company.objects.filter(ticker__in=searched_tickers)
 
 
-    if len(searched_companies) != 0:
-        data = {
-            "companies": searched_companies.values(),
-        }
-        type = "searched_tickers"
-        if(withFilings):
-            filings = Filing.objects.filter(company__in=searched_companies)
-            data["filings"] = filings.values()
-            type = "searched_tickers_with_filings"
-        
-        return Response(
-            {
-                "error": None,
-                "type": type,
-                "data": data
-            },
-            status=status.HTTP_200_OK,
-        )
-
-    else:
-        ranked_companies = {}
-
-        # calculate the similarity of the company name with words provided
-        for company in companies:
-            score = fuzz.WRatio(company.name, query)
-            ranked_companies[company.ticker] = score
-        
-        # sort the ranked_companies based on the similarity score
-        ranked_companies = dict(sorted(ranked_companies.items(), key=lambda item: item[1], reverse=True))
-
-        top_ranked = []
-        for key in ranked_companies.keys():
-            top_ranked.append(key)
-            if len(top_ranked) == num_of_companies: 
-                break
-        
-        searched_companies = [company for company in companies.values() if company['ticker'] in top_ranked]
-        type = "searched_name"
-        if(withFilings):
-            type = "searched_name_with_filings"
-            res_companies = [{
-                "ticker": company['ticker'],
-                "name": company['name'],
-                "logo": company['logo'],
-                "score": ranked_companies[company['ticker']],
-                "filing": Filing.objects.filter(company=company["ticker"]).values()
-            } for company in companies.values() if company['ticker'] in top_ranked]
-        else:
-            res_companies = [{
-                "ticker": company['ticker'],
-                "name": company['name'],
-                "logo": company['logo'],
-                "score": ranked_companies[company['ticker']],
-            } for company in companies.values() if company['ticker'] in top_ranked]
-        
-
-        if(len(res_companies) != 0):
-            return Response(
-            {
-                "error": None,
-                "type": type,
-                "data": {
-                    "companies": res_companies,
-                },
-            },
-            status=status.HTTP_200_OK,
-            )
-
-
+    # #if you want to add the proximity search again just uncomment this and following code and fix the indentation
+    # if len(searched_companies) != 0: 
+    data = {
+        "companies": searched_companies.values(),
+    }
+    type = "searched_tickers"
+    if(withFilings):
+        filings = Filing.objects.filter(company__in=searched_companies)
+        data["filings"] = filings.values()
+        type = "searched_tickers_with_filings"
+    
     return Response(
-            {"error": {"message": "No Company Found"}}, status=status.HTTP_404_NOT_FOUND
-        )
+        {
+            "error": None,
+            "type": type,
+            "data": data
+        },
+        status=status.HTTP_200_OK,
+    )
+
+    # else:
+    #     ranked_companies = {}
+
+    #     # calculate the similarity of the company name with words provided
+    #     for company in companies:
+    #         score = fuzz.WRatio(company.name, query)
+    #         ranked_companies[company.ticker] = score
+        
+    #     # sort the ranked_companies based on the similarity score
+    #     ranked_companies = dict(sorted(ranked_companies.items(), key=lambda item: item[1], reverse=True))
+
+    #     top_ranked = []
+    #     for key in ranked_companies.keys():
+    #         top_ranked.append(key)
+    #         if len(top_ranked) == num_of_companies: 
+    #             break
+        
+    #     searched_companies = [company for company in companies.values() if company['ticker'] in top_ranked]
+    #     type = "searched_name"
+    #     if(withFilings):
+    #         type = "searched_name_with_filings"
+    #         res_companies = [{
+    #             "ticker": company['ticker'],
+    #             "name": company['name'],
+    #             "logo": company['logo'],
+    #             "score": ranked_companies[company['ticker']],
+    #             "filing": Filing.objects.filter(company=company["ticker"]).values()
+    #         } for company in companies.values() if company['ticker'] in top_ranked]
+    #     else:
+    #         res_companies = [{
+    #             "ticker": company['ticker'],
+    #             "name": company['name'],
+    #             "logo": company['logo'],
+    #             "score": ranked_companies[company['ticker']],
+    #         } for company in companies.values() if company['ticker'] in top_ranked]
+        
+
+    #     if(len(res_companies) != 0):
+    #         return Response(
+    #         {
+    #             "error": None,
+    #             "type": type,
+    #             "data": {
+    #                 "companies": res_companies,
+    #             },
+    #         },
+    #         status=status.HTTP_200_OK,
+    #         )
+
+
+    # return Response(
+    #         {"error": {"message": "No Company Found"}}, status=status.HTTP_404_NOT_FOUND
+    #     )

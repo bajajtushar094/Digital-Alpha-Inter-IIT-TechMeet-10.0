@@ -35,17 +35,19 @@ function MaxWidthDialog(props) {
   const [open, setOpen] = props.open;
   const [fullWidth, setFullWidth] = props.fullWidth;
   const [maxWidth, setMaxWidth] =props.maxWidth;
-  const [baskets, setBaskets] = React.useState([]);
+  // const [baskets, setBaskets] = React.useState([]);
+  const baskets = props.state.baskets.data || [];
+  baskets.forEach((basket)=>{basket['selected'] = false});
   const [state, setState] = React.useState([]);
   let selectedBasketId =[];
 
-  const addSelector = () => {
-    let temp = baskets;
-    for(let i=0;i<temp.length;i++){
-        temp[i].selected = false;
-    }
-    setBaskets(temp);
-  }   
+  // const addSelector = () => {
+  //   let temp = baskets;
+  //   for(let i=0;i<temp.length;i++){
+  //       temp[i].selected = false;
+  //   }
+  //   setBaskets(temp);
+  // }   
 
   const handleChange = (event, basket) => {
     if(basket.selected === true) {
@@ -86,15 +88,15 @@ function MaxWidthDialog(props) {
 
   const handleFullWidthChange = props.handleFullWidthChange;
 
-  React.useEffect(()=>{
-    const getBasketsAPI = async () => {
-        const response = await getBaskets(dispatch);
-        console.log("In dialog box file:",response);
-        setBaskets(response.data);
-    }
-    getBasketsAPI();
-    addSelector();
-  },[]);
+  // React.useEffect(()=>{
+  //   const getBasketsAPI = async () => {
+  //       const response = await getBaskets(dispatch);
+  //       console.log("In dialog box file:",response);
+  //       setBaskets(response.data);
+  //   }
+  //   getBasketsAPI();
+  //   addSelector();
+  // },[]);
 
   return (
     <React.Fragment>
