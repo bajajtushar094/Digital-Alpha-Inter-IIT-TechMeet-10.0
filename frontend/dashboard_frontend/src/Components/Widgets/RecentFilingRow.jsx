@@ -14,8 +14,8 @@ const RecentFilingRow = (props) => {
 	const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
 	const [isCompany, setIsCompany] = useState(props.isCompany);
 	const filing = props.filing;
-	console.log("Filing at line 17 :", filing);
-	const [open, setOpen] = React.useState(false);
+	// console.log("filing:", filing);
+
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverBg] = useState(false);
 	const handleClickOpen = () => {
