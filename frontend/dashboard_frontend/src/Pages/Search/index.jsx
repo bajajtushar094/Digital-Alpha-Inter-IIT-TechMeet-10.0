@@ -13,6 +13,7 @@ import {
     searchFillings,
     simpleSearch,
     searchCompanyAPI,
+    getBaskets,
 } from "../../actions/action";
 import vector1 from "../../images/nav/Market.svg";
 
@@ -70,6 +71,13 @@ const Search = (props) => {
             });
         };
     }, []);
+
+    useEffect(() => {
+        const getBasketsAPI = async () => {
+          await getBaskets(dispatch);
+        };
+        getBasketsAPI();
+    })
 
     const handleTable = (selectedTemp) => {
         setSelected(selectedTemp);
