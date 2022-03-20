@@ -11,13 +11,13 @@ import { getMetricsFromFiling, getKeyMetricOfCompany, searchFillings } from '../
 import MaxWidthDialog from './DialogBox';
 
 const CompanyRow = (props) => {
-    console.log("props", props);
+    // console.log("props", props);
     const dispatch = useDispatch();
     const [hasCheckbox, setHasCheckbox] = useState(props.hasCheckbox);
     const [isCompany, setIsCompany] = useState(props.isCompany);
     let filings = [];
     const fromSearch = props.fromSearch
-    console.log("Props from Row:", props)
+    // console.log("Props from Row:", props)
     if (fromSearch == false) {
         filings = props.filing.filings
     }
@@ -25,7 +25,7 @@ const CompanyRow = (props) => {
         filings = props.filing
     }
 
-    console.log("Filings from Company Row:", filings);
+    // console.log("Filings from Company Row:", filings);
 
     const [ARR, setARR] = useState("");
     const [CCR, setCCR] = useState("");
