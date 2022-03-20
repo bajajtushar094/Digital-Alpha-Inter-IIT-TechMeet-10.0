@@ -1,0 +1,12 @@
+03-10-2022 19:00 - edgar_crawler - INFO - Saving log to C:\Users\gitan\OneDrive\Desktop\interiit\curredgar\edgar-crawler-main\logs
+
+03-10-2022 19:00 - edgar_crawler - INFO - Downloading EDGAR Index files
+03-10-2022 19:00 - edgar_crawler - INFO - Skipping 2021_QTR1.tsv
+03-10-2022 19:00 - edgar_crawler - INFO - Skipping 2021_QTR2.tsv
+03-10-2022 19:00 - edgar_crawler - INFO - Skipping 2021_QTR3.tsv
+03-10-2022 19:00 - edgar_crawler - INFO - Skipping 2021_QTR4.tsv
+03-10-2022 19:00 - edgar_crawler - INFO - 
+Downloading 47 filings...
+
+03-10-2022 19:01 - edgar_crawler - INFO - 
+Final dataframe exported to C:\Users\gitan\OneDrive\Desktop\interiit\curredgar\edgar-crawler-main\datasets\FILINGS_METADATA.csv
