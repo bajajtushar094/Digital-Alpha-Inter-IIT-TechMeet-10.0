@@ -1,0 +1,10 @@
+03-10-2022 18:58 - edgar_crawler - INFO - Saving log to C:\Users\gitan\OneDrive\Desktop\interiit\curredgar\edgar-crawler-main\logs
+
+03-10-2022 18:58 - edgar_crawler - INFO - Downloading EDGAR Index files
+03-10-2022 18:59 - edgar_crawler - INFO - 2021_QTR1.tsv downloaded
+03-10-2022 18:59 - edgar_crawler - INFO - 2021_QTR2.tsv downloaded
+03-10-2022 18:59 - edgar_crawler - INFO - 2021_QTR3.tsv downloaded
+03-10-2022 18:59 - edgar_crawler - INFO - 2021_QTR4.tsv downloaded
+03-10-2022 18:59 - edgar_crawler - INFO - 
+Downloading 47 filings...
+
