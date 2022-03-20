@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import Watchlist from '../../Components/Widgets/Watchlist';
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import {config} from "../../config";
 // const metric_types = [
 // 	{'ARR': 'Annual Recurring Revenue'},
 // 	{'Customer Churn Rate': 'Customer Churn Rate'},
@@ -221,7 +222,7 @@ const Company = (props) => {
                                     <Button style={{ color: '#9B9B9C' }}>Download stats CSV  <FileDownloadIcon /></Button>
                                 </div>
                             </div> */}
-              <TableHead childone="Key Metrics" childthree="http://localhost:8000/api/companies/getKeyMetricsCSV" data=
+              <TableHead childone="Key Metrics" childthree={config().getKeyMetricsCSVUrl} data=
                 {{
                   "ticker": props.state.queryFilings.tickers[0],
                   'time_start': props.state.queryFilings.time_start,

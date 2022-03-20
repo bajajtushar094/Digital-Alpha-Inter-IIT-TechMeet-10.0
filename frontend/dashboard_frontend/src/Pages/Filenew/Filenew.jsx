@@ -11,6 +11,7 @@ import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/Re
 import { Button, IconButton } from '@mui/material';
 import { LOCAL_SERVER_URL } from "../../config";
 import { useParams , useNavigate } from 'react-router-dom';
+import { LOCAL_SERVER_URL_MAIN } from '../../config';
 
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
@@ -207,7 +208,7 @@ const Filenew = () => {
    Nisi, rem maxime rerum sunt quos veritatis nam sint accusantium dignissimos minima quam, ea itaque aliquid cupiditate voluptatum molestiae sed in sapiente unde, qui corporis iure. Animi dolores veritatis quae!
     */}
 									{/* <div className="content" dangerouslySetInnerHTML={{__html: ref}}></div> */}
-									<iframe title='filing' src={`http://localhost:8000${filingData['filelink']}`} frameborder="0" style={{ overflowY: "scroll", height: "50vh", overflowX: "hidden", width: "165%" }}></iframe>
+									<iframe title='filing' src={`${LOCAL_SERVER_URL_MAIN}${filingData['filelink']}`} frameborder="0" style={{ overflowY: "scroll", height: "50vh", overflowX: "hidden", width: "165%" }}></iframe>
 								</div>
 							</>
 						}

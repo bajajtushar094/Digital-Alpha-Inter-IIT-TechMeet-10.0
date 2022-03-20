@@ -1,4 +1,5 @@
 export const LOCAL_SERVER_URL = `http://localhost:8000/api/`;
+export const LOCAL_SERVER_URL_MAIN = `http://localhost:8000`; 
 
 export const config = ()=>{
     const confs = {
@@ -17,7 +18,16 @@ export const config = ()=>{
             'getBasket': `${LOCAL_SERVER_URL}basket/get`,
             'createBasket': `${LOCAL_SERVER_URL}basket/create`,
             'getKeyMetricOfCompanyAPI':`${LOCAL_SERVER_URL}companies/getKeyMetrics`,
-            'getAllMetricsOfCompany':`${LOCAL_SERVER_URL}company/metric/all`
+            'getAllMetricsOfCompany':`${LOCAL_SERVER_URL}company/metric/all`,
+            'refresh':`${LOCAL_SERVER_URL}auth/token/refresh/`,
+            'bookmarkCompanyUrl':`${LOCAL_SERVER_URL}landingPage/bookmarkedCompanies/`,
+            'getMetricOfCompanyUrl':`${LOCAL_SERVER_URL}landingPage/bookmarkedCompanies/`,
+            'getBasketDetailsUrl':`${LOCAL_SERVER_URL}basket/details?basket_id=`,
+            'getKeyMetricUrl':`${LOCAL_SERVER_URL}companies/getKeyMetrics/`,
+            "basketCompanreUrl":`${LOCAL_SERVER_URL}basket/compare`,
+            'getKeyMetricsCSVUrl':`${LOCAL_SERVER_URL}companies/getKeyMetricsCSV`,
+            'getCompareCSVUrl':`${LOCAL_SERVER_URL}basket/compareCSV`,
+            'insertIntoBasket':`${LOCAL_SERVER_URL}basket/insertIntoBasket`
         }
     }
 

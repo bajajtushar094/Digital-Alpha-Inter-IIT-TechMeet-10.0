@@ -9,6 +9,7 @@ import { connect, useDispatch } from 'react-redux';
 import { Button } from '@mui/material'
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import axios from 'axios';
+import { config } from '../../config';
 
 
  
@@ -54,7 +55,7 @@ function MetricTabs(props) {
   const metrics=['Total Revenue', 'Number of customers', 'MRR', 'ARR', 'ARPU', 'MRR Expansion', 'Number of qualified leads', 'Penetration Rate', 'Sales and Marketing', 'CAC', 'CAC payback', 'Gross Margin', 'CAC payback period', 'ASP', 'Total Assets', 'Total Liabilities Net Minority Interest', 'debt ratio', 'Total Equity Gross Minority Interest', 'Total Debt','Common Stock Equity',	'Total Capitalization',	'Shareholder Equity','Private Shareholding','Public Shareholding']
   const handleDownload = () => {
     // console.log("console log",body, props)
-    const url = 'http://localhost:8000/api/basket/compareCSV'
+    const url = config().getCompareCSVUrl
     const {
       time_start,
       time_end,

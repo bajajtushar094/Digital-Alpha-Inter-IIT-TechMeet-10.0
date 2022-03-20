@@ -16,6 +16,7 @@ import { Checkbox, FormGroup, Grid, List, ListItem, Typography } from '@mui/mate
 import { getBaskets } from '../../actions/action';
 import { connect, useDispatch } from 'react-redux';
 import axios from 'axios';
+import {config} from "../../config";
 
 
 function CBLabel(props){
@@ -93,7 +94,7 @@ function MaxWidthDialog(props) {
           'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authTokens')).access}`
       }
     }:""
-    await axios.post("http://localhost:8000/api/basket/insertIntoBasket",{basketID:basketIds, ticker: props.ticker},configHeaders)
+    await axios.post(config().insertIntoBasket,{basketID:basketIds, ticker: props.ticker},configHeaders)
     .then((response)=>{console.log(response)})
     .catch((err)=>{console.log(err)});
     setOpen(false);
