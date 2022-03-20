@@ -1,5 +1,11 @@
 import jwt_decode from "jwt-decode";
 
+let endDate = new Date();
+const startDate = `${endDate.getFullYear() - 3}-${endDate.getMonth() + 1
+    }-${endDate.getDate()}`
+endDate = `${endDate.getFullYear()}-${endDate.getMonth() + 1
+    }-${endDate.getDate()}`
+
 const initState = {
     isAuthenticated:  localStorage.getItem('authTokens')?(JSON.parse(localStorage.getItem('authTokens')).access):false,
     user: localStorage.getItem('authTokens')?jwt_decode(JSON.parse(localStorage.getItem('authTokens')).access):null,

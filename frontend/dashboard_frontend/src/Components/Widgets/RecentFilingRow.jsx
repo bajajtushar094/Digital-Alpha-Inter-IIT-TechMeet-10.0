@@ -80,7 +80,8 @@ const RecentFilingRow = (props) => {
           className='actions'
         >
           <div className='actions-1'>
-            <Link to={`/company/${filing["company_id"]}`}>
+            {/* <Link to={`/company/${filing["company_id"]}`}> */}
+            <Link to={`/file/${filing["id"]}`}>
               <div className='actioncontainer '>
                 <IconButton
                   style={{ backgroundColor: "transparent" }}
