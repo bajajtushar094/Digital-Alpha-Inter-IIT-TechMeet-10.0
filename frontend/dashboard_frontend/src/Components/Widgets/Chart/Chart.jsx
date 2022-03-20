@@ -15,8 +15,8 @@ import {
 import axios from 'axios';
 
  const colors = [
-  "#07D825",
-  "#F75539",
+  "#8884D8",
+  "#413EA0",
   "#AC07D8",
   "#F7D439",
   "#7A07D8",
@@ -137,8 +137,10 @@ function Chart(props) {
   },[queryFilings]);
 
   const listOfBars = [];
+  const colvar=0;
+  console.log("Bars",props.state.queryFilings.tickers.entries())
   for (const [i, ticker] of props.state.queryFilings.tickers.entries()) {
-    listOfBars.push(<Bar fill={colors[i]} dataKey={ticker}/>)
+    listOfBars.push(<Bar fill={colors[i]} dataKey={ticker}/>);
   }
 
   const  bool=true
@@ -158,10 +160,11 @@ function Chart(props) {
     <>
     <ResponsiveContainer height={600} width="90%">
     <BarChart
+      barSize={75}
       data={chartData}
       margin={{
-        top: 5,
-        right: 30,
+        top: 50,
+        right: 20,
         left: 20,
         bottom: 5
       }}

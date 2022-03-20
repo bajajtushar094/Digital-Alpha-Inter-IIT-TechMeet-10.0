@@ -19,8 +19,8 @@ const initState = {
         "tickers": [],
         "metric_type": [],
         "form_type":[],
-        "time_start": startDate,
-        "time_end": endDate
+        "time_start": new Date(new Date().setFullYear(new Date().getFullYear() - 3)),
+        "time_end": new Date()
     },
     queryFilingsData: null,
     basketDetails: {
