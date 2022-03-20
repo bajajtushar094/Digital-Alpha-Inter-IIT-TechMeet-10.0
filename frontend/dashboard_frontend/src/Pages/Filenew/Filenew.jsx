@@ -80,6 +80,7 @@ const Filenew = () => {
 			);
 			setCompanyName(res.data.company.name);
 			let response = res.data;
+			console.log("Filing Data:", response);
 			// setFilingData(filingData=>({
 			// 	...response
 			// }));
@@ -96,7 +97,7 @@ const Filenew = () => {
 			setSnippetContext(context)
 			setFilingData(response);
 			setSummaryText(filingData.summaries[0].text);
-			console.log("Filing Data:", filingData.summaries[0].text);
+			
 		}
 		func()
 	}, [filing_id])
@@ -208,7 +209,7 @@ const Filenew = () => {
    Nisi, rem maxime rerum sunt quos veritatis nam sint accusantium dignissimos minima quam, ea itaque aliquid cupiditate voluptatum molestiae sed in sapiente unde, qui corporis iure. Animi dolores veritatis quae!
     */}
 									{/* <div className="content" dangerouslySetInnerHTML={{__html: ref}}></div> */}
-									<iframe title='filing' src={`${LOCAL_SERVER_URL_IP}/media/filings/${filingData['filelink']}.htm`} frameborder="0" style={{ overflowY: "scroll",overflowX: "hidden", width: "100%",height:"400px" }}></iframe>
+									<iframe title='filing' src={`${LOCAL_SERVER_URL_IP}/media/filings/${filingData.filelink}.htm`} frameborder="0" style={{ overflowY: "scroll",overflowX: "hidden", width: "100%",height:"400px" }}></iframe>
 								</div>
 							</>
 						}

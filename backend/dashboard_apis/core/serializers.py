@@ -35,7 +35,7 @@ class FilingSerializer(serializers.ModelSerializer):
     year = serializers.IntegerField(read_only=True)
     quarter = serializers.IntegerField(read_only=True)
     date = serializers.DateField()
-    filelink = serializers.FileField()
+    filelink = serializers.URLField()
     snippets = SnippetSerializer(many=True, read_only=True)
     summaries = SummarySerializer(many=True, read_only=True)
 
