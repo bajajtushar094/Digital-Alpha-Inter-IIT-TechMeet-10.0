@@ -5,7 +5,7 @@ import vector1 from '../../images/nav/Market.svg';
 //componenets
 import PerformerCard from '../../Components/Widgets/PerformerCard'
 import ViewedCard from '../../Components/Widgets/ViewedCard';
-import Table from '../../Components/Widgets/Table';
+import Table from '../../Components/Widgets/LandingTable';
 import { connect } from 'react-redux';
 import RecentlyViewedLogIn from '../../Components/Widgets/RecentlyViewedLogIn/RecentlyViewedLogIn';
 import { LandingContext } from './Landing';

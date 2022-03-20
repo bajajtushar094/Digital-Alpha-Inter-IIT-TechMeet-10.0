@@ -31,7 +31,8 @@ const initState = {
     },
     basketSelectedCompanies:[],
     visualize: false,
-    currentBasket: null
+    currentBasket: null,
+    page:1
 }
 
 const rootReducer = (state=initState,action) => {
@@ -222,6 +223,21 @@ const rootReducer = (state=initState,action) => {
         return{
             ...state,
             currentBasket: basket
+        }
+    }
+
+    if(action.type === 'RESET_PAGE'){
+        return {
+            ...state,
+            page:1
+        }
+    }
+
+    if(action.type === 'SET_PAGE'){
+        const page = action.page;
+        return{
+            ...state,
+            page:page
         }
     }
 

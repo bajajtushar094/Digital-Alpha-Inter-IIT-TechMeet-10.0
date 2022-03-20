@@ -152,58 +152,6 @@ def searchFillingsLanding(request):
     start = batch*no_rows
     end = start+no_rows
 
-    # if(isAll):
-    #     companies = Company.objects.all()
-    #     tickers = [company.ticker for company in companies]
-    #     form_type = []
-    #     time_start = None
-    #     time_end = None
-
-    # if time_start:
-    #     time_start = time_start.split("-")
-    #     time_start = date(int(time_start[0]), int(time_start[1]), int(time_start[2]))
-    # if time_end:
-    #     time_end = time_end.split("-")
-    #     time_end = date(int(time_end[0]), int(time_end[1]), int(time_end[2]))
-
-    # if not tickers:
-    #     return Response(
-    #         {"error": {"message": "No Ticker Found"}}, status=status.HTTP_404_NOT_FOUND
-    #     )
-
-    # companies = Company.objects.filter(ticker__in=tickers)
-
-    # filings = {company.ticker: company.filings.values() for company in companies}
-
-    # res = {}
-    # for company in filings.keys():
-    #     res[company] = []
-    #     for filing in filings[company]:
-    #         if (
-    #             ((not form_type) or (form_type and filing["form_type"] in form_type))
-    #             and ((not time_start) or (time_start and filing["date"] >= time_start))
-    #             and ((not time_end) or (time_end and filing["date"] <= time_end))
-    #         ):
-    #             res[company].append(filing)
-
-    # notFound = []
-    # for ticker in tickers:
-    #     if ticker not in [company.ticker for company in companies]:
-    #         notFound.append(ticker)
-    # error = None
-    # if len(notFound):
-    #     errorMsg = "No Company Found for Tickers: " + ", ".join(notFound)
-    #     error = {"message": errorMsg, "data": notFound}
-    
-    # count = 0
-    # responseArray = []
-    # for companies in res.keys():
-    #     for index , filing in enumerate(res[companies]):
-    #         count = count + 1
-    #         metrics = KeyMetric.objects.filter(company=filing['company_id'])
-    #         res[companies][index]['key_metrics'] = metrics.values()
-    #         # print("Response:", res[companies][index])
-    #         responseArray.append(res[companies][index])  
     error = None      
     responseArray = Filing.objects.all().order_by('-date')[start:end]
     print(responseArray.values())    
