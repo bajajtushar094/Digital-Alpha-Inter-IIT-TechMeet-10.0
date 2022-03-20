@@ -182,7 +182,7 @@ const Filenew = () => {
 							<div className="textdiv">
                                 <div className="piechart" style={{height:"208px",display:"flex",justifyContent:"center"}}>
                                 <PieChart width={730} height={250}>
-  <Pie endAngle={180}  data={data01} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110} fill="#8884d8" />
+  <Pie label endAngle={180}  data={data01} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110} fill="#8884d8" />
   
 </PieChart>
    
