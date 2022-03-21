@@ -87,6 +87,9 @@ def searchFillings(request):
             {"error": {"message": "No Ticker Found"}}, status=status.HTTP_404_NOT_FOUND
         )
 
+    for i in range(len(tickers)):
+        tickers[i] = tickers[i].upper()
+
     companies = Company.objects.filter(ticker__in=tickers)
 
     filings = {company.ticker: company.filings.values() for company in companies}
@@ -172,8 +175,9 @@ def companyMetricLanding(request):
         tickers = [company.ticker for company in companies]
 
     responseArray = []
+
     for ticker in tickers:
-        metrics = KeyMetric.objects.filter(company=ticker)
+        metrics = KeyMetric.objects.filter(company=ticker, metric_type__in=['CAC', 'Gross Margin', 'MRR', 'ARPU'])
         companies = Company.objects.filter(ticker=ticker)
         metrics_list=[]
         # print("Metrics:", companies.values()[0])
@@ -206,6 +210,7 @@ def companyMetric(request):
     count = 0
     responseArray = []
     for ticker in tickers:
+        ticker = ticker.upper()
         count = count + 1
         if count > 30:
             break

@@ -19,7 +19,7 @@ const RecentFilingRow = (props) => {
 	const [hover, setHover] = useState(false);
 	const [hoverbg, setHoverBg] = useState(false);
 	const handleClickOpen = () => {
-    setOpen(true);
+    // setOpen(true);
   };
 	const handleMouseIn = () => {
 		setHover(true);
